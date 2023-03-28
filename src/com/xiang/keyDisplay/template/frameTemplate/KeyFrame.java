@@ -15,17 +15,9 @@ import java.util.ArrayDeque;
 /**
  * 按键窗体
  */
-public class KeyFrame extends CustomizeFrame {
+public class KeyFrame extends RefreshFrame {
     //按键名
     public String keyName;
-    //用于渐变,按下后松开一直在变化
-    public Color currentBg;
-    //标记渐变要到的目标颜色
-    public Color targetColor;
-    //松开时显示的颜色
-    public Color releaseColor;
-    //按下时显示的颜色
-    public Color pressColor;
     //当前kps
     public int kps;
     //总计数
@@ -39,11 +31,7 @@ public class KeyFrame extends CustomizeFrame {
     public ArrayDeque<Long> timeStamps;
 
     public KeyFrame(String keyName) {
-        super(
-                Main.DEFAULT_BORDER_COLOR,
-                Main.DEFAULT_BG_COLOR,
-                (float) (1 / 6.0)
-        );
+        super();
         this.releaseColor = Main.DEFAULT_BG_COLOR;
         this.pressColor = Main.DEFAULT_PRESS_COLOR;
 
@@ -79,11 +67,7 @@ public class KeyFrame extends CustomizeFrame {
     }
 
     public KeyFrame(JSONObject config) {
-        super(
-                JsonUtil.json2Color(config.getJSONArray("borderColor")),
-                JsonUtil.json2Color(config.getJSONArray("releaseColor")),
-                (float) (1 / 6.0)
-        );
+        super();
         this.releaseColor = JsonUtil.json2Color(config.getJSONArray("releaseColor"));
         this.pressColor = JsonUtil.json2Color(config.getJSONArray("pressColor"));
 
@@ -114,8 +98,7 @@ public class KeyFrame extends CustomizeFrame {
         labels[2].setText(String.valueOf(counts));
         labels[2].setLocation(0, getHeight() * 2 / 3);
 
-        addMouseListener(new MouseAd());
-        addMouseMotionListener(new MouseMo());
+        registerMouseListener();
     }
 
     public JSONObject toConfig() {

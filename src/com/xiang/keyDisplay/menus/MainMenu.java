@@ -2,7 +2,6 @@ package com.xiang.keyDisplay.menus;
 
 import com.xiang.keyDisplay.main.Main;
 import com.xiang.keyDisplay.others.ComponentUtils;
-import com.xiang.keyDisplay.template.panelTemplate.AddKeyMenu;
 
 import javax.swing.*;
 import java.awt.*;

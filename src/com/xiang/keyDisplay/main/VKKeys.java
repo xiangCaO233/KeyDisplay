@@ -73,6 +73,9 @@ public class VKKeys {
         keysMap.put(40, "↓");
         keysMap.put(39, "→");
         keysMap.put(110, "N.");
+        keysMap.put(1, "LMB");
+        keysMap.put(2, "RMB");
+        keysMap.put(3, "MMB");
         return keysMap;
     }
 

@@ -3,6 +3,7 @@ package com.xiang.keyDisplay.others;
 import com.xiang.keyDisplay.main.Main;
 import com.xiang.keyDisplay.menus.MenuTemplate;
 import com.xiang.keyDisplay.template.frameTemplate.KeyFrame;
+import com.xiang.keyDisplay.template.frameTemplate.MouseFrame;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -21,15 +22,25 @@ public class MouseAd extends MouseAdapter {
         if (e.getButton() == 1) {
             mouseInFrameTemp = e.getPoint();
             Point screenMouse = e.getLocationOnScreen();
-            mouseRelativePointTemp = new ArrayList<>();
+            keyFrameMouseRelativePointTemp = new ArrayList<>();
             Collection<KeyFrame> allKeyFrames = Main.keyFrames.values();
             for (KeyFrame keyFrame : allKeyFrames) {
-                mouseRelativePointTemp.add(new Point(
+                keyFrameMouseRelativePointTemp.add(new Point(
                                 screenMouse.x - keyFrame.getLocationOnScreen().x,
                                 screenMouse.y - keyFrame.getLocationOnScreen().y
                         )
                 );
             }
+            mouseFrameMouseRelativePointTemp = new ArrayList<>();
+            Collection<MouseFrame> allMouseFrames = Main.mouseFrames.values();
+            for (MouseFrame mouseFrame : allMouseFrames) {
+                mouseFrameMouseRelativePointTemp.add(new Point(
+                                screenMouse.x - mouseFrame.getLocationOnScreen().x,
+                                screenMouse.y - mouseFrame.getLocationOnScreen().y
+                        )
+                );
+            }
+
             countFramePointTemp = new Point(
                     screenMouse.x - Main.totalCountFrame.getLocationOnScreen().x,
                     screenMouse.y - Main.totalCountFrame.getLocationOnScreen().y
@@ -53,8 +64,11 @@ public class MouseAd extends MouseAdapter {
     @Override
     public void mouseReleased(MouseEvent e) {
         if (e.getButton() == 1) {
-            mouseRelativePointTemp.clear();
-            mouseRelativePointTemp = null;
+            keyFrameMouseRelativePointTemp.clear();
+            keyFrameMouseRelativePointTemp = null;
+
+            mouseFrameMouseRelativePointTemp.clear();
+            mouseFrameMouseRelativePointTemp = null;
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.xiang.keyDisplay.template.panelTemplate;
+package com.xiang.keyDisplay.menus;
 
 import com.github.kwhat.jnativehook.GlobalScreen;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;

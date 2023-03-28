@@ -3,15 +3,15 @@
     <output-path>$PROJECT_DIR$/out/artifacts/KeyDisplay_final_jar</output-path>
     <root id="archive" name="KeyDisplay-final.jar">
       <element id="module-output" name="KeyDisplay-final" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jfree/jfreechart/1.5.4/jfreechart-1.5.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/alibaba/fastjson2/fastjson2/2.0.26/fastjson2-2.0.26.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/21-ea+5/javafx-controls-21-ea+5.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/21-ea+5/javafx-controls-21-ea+5-win.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/21-ea+5/javafx-graphics-21-ea+5.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/21-ea+5/javafx-graphics-21-ea+5-win.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-base/21-ea+5/javafx-base-21-ea+5.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-base/21-ea+5/javafx-base-21-ea+5-win.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jfree/jfreechart/1.5.4/jfreechart-1.5.4.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/github/kwhat/jnativehook/2.2.2/jnativehook-2.2.2.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/alibaba/fastjson2/fastjson2/2.0.26/fastjson2-2.0.26.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

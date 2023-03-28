@@ -4,6 +4,7 @@ import com.github.kwhat.jnativehook.mouse.NativeMouseEvent;
 import com.github.kwhat.jnativehook.mouse.NativeMouseListener;
 import com.xiang.keyDisplay.main.Main;
 import com.xiang.keyDisplay.menus.MenuTemplate;
+import com.xiang.keyDisplay.template.frameTemplate.MouseFrame;
 
 import java.awt.*;
 
@@ -12,9 +13,40 @@ import java.awt.*;
  */
 public class GlobalMouseListener implements NativeMouseListener {
     @Override
+    public void nativeMouseReleased(NativeMouseEvent e) {
+        //MouseFrame操作
+        MouseFrame frame = Main.mouseFrames.get(e.getButton());
+        if (frame != null) {
+            //设置刷新线程将要渐变的目标颜色
+            frame.targetColor = frame.releaseColor;
+            //设置为松开状态
+            frame.isPressed = false;
+
+        }
+    }
+
+    @Override
     public void nativeMousePressed(NativeMouseEvent e) {
-        System.out.println(e.getButton());
+        //MouseFrame操作
+        MouseFrame frame = Main.mouseFrames.get(e.getButton());
+        if (frame != null) {
+            frame.isPressed = true;
+            //总计数++
+            frame.labels[2].setText(String.valueOf(++frame.count));
+            //cps++
+            frame.labels[1].setText(String.valueOf((++frame.cps) - 1));
+            //更新时间戳
+            frame.timeStamps.add(System.currentTimeMillis());
+            //直接设置填充颜色
+            frame.currentBg = frame.pressColor;
+            frame.setRootBg(frame.currentBg);
+            frame.repaint();
+
+        }
+
+        //菜单逻辑
         boolean inMenu = false;
+        //获取计算缩放后坐标
         Point mouseLoc = new Point(
                 (int)(e.getPoint().x / Main.SCALE_X),
                 (int)(e.getPoint().y / Main.SCALE_Y)

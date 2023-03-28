@@ -11,11 +11,8 @@ import com.github.kwhat.jnativehook.mouse.NativeMouseListener;
 import com.xiang.keyDisplay.menus.*;
 import com.xiang.keyDisplay.others.*;
 import com.xiang.keyDisplay.template.FileChooser;
-import com.xiang.keyDisplay.template.frameTemplate.ChartFrame;
-import com.xiang.keyDisplay.template.frameTemplate.FastSetFrame;
-import com.xiang.keyDisplay.template.frameTemplate.KeyFrame;
-import com.xiang.keyDisplay.template.frameTemplate.TotalCountFrame;
-import com.xiang.keyDisplay.template.panelTemplate.AddKeyMenu;
+import com.xiang.keyDisplay.template.frameTemplate.*;
+import com.xiang.keyDisplay.menus.AddKeyMenu;
 
 import java.awt.*;
 import java.io.File;
@@ -41,6 +38,7 @@ public class Main {
     public static final double SCALE_X = SCREEN_DEVICE.getDefaultConfiguration().getDefaultTransform().getScaleX();
     public static final double SCALE_Y = SCREEN_DEVICE.getDefaultConfiguration().getDefaultTransform().getScaleY();
     public static final String[] DEFAULT_KEYS = new String[]{"A", "S", "D", "SPACE", "J", "K", "L"};
+    public static final String[] DEFAULT_MOUSE_BUTTONS = new String[]{"LMB" , "RMB"};
     public static final Dimension DEFAULT_SIZE = new Dimension(60, 80);
     public static final Color DEFAULT_BORDER_COLOR = new Color(220, 220, 220);
     public static final Color DEFAULT_BG_COLOR = new Color(24, 15, 36, 220);
@@ -63,6 +61,8 @@ public class Main {
 
     //所有按键窗体: keycode-frameTemplate.KeyFrame
     public static LinkedHashMap<Integer, KeyFrame> keyFrames;
+    //所有鼠标按键窗体: mouseButton-frameTemplate.MouseFrame
+    public static LinkedHashMap<Integer, MouseFrame> mouseFrames;
     //总计数窗体
     public static TotalCountFrame totalCountFrame;
     //菜单窗体
@@ -86,7 +86,7 @@ public class Main {
     //刷新线程
     static RefreshThread refreshThread;
     //计时器
-    static Timer kpsTimer;
+    static Timer kpsAndCpsTimer;
     static Timer chartTimer;
     //全局监听器
     static NativeKeyListener globalKeyListener;
@@ -128,7 +128,8 @@ public class Main {
      */
     void start() {
         fps = DEFAULT_FPS;
-        initFrames(DEFAULT_KEYS);
+        initKeyFrames(DEFAULT_KEYS);
+        initMouseFrames(DEFAULT_MOUSE_BUTTONS);
         initMenus();
         initAllThreads();
     }
@@ -140,7 +141,7 @@ public class Main {
      */
     static void start(JSONObject config) {
         fps = config.getIntValue("fps");
-        //初始化默认按键列表
+        //初始化按键列表
         keyFrames = new LinkedHashMap<>();
         JSONArray keysConfig = config.getJSONArray("按键");
         for (int i = 0; i < keysConfig.size(); i++) {
@@ -149,6 +150,16 @@ public class Main {
             keyFrames.put(VKKeys.KeySearch(keyFrame.keyName), keyFrame);
             keyFrame.setVisible(true);
             keyFrame.setLocation(JsonUtil.json2Rec(keyConfig.getJSONArray("bounds")).getLocation());
+        }
+        //初始化按键列表
+        mouseFrames = new LinkedHashMap<>();
+        JSONArray mouseKeysConfig = config.getJSONArray("鼠标");
+        for (int i = 0; i < mouseKeysConfig.size(); i++) {
+            JSONObject mouseKeyConfig = mouseKeysConfig.getJSONObject(i);
+            MouseFrame mouseFrame = new MouseFrame(mouseKeyConfig);
+            mouseFrames.put(VKKeys.KeySearch(mouseFrame.mouseKeyName), mouseFrame);
+            mouseFrame.setVisible(true);
+            mouseFrame.setLocation(JsonUtil.json2Rec(mouseKeyConfig.getJSONArray("bounds")).getLocation());
         }
         JSONObject chartConfig = config.getJSONObject("表格界面");
         JSONObject countConfig = config.getJSONObject("计数界面");
@@ -183,7 +194,7 @@ public class Main {
      *
      * @param keyStrs
      */
-    private static void initFrames(String[] keyStrs) {
+    private static void initKeyFrames(String[] keyStrs) {
         isInitDone = false;
         //初始化默认按键列表
         keyFrames = new LinkedHashMap<>();
@@ -219,6 +230,48 @@ public class Main {
 
         /*
         mainMenu.childMenus.add(fastSetMenu);*/
+        isInitDone = true;
+    }
+    private static void initMouseFrames(String[] mouseButtons){
+        isInitDone = false;
+        mouseFrames = new LinkedHashMap<>();
+        int minX = SCREEN_SIZE.width,minY = SCREEN_SIZE.height , maxX = 0 , maxY = 0 , maxsWidth = DEFAULT_SIZE.width;
+        if (keyFrames.size() > 0){
+            Collection<KeyFrame> keys = keyFrames.values();
+            for (KeyFrame key : keys){
+                Point keyLoc = key.getLocationOnScreen();
+                if (keyLoc.x < minX)
+                    minX = keyLoc.x;
+                if (keyLoc.y < minY)
+                    minY = keyLoc.y;
+                if (keyLoc.x > maxX){
+                    maxX = keyLoc.x;
+                    maxsWidth = key.getWidth();
+                }
+
+                if (keyLoc.y > maxY)
+                    maxY = keyLoc.y;
+
+            }
+        }
+        for (String mouseStr : mouseButtons){
+            MouseFrame mouseFrame = new MouseFrame(mouseStr);
+            mouseFrames.put(
+                    VKKeys.KeySearch(mouseStr) , mouseFrame
+            );
+            mouseFrame.setVisible(true);
+        }
+        MouseFrame mouseLeft = mouseFrames.get(1);
+        mouseLeft.setLocation(
+                minX - mouseLeft.getWidth() ,
+                minY
+        );
+        MouseFrame mouseRight = mouseFrames.get(2);
+        mouseRight.setLocation(
+                maxX + maxsWidth ,
+                minY
+        );
+
         isInitDone = true;
     }
 
@@ -264,9 +317,9 @@ public class Main {
                 new ChartRefreshTask(), 0, 1000 / Main.fps
         );
         //初始化kps处理定时器
-        kpsTimer = new Timer();
-        kpsTimer.schedule(
-                new KpsTask(), 0, 50
+        kpsAndCpsTimer = new Timer();
+        kpsAndCpsTimer.schedule(
+                new KpsAndCpsTask(), 0, 50
         );
         globalKeyListener = new GlobalKeyListener();
         GlobalScreen.addNativeKeyListener(globalKeyListener);
@@ -324,7 +377,7 @@ public class Main {
         refreshThread.interrupt();
         refreshThread.stop();
         chartTimer.cancel();
-        kpsTimer.cancel();
+        kpsAndCpsTimer.cancel();
         isThreadClosed = true;
         FileChooser.close();
     }
@@ -342,7 +395,7 @@ public class Main {
         stopAllThread();
         disposeAllFrame();
 
-        initFrames(keys);
+        initKeyFrames(keys);
         while (!isInitDone) {
             Thread.onSpinWait();
         }
@@ -430,6 +483,8 @@ public class Main {
         JSONObject countFrameConfig = totalCountFrame.toConfig();
         //按键配置
         JSONArray keyFramesConfig = getAllKeysConfigs();
+        //鼠标按键配置
+        JSONArray mouseFramesConfig = getAllMouseKeysConfig();
 
         long time = System.currentTimeMillis();
         latestConfig.put("time", time);
@@ -439,6 +494,7 @@ public class Main {
         latestConfig.put("计数界面", countFrameConfig);
         latestConfig.put("表格界面", chartFrameConfig);
         latestConfig.put("按键", keyFramesConfig);
+        latestConfig.put("鼠标", mouseFramesConfig);
         return latestConfig;
     }
 
@@ -456,6 +512,16 @@ public class Main {
             keyFramesConfig.add(keyConfig);
         }
         return keyFramesConfig;
+    }
+    public static JSONArray getAllMouseKeysConfig() {
+        JSONArray mouseFramesConfig = new JSONArray();
+        //按键配置
+        Set<Integer> codeSet = mouseFrames.keySet();
+        for (Integer code : codeSet) {
+            JSONObject mouseKeyConfig = mouseFrames.get(code).toConfig();
+            mouseFramesConfig.add(mouseKeyConfig);
+        }
+        return mouseFramesConfig;
     }
 
     public static void main(String[] args) {
@@ -478,6 +544,7 @@ public class Main {
             throw new RuntimeException(e);
         }
         new Main();
+
 
     }
 

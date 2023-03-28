@@ -3,6 +3,7 @@ package com.xiang.keyDisplay.others;
 import com.xiang.keyDisplay.main.Main;
 import com.xiang.keyDisplay.template.frameTemplate.ChartFrame;
 import com.xiang.keyDisplay.template.frameTemplate.KeyFrame;
+import com.xiang.keyDisplay.template.frameTemplate.MouseFrame;
 import com.xiang.keyDisplay.template.frameTemplate.TotalCountFrame;
 
 import javax.swing.*;
@@ -14,7 +15,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class MouseMo extends MouseMotionAdapter {
-    public static ArrayList<Point> mouseRelativePointTemp;
+    public static ArrayList<Point> keyFrameMouseRelativePointTemp;
+    public static ArrayList<Point> mouseFrameMouseRelativePointTemp;
     public static Point countFramePointTemp;
     public static Point chartFramePointTemp;
     public static Point mouseInFrameTemp;
@@ -25,15 +27,27 @@ public class MouseMo extends MouseMotionAdapter {
         if (e.getModifiersEx() == InputEvent.BUTTON1_DOWN_MASK || e.getModifiersEx() == (InputEvent.CTRL_DOWN_MASK | InputEvent.BUTTON1_DOWN_MASK)) {
             Point mouse = e.getLocationOnScreen();
             if (GlobalKeyListener.ctrl) {
+                //按键容器
                 Collection<KeyFrame> allKeyFrames = Main.keyFrames.values();
-                int index = 0;
+                int index1 = 0;
                 for (KeyFrame keyFrame : allKeyFrames) {
                     keyFrame.setLocation(
-                            mouse.x - mouseRelativePointTemp.get(index).x,
-                            mouse.y - mouseRelativePointTemp.get(index).y
+                            mouse.x - keyFrameMouseRelativePointTemp.get(index1).x,
+                            mouse.y - keyFrameMouseRelativePointTemp.get(index1).y
                     );
-                    index++;
+                    index1++;
                 }
+                //鼠标容器
+                Collection<MouseFrame> allMouseFrames = Main.mouseFrames.values();
+                int index2 = 0;
+                for (MouseFrame mouseFrame : allMouseFrames) {
+                    mouseFrame.setLocation(
+                            mouse.x - keyFrameMouseRelativePointTemp.get(index2).x,
+                            mouse.y - keyFrameMouseRelativePointTemp.get(index2).y
+                    );
+                    index2++;
+                }
+
                 Main.totalCountFrame.setLocation(
                         mouse.x - countFramePointTemp.x,
                         mouse.y - countFramePointTemp.y
@@ -47,6 +61,8 @@ public class MouseMo extends MouseMotionAdapter {
                 //磁吸
                 //建立磁吸列表
                 ArrayList<JFrame> allFramesWithoutSelf = new ArrayList<>();
+                //检测是否是自身,不磁吸自身
+                //按键
                 Collection<KeyFrame> keyFrames = Main.keyFrames.values();
                 if (e.getSource() instanceof KeyFrame) {
                     for (KeyFrame keyFrame : keyFrames) {
@@ -55,6 +71,16 @@ public class MouseMo extends MouseMotionAdapter {
                         }
                     }
                 } else allFramesWithoutSelf.addAll(keyFrames);
+                //鼠标
+                Collection<MouseFrame> mouseFrames = Main.mouseFrames.values();
+                if (e.getSource() instanceof MouseFrame) {
+                    for (MouseFrame mouseFrame : mouseFrames) {
+                        if (!(mouseFrame.equals(e.getSource()))) {
+                            allFramesWithoutSelf.add(mouseFrame);
+                        }
+                    }
+                } else allFramesWithoutSelf.addAll(mouseFrames);
+
                 if (!(e.getSource() instanceof TotalCountFrame)) {
                     allFramesWithoutSelf.add(Main.totalCountFrame);
                 }

@@ -1,7 +1,10 @@
 package com.xiang.keyDisplay.others;
 
 import com.xiang.keyDisplay.main.Main;
+import com.xiang.keyDisplay.template.frameTemplate.CustomizeFrame;
 import com.xiang.keyDisplay.template.frameTemplate.KeyFrame;
+import com.xiang.keyDisplay.template.frameTemplate.MouseFrame;
+import com.xiang.keyDisplay.template.frameTemplate.RefreshFrame;
 
 import java.awt.*;
 import java.util.Collection;
@@ -20,7 +23,41 @@ public class RefreshThread extends Thread {
                 Thread.sleep(1000 / Main.fps);
             } catch (InterruptedException e) {
             }
-            //设置currentBg
+            //转化速率
+            double speed = 0;
+            switch (Main.speedValue) {
+                case 10:
+                    speed = 0.8;
+                    break;
+                case 9:
+                    speed = 0.9;
+                    break;
+                case 8:
+                    speed = 0.95;
+                    break;
+                case 7:
+                    speed = 0.97;
+                    break;
+                case 6:
+                    speed = 0.99;
+                    break;
+                case 5:
+                    speed = 0.995;
+                    break;
+                case 4:
+                    speed = 0.9999;
+                    break;
+                case 3:
+                    speed = 0.99999;
+                    break;
+                case 2:
+                    speed = 0.99999999;
+                    break;
+                case 1:
+                    speed = 0.9999999999;
+                    break;
+            }
+            //设置keyframe.currentBg
             Collection<KeyFrame> keyFrames = Main.keyFrames.values();
             for (KeyFrame keyFrame : keyFrames) {
                 if (keyFrame.kps < 1) {
@@ -36,55 +73,42 @@ public class RefreshThread extends Thread {
                     continue;
                 }
                 //current -> target
-                //转化速率
-                double speed = 0;
-                switch (Main.speedValue) {
-                    case 10:
-                        speed = 0.8;
-                        break;
-                    case 9:
-                        speed = 0.9;
-                        break;
-                    case 8:
-                        speed = 0.95;
-                        break;
-                    case 7:
-                        speed = 0.97;
-                        break;
-                    case 6:
-                        speed = 0.99;
-                        break;
-                    case 5:
-                        speed = 0.995;
-                        break;
-                    case 4:
-                        speed = 0.9999;
-                        break;
-                    case 3:
-                        speed = 0.99999;
-                        break;
-                    case 2:
-                        speed = 0.99999999;
-                        break;
-                    case 1:
-                        speed = 0.9999999999;
-                        break;
+                updateFrameColor(keyFrame , speed);
+            }
+            //mouseFrame处理
+            Collection<MouseFrame> mouseFrames = Main.mouseFrames.values();
+            for (MouseFrame mouseFrame : mouseFrames) {
+                if (mouseFrame.cps < 1) {
+                    System.out.println("修复");
+                    mouseFrame.cps = 1;
                 }
-                //目标颜色
-                Color setColor = new Color(
-                        keyFrame.targetColor.getRed() - (int) ((keyFrame.targetColor.getRed() - keyFrame.currentBg.getRed()) * speed),
-                        keyFrame.targetColor.getGreen() - (int) ((keyFrame.targetColor.getGreen() - keyFrame.currentBg.getGreen()) * speed),
-                        keyFrame.targetColor.getBlue() - (int) ((keyFrame.targetColor.getBlue() - keyFrame.currentBg.getBlue()) * speed),
-                        keyFrame.targetColor.getAlpha() - (int) ((keyFrame.targetColor.getAlpha() - keyFrame.currentBg.getAlpha()) * speed)
-                );
-                //设置当前颜色
-                keyFrame.currentBg = setColor;
-                //更新颜色
-                keyFrame.setRootBg(keyFrame.currentBg);
-                //重绘界面
-                keyFrame.repaint();
+                /*if (Main.totalCountFrame.currentKps < Main.keyFrames.size()) {
+                    System.out.println("修复");
+                    Main.totalCountFrame.currentKps = Main.keyFrames.size();
+                }*/
+//                System.out.println(mouseFrame.targetColor);
+                if (mouseFrame.isPressed || mouseFrame.currentBg.equals(mouseFrame.targetColor)) {
+                    continue;
+                }
+                updateFrameColor(mouseFrame , speed);
             }
         }
         System.out.println("刷新线程退出");
+    }
+    static void updateFrameColor(RefreshFrame frame , double speed){
+        //current -> target
+        //目标颜色
+        Color setColor = new Color(
+                frame.targetColor.getRed() - (int) ((frame.targetColor.getRed() - frame.currentBg.getRed()) * speed),
+                frame.targetColor.getGreen() - (int) ((frame.targetColor.getGreen() - frame.currentBg.getGreen()) * speed),
+                frame.targetColor.getBlue() - (int) ((frame.targetColor.getBlue() - frame.currentBg.getBlue()) * speed),
+                frame.targetColor.getAlpha() - (int) ((frame.targetColor.getAlpha() - frame.currentBg.getAlpha()) * speed)
+        );
+        //设置当前颜色
+        frame.currentBg = setColor;
+        //更新颜色
+        frame.setRootBg(frame.currentBg);
+        //重绘界面
+        frame.repaint();
     }
 }

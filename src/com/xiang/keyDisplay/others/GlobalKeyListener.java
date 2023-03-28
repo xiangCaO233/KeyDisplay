@@ -15,10 +15,8 @@ public class GlobalKeyListener implements NativeKeyListener {
         if (keyFrame != null) {
             if (!keyFrame.isPressed) {
                 //单按键总计数++
-
                 keyFrame.labels[2].setText(String.valueOf(++keyFrame.counts));
                 //kps++
-
                 keyFrame.labels[1].setText(String.valueOf((++keyFrame.kps) - 1));
                 //总计数窗体
                 Main.totalCountFrame.labels[1].setText("当前:" + (++Main.totalCountFrame.currentKps - Main.keyFrames.size()));
