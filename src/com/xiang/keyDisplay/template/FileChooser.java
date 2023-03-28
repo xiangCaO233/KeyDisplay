@@ -34,7 +34,6 @@ public class FileChooser extends Application {
     }
 
     public static void sendFile(FileChooseCallBack fileChooseCallBack) {
-
         fileChooser.setTitle("打开存档...");
         file = fileChooser.showOpenDialog(stage);
         fileChooseCallBack.callback(file);

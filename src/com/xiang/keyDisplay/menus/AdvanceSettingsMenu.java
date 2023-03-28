@@ -43,7 +43,7 @@ public class AdvanceSettingsMenu extends MenuTemplate {
 
         int buttonHeight;
         if (lessThanMin || moreThanMax){
-            buttonHeight = (300 / Main.keyFrames.size() + 4);
+            buttonHeight = (300 / (Main.keyFrames.size() + 4));
         }else {
             buttonHeight = 30;
         }
