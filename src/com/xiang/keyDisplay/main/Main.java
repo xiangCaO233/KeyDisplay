@@ -45,7 +45,8 @@ public class Main {
     public static final Color DEFAULT_BORDER_COLOR = new Color(220, 220, 220);
     public static final Color DEFAULT_BG_COLOR = new Color(24, 15, 36, 220);
     public static final Color DEFAULT_PRESS_COLOR = new Color(88, 108, 140, 180);
-    public static final int DEFAULT_FPS = 120;
+    //获取屏幕硬件启动时刷新率
+    public static final int DEFAULT_FPS = SCREEN_DEVICE.getDisplayMode().getRefreshRate();
     public static final AreaColor DEFAULT_AREA_COLOR = AreaColor.CYAN;
 
     public static int fps;
@@ -188,10 +189,7 @@ public class Main {
         keyFrames = new LinkedHashMap<>();
         for (int i = 0; i < keyStrs.length; i++) {
             KeyFrame keyFrame = new KeyFrame(
-                    keyStrs[i],
-                    DEFAULT_BORDER_COLOR,
-                    DEFAULT_BG_COLOR,
-                    DEFAULT_PRESS_COLOR
+                    keyStrs[i]
             );
             keyFrames.put(
                     VKKeys.KeySearch(keyStrs[i]),
@@ -358,12 +356,7 @@ public class Main {
      */
     public static void addKey(int keyCode) {
 
-        KeyFrame keyFrame = new KeyFrame(
-                VKKeys.data.get(keyCode),
-                DEFAULT_BORDER_COLOR,
-                DEFAULT_BG_COLOR,
-                DEFAULT_PRESS_COLOR
-        );
+        KeyFrame keyFrame = new KeyFrame(VKKeys.data.get(keyCode));
         //取最后一个按键位置
         Iterator<Integer> itr = keyFrames.keySet().iterator();
         int lastKey = 0;

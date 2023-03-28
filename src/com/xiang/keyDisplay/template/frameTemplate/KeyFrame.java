@@ -38,14 +38,14 @@ public class KeyFrame extends CustomizeFrame {
     //时间戳队列,用于检测时间计算kps
     public ArrayDeque<Long> timeStamps;
 
-    public KeyFrame(String keyName, Color borderColor, Color releaseColor, Color pressColor) {
+    public KeyFrame(String keyName) {
         super(
-                borderColor,
-                releaseColor,
+                Main.DEFAULT_BORDER_COLOR,
+                Main.DEFAULT_BG_COLOR,
                 (float) (1 / 6.0)
         );
-        this.releaseColor = releaseColor;
-        this.pressColor = pressColor;
+        this.releaseColor = Main.DEFAULT_BG_COLOR;
+        this.pressColor = Main.DEFAULT_PRESS_COLOR;
 
         targetColor = releaseColor;
         currentBg = releaseColor;

@@ -12,11 +12,12 @@ import java.awt.*;
  */
 public class GlobalMouseListener implements NativeMouseListener {
     @Override
-    public void nativeMousePressed(NativeMouseEvent nativeEvent) {
+    public void nativeMousePressed(NativeMouseEvent e) {
+        System.out.println(e.getButton());
         boolean inMenu = false;
         Point mouseLoc = new Point(
-                (int)(nativeEvent.getPoint().x / Main.SCALE_X),
-                (int)(nativeEvent.getPoint().y / Main.SCALE_Y)
+                (int)(e.getPoint().x / Main.SCALE_X),
+                (int)(e.getPoint().y / Main.SCALE_Y)
         );
         for (int i = Main.allMenus.size() - 1; i >= 0; i--) {
             MenuTemplate menu = Main.allMenus.get(i);
