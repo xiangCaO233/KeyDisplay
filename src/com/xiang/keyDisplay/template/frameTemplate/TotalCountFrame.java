@@ -129,9 +129,7 @@ public class TotalCountFrame extends CustomizeFrame {
     }
 
     public void updateSize() {
-        if (Main.keyFrames.size() < 5) {
-
-        } else {
+        if (Main.keyFrames.size() >= 4) {
             Collection<KeyFrame> keyFrameCollection = Main.keyFrames.values();
             int sum = 0;
             for (KeyFrame keyFrame : keyFrameCollection) {

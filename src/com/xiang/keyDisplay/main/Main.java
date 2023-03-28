@@ -99,6 +99,10 @@ public class Main {
         } else {
             try {
                 FileInputStream fis = new FileInputStream(latestFile);
+                if (fis.available() == 0){
+                    start();
+                    fis.close();
+                }
                 start(JSON.parseObject(fis, StandardCharsets.UTF_8));
                 fis.close();
             } catch (IOException e) {
@@ -234,6 +238,7 @@ public class Main {
         mainMenu.addChild(addKeyMenu);
         mainMenu.addChild(saveMenu);
         mainMenu.addChild(loadMenu);
+
     }
 
     /**
