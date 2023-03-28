@@ -91,33 +91,13 @@ public class MouseMo extends MouseMotionAdapter {
                 //鼠标等效位置
                 ArrayList<Point> thisPs = new ArrayList<>();
                 //左上角点
-                thisPs.add(
-                        new Point(
-                                mouse.x - mouseInFrameTemp.x,
-                                mouse.y - mouseInFrameTemp.y
-                        )
-                );
+                thisPs.add(new Point(mouse.x - mouseInFrameTemp.x, mouse.y - mouseInFrameTemp.y));
                 //右上角点
-                thisPs.add(
-                        new Point(
-                                mouse.x - mouseInFrameTemp.x + e.getComponent().getWidth(),
-                                mouse.y - mouseInFrameTemp.y
-                        )
-                );
+                thisPs.add(new Point(mouse.x - mouseInFrameTemp.x + e.getComponent().getWidth(), mouse.y - mouseInFrameTemp.y));
                 //左下角点
-                thisPs.add(
-                        new Point(
-                                mouse.x - mouseInFrameTemp.x,
-                                mouse.y - mouseInFrameTemp.y + e.getComponent().getHeight()
-                        )
-                );
+                thisPs.add(new Point(mouse.x - mouseInFrameTemp.x, mouse.y - mouseInFrameTemp.y + e.getComponent().getHeight()));
                 //右下角点
-                thisPs.add(
-                        new Point(
-                                mouse.x - mouseInFrameTemp.x + e.getComponent().getWidth(),
-                                mouse.y - mouseInFrameTemp.y + e.getComponent().getHeight()
-                        )
-                );
+                thisPs.add(new Point(mouse.x - mouseInFrameTemp.x + e.getComponent().getWidth(), mouse.y - mouseInFrameTemp.y + e.getComponent().getHeight()));
                 for (JFrame frame : allFramesWithoutSelf) {
                     Point otherLoc = frame.getLocationOnScreen();
                     for (int i = 0; i < thisPs.size(); i++) {
