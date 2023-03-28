@@ -14,14 +14,14 @@ import static com.xiang.keyDisplay.main.Main.DEFAULT_BORDER_COLOR;
  * 菜单类
  * 最外层为JFrame,含有标题,按钮数组,按钮名数组
  */
-public class MainMenuFrame extends MenuFrame {
+public class MainMenu extends MenuTemplate {
     JLabel title;
     JButton[] buttons;
     String[] buttonNames = new String[]{
             "快速设置...", "添加按键...", "删除按键...", "高级设置...", "保存配置...", "加载配置...", "说明...", "关于...", "退出"
     };
 
-    public MainMenuFrame() throws HeadlessException {
+    public MainMenu() throws HeadlessException {
         super(DEFAULT_BORDER_COLOR, DEFAULT_BG_COLOR);
 
         setSize(122, 302);

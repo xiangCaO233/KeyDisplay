@@ -3,7 +3,7 @@ package com.xiang.keyDisplay.others;
 import com.github.kwhat.jnativehook.mouse.NativeMouseEvent;
 import com.github.kwhat.jnativehook.mouse.NativeMouseListener;
 import com.xiang.keyDisplay.main.Main;
-import com.xiang.keyDisplay.menus.MenuFrame;
+import com.xiang.keyDisplay.menus.MenuTemplate;
 
 import java.awt.*;
 
@@ -15,14 +15,14 @@ public class GlobalMouseListener implements NativeMouseListener {
     public void nativeMousePressed(NativeMouseEvent nativeEvent) {
         boolean inMenu = false;
         for (int i = Main.allMenus.size() - 1; i >= 0; i--) {
-            MenuFrame menu = Main.allMenus.get(i);
+            MenuTemplate menu = Main.allMenus.get(i);
             Rectangle bound = menu.getBounds();
             if (bound.contains(nativeEvent.getPoint())) {
                 inMenu = true;
                 //按在某个菜单中,将其子菜单及子菜单的所有子菜单全部设置为不可见
                 if (menu.childMenus.size() > 0) {
                     //有子菜单
-                    for (MenuFrame child : menu.childMenus) {
+                    for (MenuTemplate child : menu.childMenus) {
                         setInvisible(child);
                     }
                 }
@@ -36,10 +36,10 @@ public class GlobalMouseListener implements NativeMouseListener {
         }
     }
 
-    void setInvisible(MenuFrame menu) {
+    void setInvisible(MenuTemplate menu) {
         //递归设置不可见
         if (menu.childMenus.size() > 0) {
-            for (MenuFrame child : menu.childMenus) {
+            for (MenuTemplate child : menu.childMenus) {
                 setInvisible(child);
             }
         }

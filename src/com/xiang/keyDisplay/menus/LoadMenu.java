@@ -14,7 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-public class LoadMenu extends MenuFrame implements FileChooser.FileChooseCallBack {
+public class LoadMenu extends MenuTemplate implements FileChooser.FileChooseCallBack {
     File[] saveList;
     File file;
     JLabel title;

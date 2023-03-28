@@ -5,7 +5,7 @@ import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 import com.xiang.keyDisplay.main.Main;
 import com.xiang.keyDisplay.main.VKKeys;
-import com.xiang.keyDisplay.menus.MenuFrame;
+import com.xiang.keyDisplay.menus.MenuTemplate;
 import com.xiang.keyDisplay.others.ComponentUtils;
 import com.xiang.keyDisplay.template.frameTemplate.FastSetFrame;
 
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import static com.xiang.keyDisplay.main.Main.DEFAULT_BG_COLOR;
 import static com.xiang.keyDisplay.main.Main.DEFAULT_BORDER_COLOR;
 
-public class AddKeyMenu extends MenuFrame {
+public class AddKeyMenu extends MenuTemplate {
     public NativeKeyListener keyListener;
     public JLabel title;
     JLabel key;

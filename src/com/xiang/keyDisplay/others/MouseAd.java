@@ -1,7 +1,7 @@
 package com.xiang.keyDisplay.others;
 
 import com.xiang.keyDisplay.main.Main;
-import com.xiang.keyDisplay.menus.MenuFrame;
+import com.xiang.keyDisplay.menus.MenuTemplate;
 import com.xiang.keyDisplay.template.frameTemplate.KeyFrame;
 
 import java.awt.*;
@@ -44,7 +44,7 @@ public class MouseAd extends MouseAdapter {
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getButton() == 3) {
-            MenuFrame menu = Main.allMenus.get(0);
+            MenuTemplate menu = Main.allMenus.get(0);
             menu.setLocation(e.getLocationOnScreen());
             menu.setVisible(true);
         }

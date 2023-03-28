@@ -5,7 +5,7 @@ import com.xiang.keyDisplay.main.Main;
 import javax.swing.*;
 import java.awt.*;
 
-public class AdvanceSettingsMenu extends MenuFrame {
+public class AdvanceSettingsMenu extends MenuTemplate {
     int minHeight;
     int maxHeight;
     JPanel componentSettings;

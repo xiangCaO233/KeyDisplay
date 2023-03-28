@@ -10,7 +10,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public class SaveMenu extends MenuFrame implements FileChooser.FileChooseCallBack {
+public class SaveMenu extends MenuTemplate implements FileChooser.FileChooseCallBack {
     JLabel title;
     JTextField inputField;
     JButton cancel;

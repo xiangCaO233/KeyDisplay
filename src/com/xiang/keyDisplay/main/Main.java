@@ -53,8 +53,8 @@ public class Main {
     //总计数窗体
     public static TotalCountFrame totalCountFrame;
     //菜单窗体
-    public static ArrayList<MenuFrame> allMenus;
-    public static MainMenuFrame mainMenu;
+    public static ArrayList<MenuTemplate> allMenus;
+    public static MainMenu mainMenu;
     public static FastSetMenu fastSetMenu;
     //删除按键菜单
     public static DeleteKeyMenu deleteKeyMenu;
@@ -215,7 +215,7 @@ public class Main {
     private static void initMenus() {
         //初始化菜单
         allMenus = new ArrayList<>();
-        mainMenu = new MainMenuFrame();
+        mainMenu = new MainMenu();
         fastSetMenu = new FastSetMenu();
         deleteKeyMenu = new DeleteKeyMenu();
         addKeyMenu = new AddKeyMenu();
@@ -295,7 +295,7 @@ public class Main {
         }
         keyFrames.clear();
         keyFrames = null;
-        for (MenuFrame menu : allMenus) {
+        for (MenuTemplate menu : allMenus) {
             menu.dispose();
         }
         totalCountFrame.dispose();

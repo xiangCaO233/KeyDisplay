@@ -12,7 +12,7 @@ import java.util.Collection;
 import static com.xiang.keyDisplay.main.Main.DEFAULT_BG_COLOR;
 import static com.xiang.keyDisplay.main.Main.DEFAULT_BORDER_COLOR;
 
-public class DeleteKeyMenu extends MenuFrame {
+public class DeleteKeyMenu extends MenuTemplate {
     JLabel title;
     ArrayList<JButton> allKeys;
     JButton back;

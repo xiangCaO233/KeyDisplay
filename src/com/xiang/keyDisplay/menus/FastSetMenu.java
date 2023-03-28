@@ -12,7 +12,7 @@ import static com.xiang.keyDisplay.main.Main.DEFAULT_BG_COLOR;
 import static com.xiang.keyDisplay.main.Main.DEFAULT_BORDER_COLOR;
 
 //快速设置菜单
-public class FastSetMenu extends MenuFrame {
+public class FastSetMenu extends MenuTemplate {
     JLabel title;
     JButton[] buttons;
     String[] buttonNames = new String[]{
