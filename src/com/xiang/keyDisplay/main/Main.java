@@ -28,6 +28,18 @@ import java.util.*;
 public class Main {
     //默认配置
     public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+    public static final GraphicsDevice SCREEN_DEVICE = getDevice();
+
+    private static GraphicsDevice getDevice() {
+        return GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+    }
+
+    public static final Dimension SCREEN_DEVICE_SIZE = new Dimension(
+            SCREEN_DEVICE.getDisplayMode().getWidth(),
+            SCREEN_DEVICE.getDisplayMode().getHeight()
+    );
+    public static final double SCALE_X = SCREEN_DEVICE.getDefaultConfiguration().getDefaultTransform().getScaleX();
+    public static final double SCALE_Y = SCREEN_DEVICE.getDefaultConfiguration().getDefaultTransform().getScaleY();
     public static final String[] DEFAULT_KEYS = new String[]{"A", "S", "D", "SPACE", "J", "K", "L"};
     public static final Dimension DEFAULT_SIZE = new Dimension(60, 80);
     public static final Color DEFAULT_BORDER_COLOR = new Color(220, 220, 220);

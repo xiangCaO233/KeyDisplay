@@ -39,7 +39,10 @@ public class LoadMenu extends MenuTemplate implements FileChooser.FileChooseCall
                 saveButtons[i].addActionListener(e -> {
                     try {
                         FileInputStream fis = new FileInputStream(saveList[finalI]);
-                        Main.loadFromConfig(JSON.parseObject(fis, StandardCharsets.UTF_8));
+                        if (fis.available() == 0)
+                            System.out.println("存档尚未初始化");
+                        else
+                            Main.loadFromConfig(JSON.parseObject(fis, StandardCharsets.UTF_8));
                         fis.close();
                     } catch (FileNotFoundException ex) {
                         throw new RuntimeException(ex);

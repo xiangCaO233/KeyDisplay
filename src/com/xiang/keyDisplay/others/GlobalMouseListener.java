@@ -14,10 +14,14 @@ public class GlobalMouseListener implements NativeMouseListener {
     @Override
     public void nativeMousePressed(NativeMouseEvent nativeEvent) {
         boolean inMenu = false;
+        Point mouseLoc = new Point(
+                (int)(nativeEvent.getPoint().x / Main.SCALE_X),
+                (int)(nativeEvent.getPoint().y / Main.SCALE_Y)
+        );
         for (int i = Main.allMenus.size() - 1; i >= 0; i--) {
             MenuTemplate menu = Main.allMenus.get(i);
             Rectangle bound = menu.getBounds();
-            if (bound.contains(nativeEvent.getPoint())) {
+            if (bound.contains(mouseLoc)) {
                 inMenu = true;
                 //按在某个菜单中,将其子菜单及子菜单的所有子菜单全部设置为不可见
                 if (menu.childMenus.size() > 0) {
