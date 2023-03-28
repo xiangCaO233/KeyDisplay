@@ -16,6 +16,11 @@ public class FileChooser extends Application {
     public void start(Stage stage) {
         stage.initStyle(StageStyle.UTILITY);
         fileChooser = new javafx.stage.FileChooser();
+        fileChooser.getExtensionFilters().add(
+                new javafx.stage.FileChooser.ExtensionFilter(
+                        "Json配置文件",".json"
+                )
+        );
         this.stage = stage;
 
     }

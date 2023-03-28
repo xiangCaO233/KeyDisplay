@@ -71,28 +71,6 @@ public class SaveMenu extends MenuTemplate implements FileChooser.FileChooseCall
                         setVisible(false);
                     }
                 });
-                /*IJfxFileChooserAdapterModuleContext context = new IJfxFileChooserAdapterModuleContext() {
-                    @Override
-                    public IFileChooserBuilder getFileChooserBuilder() {
-                        return null;
-                    }
-                };*/
-                /*IFileChooserBuilder builder = new IFileChooserBuilder() {
-                    @Override
-                    public IFileChooserBuilder addToSwingParent(Consumer<JComponent> consumer) {
-                        return null;
-                    }
-
-                    @Override
-                    public Initialised init() {
-                        return null;
-                    }
-
-                    @Override
-                    public Initialised init(String s) {
-                        return null;
-                    }
-                };*/
             }
         });
         addCom(saveAs);
@@ -100,6 +78,9 @@ public class SaveMenu extends MenuTemplate implements FileChooser.FileChooseCall
         cancel = ComponentUtils.registerButton("取消");
         cancel.setSize(getWidth() - 2, 30);
         cancel.setLocation(1, 131);
+        cancel.addActionListener(e->{
+            cancel.getTopLevelAncestor().setVisible(false);
+        });
         addCom(cancel);
 
     }

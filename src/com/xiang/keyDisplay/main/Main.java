@@ -77,6 +77,8 @@ public class Main {
     public static LoadMenu loadMenu;
     //添加按键菜单
     public static AddKeyMenu addKeyMenu;
+    //高级设置菜单
+    public static AdvanceSettingsMenu advanceSettingsMenu;
     //快速设置界面
     public static FastSetFrame fastSetFrame;
     //表格窗体
@@ -287,6 +289,7 @@ public class Main {
         addKeyMenu = new AddKeyMenu();
         saveMenu = new SaveMenu();
         loadMenu = new LoadMenu();
+        advanceSettingsMenu = new AdvanceSettingsMenu();
 
         allMenus.add(mainMenu);
         allMenus.add(fastSetMenu);
@@ -294,12 +297,14 @@ public class Main {
         allMenus.add(addKeyMenu);
         allMenus.add(saveMenu);
         allMenus.add(loadMenu);
+        allMenus.add(advanceSettingsMenu);
 
         mainMenu.addChild(fastSetMenu);
         mainMenu.addChild(deleteKeyMenu);
         mainMenu.addChild(addKeyMenu);
         mainMenu.addChild(saveMenu);
         mainMenu.addChild(loadMenu);
+        mainMenu.addChild(advanceSettingsMenu);
 
     }
 

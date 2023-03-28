@@ -5,6 +5,9 @@ import com.xiang.keyDisplay.others.ComponentUtils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import static com.xiang.keyDisplay.main.Main.DEFAULT_BG_COLOR;
 import static com.xiang.keyDisplay.main.Main.DEFAULT_BORDER_COLOR;
@@ -17,13 +20,13 @@ public class MainMenu extends MenuTemplate {
     JLabel title;
     JButton[] buttons;
     String[] buttonNames = new String[]{
-            "快速设置...", "添加按键...", "删除按键...", "高级设置...", "保存配置...", "加载配置...", "说明...", "关于...", "退出"
+            "快速设置...", "添加按键...", "删除按键...", "高级设置...", "保存配置...", "加载配置...", "关于...", "退出"
     };
 
     public MainMenu() throws HeadlessException {
         super(DEFAULT_BORDER_COLOR, DEFAULT_BG_COLOR);
 
-        setSize(122, 302);
+        setSize(122, 272);
         title = ComponentUtils.registerLabel("menu");
         title.setSize(120, 30);
         title.setLocation(1, 1);
@@ -79,6 +82,16 @@ public class MainMenu extends MenuTemplate {
         });
         buttons[3].addActionListener(e -> {
             //高级设置按钮
+            //添加按键按钮
+            Point thisButtonPoint = ((JButton) (e.getSource())).getLocationOnScreen();
+            if (Main.advanceSettingsMenu == null) {
+                Main.advanceSettingsMenu = new AdvanceSettingsMenu();
+            }
+            Main.advanceSettingsMenu.setLocation(
+                    thisButtonPoint.x + buttons[3].getWidth(),
+                    thisButtonPoint.y
+            );
+            Main.advanceSettingsMenu.setVisible(true);
         });
         buttons[4].addActionListener(e -> {
 
@@ -115,7 +128,17 @@ public class MainMenu extends MenuTemplate {
             Main.loadMenu.setVisible(true);
             Main.loadMenu.setLocation(thisButtonPoint.x + buttons[4].getWidth(), thisButtonPoint.y);
         });
-        buttons[8].addActionListener(e -> {
+        buttons[6].addActionListener(e->{
+            Desktop desktop = Desktop.getDesktop();
+            if (Desktop.isDesktopSupported() && desktop.isSupported(Desktop.Action.BROWSE)) {
+                try {
+                    desktop.browse(new URI("https://github.com/xiangCaO233/KeyDisplay"));
+                } catch (IOException | URISyntaxException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+        buttons[7].addActionListener(e -> {
             //退出按钮
             Main.stop();
         });
