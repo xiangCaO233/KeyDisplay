@@ -42,8 +42,8 @@ public class MouseMo extends MouseMotionAdapter {
                 int index2 = 0;
                 for (MouseFrame mouseFrame : allMouseFrames) {
                     mouseFrame.setLocation(
-                            mouse.x - keyFrameMouseRelativePointTemp.get(index2).x,
-                            mouse.y - keyFrameMouseRelativePointTemp.get(index2).y
+                            mouse.x - mouseFrameMouseRelativePointTemp.get(index2).x,
+                            mouse.y - mouseFrameMouseRelativePointTemp.get(index2).y
                     );
                     index2++;
                 }
