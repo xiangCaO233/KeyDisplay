@@ -111,11 +111,10 @@ public class Main {
         } else {
             try {
                 FileInputStream fis = new FileInputStream(latestFile);
-                if (fis.available() == 0){
+                if (fis.available() == 0)
                     start();
-                    fis.close();
-                }
-                start(JSON.parseObject(fis, StandardCharsets.UTF_8));
+                else
+                    start(JSON.parseObject(fis, StandardCharsets.UTF_8));
                 fis.close();
             } catch (IOException e) {
                 throw new RuntimeException(e);
