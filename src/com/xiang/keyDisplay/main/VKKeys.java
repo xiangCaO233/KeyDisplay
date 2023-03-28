@@ -8,15 +8,19 @@ public class VKKeys {
     private static HashMap<Integer, String> registerData() {
         HashMap<Integer, String> keysMap = new HashMap<>();
         for (int i = 112; i < 124; i++) {//F1-F12[12个键](12)
+            //F1-112......
             keysMap.put(i, ("F" + (i - 111)));
         }
         for (int i = 48; i < 58; i++) {//大键盘0-9[10个键](22)
+            //48-0......
             keysMap.put(i, (String.valueOf(i - 48)));
         }
         for (int i = 96; i < 106; i++) {//小键盘0-9[10个键](32)
+            //N0-96......
             keysMap.put(i, ("N" + (i - 96)));
         }
         for (int i = 65; i < 91; i++) {//A-Z[26个键](58)
+            //A-65
             keysMap.put(i, (String.valueOf((char) i)));
         }
         //[1个键](59)
