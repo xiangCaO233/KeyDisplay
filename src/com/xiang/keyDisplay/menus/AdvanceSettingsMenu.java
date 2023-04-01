@@ -2,11 +2,8 @@ package com.xiang.keyDisplay.menus;
 
 import com.xiang.keyDisplay.main.Main;
 import com.xiang.keyDisplay.others.ComponentUtils;
-import com.xiang.keyDisplay.template.frameTemplate.KeyFrame;
 
 import javax.swing.*;
-import java.awt.*;
-import java.util.Collection;
 
 public class AdvanceSettingsMenu extends MenuTemplate {
     int minHeight;
@@ -17,16 +14,16 @@ public class AdvanceSettingsMenu extends MenuTemplate {
     JButton chartOpts;
     JButton countOpts;
 
-    public AdvanceSettingsMenu() throws HeadlessException {
+    public AdvanceSettingsMenu() {
         super(Main.DEFAULT_BORDER_COLOR, Main.DEFAULT_BG_COLOR);
         minHeight = 300;
         maxHeight = 480;
         int height = minHeight;
-        int temp =( Main.keyFrames.size() + 4 ) * 30;
+        int temp = (Main.keyFrames.size() + 4) * 30;
         boolean lessThanMin;
         boolean moreThanMax;
-        if (temp >= minHeight){
-            if (temp < maxHeight){
+        if (temp >= minHeight) {
+            if (temp < maxHeight) {
                 height = temp;
                 lessThanMin = false;
                 moreThanMax = false;
