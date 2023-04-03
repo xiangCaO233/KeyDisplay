@@ -5,7 +5,6 @@ import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 import com.xiang.keyDisplay.main.Main;
 import com.xiang.keyDisplay.main.VKKeys;
-import com.xiang.keyDisplay.menus.MenuTemplate;
 import com.xiang.keyDisplay.others.ComponentUtils;
 import com.xiang.keyDisplay.template.frameTemplate.FastSetFrame;
 
@@ -93,7 +92,6 @@ public class AddKeyMenu extends MenuTemplate {
     }
 
     void disposeSelf() {
-
         keyListener = null;
         dispose();
         Main.addKeyMenu = null;

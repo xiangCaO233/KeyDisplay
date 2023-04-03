@@ -12,7 +12,6 @@ import com.xiang.keyDisplay.menus.*;
 import com.xiang.keyDisplay.others.*;
 import com.xiang.keyDisplay.template.FileChooser;
 import com.xiang.keyDisplay.template.frameTemplate.*;
-import com.xiang.keyDisplay.menus.AddKeyMenu;
 
 import java.awt.*;
 import java.io.File;
@@ -370,6 +369,13 @@ public class Main {
         for (MenuTemplate menu : allMenus) {
             menu.dispose();
         }
+        Collection<MouseFrame> allMouses = mouseFrames.values();
+        for (MouseFrame mouseFrame : allMouses) {
+            mouseFrame.dispose();
+        }
+        mouseFrames.clear();
+        mouseFrames = null;
+
         totalCountFrame.dispose();
         chartFrame.dispose();
     }
@@ -383,6 +389,12 @@ public class Main {
         refreshThread.stop();
         chartTimer.cancel();
         kpsAndCpsTimer.cancel();
+        GlobalScreen.removeNativeKeyListener(globalKeyListener);
+        GlobalScreen.removeNativeMouseListener(globalMouseListener);
+
+        globalKeyListener = null;
+        globalMouseListener = null;
+
         isThreadClosed = true;
         FileChooser.close();
     }
@@ -400,7 +412,9 @@ public class Main {
         stopAllThread();
         disposeAllFrame();
 
+
         initKeyFrames(keys);
+        initMouseFrames(DEFAULT_MOUSE_BUTTONS);
         while (!isInitDone) {
             Thread.onSpinWait();
         }

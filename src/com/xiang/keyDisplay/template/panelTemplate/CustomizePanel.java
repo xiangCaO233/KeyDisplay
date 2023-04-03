@@ -15,6 +15,7 @@ public class CustomizePanel extends JPanel {
         setLayout(null);
         this.borderColor = borderColor;
         this.backgroundColor = backgroundColor;
+
     }
 
     /**

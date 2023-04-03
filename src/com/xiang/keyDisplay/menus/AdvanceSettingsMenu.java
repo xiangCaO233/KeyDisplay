@@ -1,64 +1,51 @@
 package com.xiang.keyDisplay.menus;
 
 import com.xiang.keyDisplay.main.Main;
-import com.xiang.keyDisplay.others.ComponentUtils;
+import com.xiang.keyDisplay.template.panelTemplate.WithoutBorderPanel;
+import com.xiang.keyDisplay.template.uis.CustomCheckBoxUI;
+import com.xiang.keyDisplay.template.uis.CustomizedTabbedPaneUI;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class AdvanceSettingsMenu extends MenuTemplate {
-    int minHeight;
-    int maxHeight;
-    JPanel componentSettings;
-    JPanel otherSettings;
-    JButton mouseOpts;
-    JButton chartOpts;
-    JButton countOpts;
+    WithoutBorderPanel mouseOpts;
+    WithoutBorderPanel chartOpts;
+    WithoutBorderPanel countOpts;
+    WithoutBorderPanel otherOpts;
+    WithoutBorderPanel componentOpts;
+    WithoutBorderPanel keyOpts;
+    JCheckBox visible;
 
     public AdvanceSettingsMenu() {
         super(Main.DEFAULT_BORDER_COLOR, Main.DEFAULT_BG_COLOR);
-        minHeight = 300;
-        maxHeight = 480;
-        int height = minHeight;
-        int temp = (Main.keyFrames.size() + 4) * 30;
-        boolean lessThanMin;
-        boolean moreThanMax;
-        if (temp >= minHeight) {
-            if (temp < maxHeight) {
-                height = temp;
-                lessThanMin = false;
-                moreThanMax = false;
-            }else{
-                height = maxHeight;
-                lessThanMin = false;
-                moreThanMax = true;
-            }
-        }else {
-            lessThanMin = true;
-            moreThanMax = false;
-        }
-        setSize(320 , height);
+        setSize(350, 300);
 
-        int buttonHeight;
-        if (lessThanMin || moreThanMax){
-            buttonHeight = (300 / (Main.keyFrames.size() + 4));
-        }else {
-            buttonHeight = 30;
-        }
+        mouseOpts = new WithoutBorderPanel();
+        visible = new JCheckBox("啊啊啊啊");
+        visible.setUI(new CustomCheckBoxUI());
+        mouseOpts.add(visible);
 
-        mouseOpts = ComponentUtils.registerButton("鼠标");
-        mouseOpts.setSize(90 , buttonHeight);
-        mouseOpts.setLocation(1 ,1 );
-        addCom(mouseOpts);
+        chartOpts = new WithoutBorderPanel();
+        countOpts = new WithoutBorderPanel();
+        otherOpts = new WithoutBorderPanel();
+        componentOpts = new WithoutBorderPanel();
+        keyOpts = new WithoutBorderPanel();
 
-        chartOpts = ComponentUtils.registerButton("图表");
-        chartOpts.setSize(90 , buttonHeight);
-        chartOpts.setLocation(1 , 31);
-        addCom(chartOpts);
+        JTabbedPane tabbedPane = new JTabbedPane();
+        tabbedPane.setSize(350, 300);
+        tabbedPane.setFont(Main.DEFAULT_FONT.deriveFont(18f));
+        tabbedPane.setForeground(Main.DEFAULT_BORDER_COLOR);
+        tabbedPane.addTab("鼠标", null, mouseOpts, "鼠标界面设置");
+        tabbedPane.addTab("按键", keyOpts);
+        tabbedPane.addTab("表格", chartOpts);
+        tabbedPane.addTab("计数", countOpts);
+        tabbedPane.addTab("全局", componentOpts);
+        tabbedPane.addTab("其他", otherOpts);
 
-        countOpts = ComponentUtils.registerButton("计数");
-        countOpts.setSize(90 , buttonHeight);
-        countOpts.setLocation(1 , 61);
-        addCom(countOpts);
+        tabbedPane.setUI(new CustomizedTabbedPaneUI());
+        tabbedPane.setBackground(new Color(0, 0, 0, 0));
+        addCom(tabbedPane);
 
 
     }

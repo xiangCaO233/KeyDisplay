@@ -5,8 +5,6 @@ import com.xiang.keyDisplay.main.Main;
 import com.xiang.keyDisplay.main.VKKeys;
 import com.xiang.keyDisplay.others.ComponentUtils;
 import com.xiang.keyDisplay.others.JsonUtil;
-import com.xiang.keyDisplay.others.MouseAd;
-import com.xiang.keyDisplay.others.MouseMo;
 
 import javax.swing.*;
 import java.awt.*;
@@ -131,7 +129,6 @@ public class MouseFrame extends RefreshFrame{
         );
         return config;
     }
-
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof  MouseFrame mouseFrame) {
