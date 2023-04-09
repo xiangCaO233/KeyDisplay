@@ -62,7 +62,7 @@ public class CustomizedTabbedPaneUI extends BasicTabbedPaneUI {
         g.fillRect(x, y, w, h);
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(Main.DEFAULT_BORDER_COLOR);
-        g2d.setStroke(new BasicStroke(5f));
+        g2d.setStroke(new BasicStroke(3f));
         g2d.drawLine(x, y, x + width, y);
 
     }

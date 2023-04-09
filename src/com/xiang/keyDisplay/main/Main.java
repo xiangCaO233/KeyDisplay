@@ -12,6 +12,7 @@ import com.xiang.keyDisplay.menus.*;
 import com.xiang.keyDisplay.others.*;
 import com.xiang.keyDisplay.template.FileChooser;
 import com.xiang.keyDisplay.template.frameTemplate.*;
+import com.xiang.keyDisplay.template.uis.CustomButtonUIManager;
 
 import java.awt.*;
 import java.io.File;
@@ -544,6 +545,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        CustomButtonUIManager.setCustomButtonUIManager();
         String fileStr = Main.class.getResource("").toExternalForm();
         File filePath = new File(
                 fileStr.substring(

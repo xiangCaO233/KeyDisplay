@@ -1,15 +1,15 @@
 package com.xiang.keyDisplay.menus;
 
 import com.xiang.keyDisplay.main.Main;
+import com.xiang.keyDisplay.template.panelTemplate.MouseOptPanel;
 import com.xiang.keyDisplay.template.panelTemplate.WithoutBorderPanel;
-import com.xiang.keyDisplay.template.uis.CustomCheckBoxUI;
 import com.xiang.keyDisplay.template.uis.CustomizedTabbedPaneUI;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class AdvanceSettingsMenu extends MenuTemplate {
-    WithoutBorderPanel mouseOpts;
+    MouseOptPanel mouseOpts;
     WithoutBorderPanel chartOpts;
     WithoutBorderPanel countOpts;
     WithoutBorderPanel otherOpts;
@@ -21,10 +21,10 @@ public class AdvanceSettingsMenu extends MenuTemplate {
         super(Main.DEFAULT_BORDER_COLOR, Main.DEFAULT_BG_COLOR);
         setSize(350, 300);
 
-        mouseOpts = new WithoutBorderPanel();
-        visible = new JCheckBox("啊啊啊啊");
+        mouseOpts = new MouseOptPanel();
+        /*visible = new JCheckBox("啊啊啊啊");
         visible.setUI(new CustomCheckBoxUI());
-        mouseOpts.add(visible);
+        mouseOpts.add(visible , "left");*/
 
         chartOpts = new WithoutBorderPanel();
         countOpts = new WithoutBorderPanel();
