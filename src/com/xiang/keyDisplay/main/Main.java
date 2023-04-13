@@ -10,7 +10,7 @@ import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 import com.github.kwhat.jnativehook.mouse.NativeMouseListener;
 import com.xiang.keyDisplay.menus.*;
 import com.xiang.keyDisplay.others.*;
-import com.xiang.keyDisplay.template.FileChooser;
+import com.xiang.keyDisplay.template.Choosers;
 import com.xiang.keyDisplay.template.frameTemplate.*;
 import com.xiang.keyDisplay.template.uis.CustomButtonUIManager;
 
@@ -331,8 +331,8 @@ public class Main {
         globalMouseListener = new GlobalMouseListener();
         GlobalScreen.addNativeMouseListener(globalMouseListener);
 
-        if (FileChooser.stage == null) {
-            FileChooser.open();
+        if (Choosers.stage == null) {
+            Choosers.open();
         }
     }
 
@@ -397,7 +397,7 @@ public class Main {
         globalMouseListener = null;
 
         isThreadClosed = true;
-        FileChooser.close();
+        Choosers.close();
     }
 
     /**

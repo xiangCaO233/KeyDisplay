@@ -3,7 +3,7 @@ package com.xiang.keyDisplay.menus;
 import com.alibaba.fastjson2.JSON;
 import com.xiang.keyDisplay.main.Main;
 import com.xiang.keyDisplay.others.ComponentUtils;
-import com.xiang.keyDisplay.template.FileChooser;
+import com.xiang.keyDisplay.template.Choosers;
 import javafx.application.Platform;
 
 import javax.swing.*;
@@ -14,7 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-public class LoadMenu extends MenuTemplate implements FileChooser.FileChooseCallBack {
+public class LoadMenu extends MenuTemplate implements Choosers.FileChooseCallBack {
     File[] saveList;
     File file;
     JLabel title;
@@ -59,7 +59,7 @@ public class LoadMenu extends MenuTemplate implements FileChooser.FileChooseCall
         fromFile.setLocation(1, (saveButtons.length + 1) * 30 + 1);
         fromFile.addActionListener(e -> {
             Platform.runLater(() -> {
-                FileChooser.sendFile(this);
+                Choosers.sendFile(this);
                 if (file != null) {
                     String fileName = file.getName();
                     if (!"json".equals(fileName.substring(fileName.lastIndexOf('.') + 1))) {

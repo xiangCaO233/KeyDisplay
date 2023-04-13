@@ -2,7 +2,7 @@ package com.xiang.keyDisplay.menus;
 
 import com.xiang.keyDisplay.main.Main;
 import com.xiang.keyDisplay.others.ComponentUtils;
-import com.xiang.keyDisplay.template.FileChooser;
+import com.xiang.keyDisplay.template.Choosers;
 import javafx.application.Platform;
 
 import javax.swing.*;
@@ -10,7 +10,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public class SaveMenu extends MenuTemplate implements FileChooser.FileChooseCallBack {
+public class SaveMenu extends MenuTemplate implements Choosers.FileChooseCallBack {
     JLabel title;
     JTextField inputField;
     JButton cancel;
@@ -58,7 +58,7 @@ public class SaveMenu extends MenuTemplate implements FileChooser.FileChooseCall
                 System.out.println("请输入文件名!");
             } else {
                 Platform.runLater(() -> {
-                    FileChooser.sendDir(this);
+                    Choosers.sendDir(this);
                     if (file != null) {
                         Main.saveToFile(file);
                         try {

@@ -134,18 +134,4 @@ public class KeyFrame extends RefreshFrame {
         } else
             return false;
     }
-
-    @Override
-    public String toString() {
-        return "KeyFrame{" +
-                "keyName='" + keyName + '\'' +
-                ", currentBg=" + currentBg +
-                ", targetColor=" + targetColor +
-                ", releaseColor=" + releaseColor +
-                ", pressColor=" + pressColor +
-                ", kps=" + kps +
-                ", counts=" + counts +
-                ", isPressed=" + isPressed +
-                '}';
-    }
 }

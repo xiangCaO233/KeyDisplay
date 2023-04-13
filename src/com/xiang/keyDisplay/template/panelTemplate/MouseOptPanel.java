@@ -12,6 +12,8 @@ public class MouseOptPanel extends JPanel {
     CustomizeToggleButton[] mousesButtons;
     JPanel settingsPanel;
 
+    ColorPickPane bgPicker;
+
     public MouseOptPanel() {
 
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -23,9 +25,13 @@ public class MouseOptPanel extends JPanel {
         buttonListVbox.setMaximumSize(new Dimension(Integer.MAX_VALUE / 5, Integer.MAX_VALUE));
         add(buttonListVbox);
 
+        bgPicker = new ColorPickPane("背景颜色");
+
         settingsPanel = new JPanel();
+        settingsPanel.setLayout(new BoxLayout(settingsPanel, BoxLayout.Y_AXIS));
         settingsPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
         settingsPanel.setBackground(new Color(0, 0, 0, 0));
+        settingsPanel.add(bgPicker);
         add(settingsPanel);
 
         mousesButtons = new CustomizeToggleButton[Main.mouseFrames.size()];
