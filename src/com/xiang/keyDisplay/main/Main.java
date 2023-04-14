@@ -65,6 +65,8 @@ public class Main {
     public static LinkedHashMap<Integer, MouseFrame> mouseFrames;
     //总计数窗体
     public static TotalCountFrame totalCountFrame;
+    //颜色选择器
+    public static SwingColorPicker swingColorPicker;
     //菜单窗体
     public static ArrayList<MenuTemplate> allMenus;
     public static MainMenu mainMenu;
@@ -281,6 +283,8 @@ public class Main {
      * 初始化全部菜单
      */
     private static void initMenus() {
+        //初始化颜色选择器
+        swingColorPicker = new SwingColorPicker();
         //初始化菜单
         allMenus = new ArrayList<>();
         mainMenu = new MainMenu();
@@ -298,6 +302,9 @@ public class Main {
         allMenus.add(saveMenu);
         allMenus.add(loadMenu);
         allMenus.add(advanceSettingsMenu);
+        allMenus.add(swingColorPicker);
+
+        advanceSettingsMenu.addChild(swingColorPicker);
 
         mainMenu.addChild(fastSetMenu);
         mainMenu.addChild(deleteKeyMenu);
@@ -305,6 +312,7 @@ public class Main {
         mainMenu.addChild(saveMenu);
         mainMenu.addChild(loadMenu);
         mainMenu.addChild(advanceSettingsMenu);
+
 
     }
 
@@ -564,6 +572,7 @@ public class Main {
         } catch (NativeHookException e) {
             throw new RuntimeException(e);
         }
+        System.out.println(GraphicUtils.color2Hex(new Color(10, 200, 200, 125)));
         new Main();
 
 

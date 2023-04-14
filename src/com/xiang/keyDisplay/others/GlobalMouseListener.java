@@ -55,16 +55,20 @@ public class GlobalMouseListener implements NativeMouseListener {
             MenuTemplate menu = Main.allMenus.get(i);
             Rectangle bound = menu.getBounds();
             if (bound.contains(mouseLoc)) {
+                menu.isIn = true;
                 inMenu = true;
                 //按在某个菜单中,将其子菜单及子菜单的所有子菜单全部设置为不可见
                 if (menu.childMenus.size() > 0) {
                     //有子菜单
                     for (MenuTemplate child : menu.childMenus) {
-                        setInvisible(child);
+                        //只设置没按到的子菜单不可见
+                        if (!child.isIn)
+                            setInvisible(child);
                     }
                 }
                 //无子菜单(鼠标按在最底层菜单中),不操作
-            }
+            } else
+                menu.isIn = false;
         }
         //未点在任何菜单中
         if (!inMenu) {

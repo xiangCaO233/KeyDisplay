@@ -1,7 +1,6 @@
 package com.xiang.keyDisplay.template.panelTemplate;
 
 import com.xiang.keyDisplay.main.Main;
-import com.xiang.keyDisplay.others.GraphicUtils;
 import com.xiang.keyDisplay.template.frameTemplate.SwingColorPicker;
 
 import javax.swing.*;
@@ -9,11 +8,15 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+
+/**
+ * 颜色选择容器.包括标题和修改功能显示的容器
+ */
+
 public class ColorPickPane extends JPanel {
     JLabel title;
-    JPanel colorPane;
+    ColorBlockPanel colorPane;
     public Color color;
-    boolean isInColorPane;
 
     public ColorPickPane(String title) {
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -24,42 +27,23 @@ public class ColorPickPane extends JPanel {
         this.title.setBackground(new Color(0, 0, 0, 0));
         this.title.setForeground(Main.DEFAULT_BORDER_COLOR);
         color = Main.DEFAULT_BG_COLOR;
-        colorPane = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                Graphics2D g2d = (Graphics2D) g;
-                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2d.setColor(color);
-                g2d.fillRect(0, 0, getWidth(), getHeight());
-                g2d.setColor(GraphicUtils.antiColor(color));
-                g2d.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
-                if (isInColorPane) {
-                    g2d.drawRect(1, 1, getWidth() - 3, getHeight() - 3);
-                    g2d.drawRect(2, 2, getWidth() - 5, getHeight() - 5);
-                }
-            }
-        };
-        colorPane.setMaximumSize(new Dimension(26, 26));
-        colorPane.setSize(30, 30);
+        colorPane = new ColorBlockPanel(color);
         colorPane.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                System.out.println("az");
-                SwingColorPicker picker = new SwingColorPicker(((ColorPickPane) ((JPanel) e.getSource()).getParent()));
-                picker.setVisible(true);
-                picker.setLocation(e.getLocationOnScreen());
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                isInColorPane = true;
-                colorPane.getTopLevelAncestor().repaint();
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                isInColorPane = false;
-                colorPane.getTopLevelAncestor().repaint();
+                if (Main.swingColorPicker != null) {
+                    Main.swingColorPicker.dispose();
+                    Main.allMenus.remove(Main.swingColorPicker);
+                    Main.advanceSettingsMenu.childMenus.remove(Main.swingColorPicker);
+                    Main.swingColorPicker = null;
+                }
+                Main.swingColorPicker = new SwingColorPicker(
+                        ((ColorPickPane) ((JPanel) e.getSource()).getParent())
+                );
+                Main.allMenus.add(Main.swingColorPicker);
+                Main.advanceSettingsMenu.childMenus.add(Main.swingColorPicker);
+                Main.swingColorPicker.setVisible(true);
+                Main.swingColorPicker.setLocation(e.getLocationOnScreen());
             }
         });
 
