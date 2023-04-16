@@ -4,6 +4,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.xiang.keyDisplay.main.Main;
 import com.xiang.keyDisplay.main.VKKeys;
 import com.xiang.keyDisplay.others.ComponentUtils;
+import com.xiang.keyDisplay.others.GU;
 import com.xiang.keyDisplay.others.JsonUtil;
 
 import javax.swing.*;
@@ -38,7 +39,7 @@ public class MouseFrame extends RefreshFrame{
      */
     public MouseFrame(String name){
         super();
-        setSize(Main.DEFAULT_SIZE);
+        setSize(GU.toAbsSize(Main.DEFAULT_SIZE.width, Main.DEFAULT_SIZE.height));
 
 
 
@@ -47,11 +48,11 @@ public class MouseFrame extends RefreshFrame{
             labels[i] = ComponentUtils.registerLabel("");
             labels[i].setFont(Main.DEFAULT_FONT.deriveFont(14f));
             labels[i].setSize(
-                    Main.DEFAULT_SIZE.width ,
-                    Main.DEFAULT_SIZE.height / 3
-                    );
+                    getWidth(),
+                    getHeight() / 3
+            );
             labels[i].setLocation(
-                    0 , i * Main.DEFAULT_SIZE.height / 3
+                    0, i * getHeight() / 3
             );
             addCom(labels[i]);
         }

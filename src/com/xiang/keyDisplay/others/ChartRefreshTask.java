@@ -18,8 +18,8 @@ public class ChartRefreshTask extends TimerTask {
         try {
             Main.chartFrame.setRootImage(
                     Main.chartFrame.chart.createBufferedImage(
-                            Main.chartFrame.getWidth() - 2,
-                            Main.chartFrame.getHeight() - 2
+                            Main.chartFrame.getWidth() - GU.absX(2),
+                            Main.chartFrame.getHeight() - GU.absY(2)
                     )
             );
         } catch (Exception e) {

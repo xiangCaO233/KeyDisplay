@@ -2,7 +2,7 @@ package com.xiang.keyDisplay.template.frameTemplate;
 
 import com.xiang.keyDisplay.main.Main;
 import com.xiang.keyDisplay.menus.MenuTemplate;
-import com.xiang.keyDisplay.others.GraphicUtils;
+import com.xiang.keyDisplay.others.GU;
 import com.xiang.keyDisplay.template.panelTemplate.ColorBlockPanel;
 import com.xiang.keyDisplay.template.panelTemplate.ColorPickPane;
 import com.xiang.keyDisplay.template.panelTemplate.SliderPane;
@@ -131,24 +131,28 @@ public class SwingColorPicker extends MenuTemplate {
         super(Main.DEFAULT_BORDER_COLOR, Main.DEFAULT_BG_COLOR);
         bindPickerPane = pickerPane;
         selectedColor = pickerPane.color;
-        setSize(682, 384);
+        setSize(GU.toAbsSize(682, 384));
+
         colorsBox = new JPanel();
         colorsBox.setLayout(null);
-        colorsBox.setSize(680, 260);
+        colorsBox.setSize(GU.toAbsSize(680, 260));
         colorsBox.setLocation(1, 1);
         colorsBox.setBackground(new Color(0, 0, 0, 0));
         add(colorsBox);
+
         //初始化选择结果颜色容器
         selectColorPanel = new ColorBlockPanel(bindPickerPane.color);
-        selectColorPanel.setSize(120, 120);
+        selectColorPanel.setSize(GU.toAbsSize(120, 120));
         add(selectColorPanel);
+
         //共13行
         selectColorPanel.setLocation(
                 ((getWidth() - 2) - selectColorPanel.getWidth()) / 2 + 1,
-                13 * 20 + 2
+                GU.absY(13 * 20 + 2)
         );
         //sliders
-        //r
+
+        //red-调整器
         redSlider = new SliderPane("R", selectedColor.getRed());
         redSlider.setLocation(1, selectColorPanel.getY());
         redSlider.slider.addChangeListener(e -> {
@@ -163,7 +167,7 @@ public class SwingColorPicker extends MenuTemplate {
         });
         add(redSlider);
 
-        //g
+        //green-调整器
         greenSlider = new SliderPane("G", selectedColor.getGreen());
         greenSlider.setLocation(1, selectColorPanel.getY() + 30);
         greenSlider.slider.addChangeListener(e -> {
@@ -177,7 +181,8 @@ public class SwingColorPicker extends MenuTemplate {
             repaint();
         });
         add(greenSlider);
-        //b
+
+        //blue-调整器
         blueSlider = new SliderPane("B", selectedColor.getBlue());
         blueSlider.setLocation(1, selectColorPanel.getY() + 60);
         blueSlider.slider.addChangeListener(e -> {
@@ -191,7 +196,8 @@ public class SwingColorPicker extends MenuTemplate {
             repaint();
         });
         add(blueSlider);
-        //a
+
+        //alpha-调整器
         alphaSlider = new SliderPane("A", selectedColor.getAlpha());
         alphaSlider.setLocation(1, selectColorPanel.getY() + 90);
         alphaSlider.slider.addChangeListener(e -> {
@@ -205,11 +211,11 @@ public class SwingColorPicker extends MenuTemplate {
             repaint();
         });
         add(alphaSlider);
+
         //初始化全部快捷颜色设置
         int index = 1;
-        System.out.println(colorStrs.length);
         for (String colorStr : colorStrs) {
-            ColorBlockPanel colorBlockPanel = new ColorBlockPanel(GraphicUtils.hex2Color(colorStr));
+            ColorBlockPanel colorBlockPanel = new ColorBlockPanel(GU.hex2Color(colorStr));
             colorBlockPanel.setSize(19, 19);
             //总行数
             int x_rows = colorsBox.getWidth() / (colorBlockPanel.getWidth() + 1) + 1;

@@ -1,9 +1,11 @@
 package com.xiang.keyDisplay.others;
 
+import com.xiang.keyDisplay.main.Main;
+
 import java.awt.*;
 import java.util.ArrayList;
 
-public class GraphicUtils {
+public class GU {
     public static Color antiColor(Color src) {
         return new Color(255 - src.getRed(), 255 - src.getGreen(), 255 - src.getBlue(), src.getAlpha());
     }
@@ -88,9 +90,26 @@ public class GraphicUtils {
         return res;
     }
 
-    public static void main(String[] args) {
-        for (int i = 1; i < 455; i++) {
-            System.out.println("一排" + i + "个:余数" + 454 % i);
-        }
+    public static Dimension toAbsSize(int width, int height) {
+        return new Dimension(
+                (int) (Main.SCREEN_DEVICE_SIZE.width * (double) width / 1920),
+                (int) (Main.SCREEN_DEVICE_SIZE.height * (double) height / 1080)
+        );
     }
+
+    public static Point toAbsPos(int x, int y) {
+        return new Point(
+                (int) (Main.SCREEN_DEVICE_SIZE.width * (double) x / 1920),
+                (int) (Main.SCREEN_DEVICE_SIZE.height * (double) y / 1080)
+        );
+    }
+
+    public static int absX(int x) {
+        return (int) (Main.SCREEN_DEVICE_SIZE.width * (double) x / 1920);
+    }
+
+    public static int absY(int y) {
+        return (int) (Main.SCREEN_DEVICE_SIZE.height * (double) y / 1080);
+    }
+
 }

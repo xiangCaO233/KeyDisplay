@@ -572,7 +572,7 @@ public class Main {
         } catch (NativeHookException e) {
             throw new RuntimeException(e);
         }
-        System.out.println(GraphicUtils.color2Hex(new Color(10, 200, 200, 125)));
+        System.out.println(GU.color2Hex(new Color(10, 200, 200, 125)));
         new Main();
 
 

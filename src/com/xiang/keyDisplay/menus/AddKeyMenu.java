@@ -6,6 +6,7 @@ import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 import com.xiang.keyDisplay.main.Main;
 import com.xiang.keyDisplay.main.VKKeys;
 import com.xiang.keyDisplay.others.ComponentUtils;
+import com.xiang.keyDisplay.others.GU;
 import com.xiang.keyDisplay.template.frameTemplate.FastSetFrame;
 
 import javax.swing.*;
@@ -25,23 +26,22 @@ public class AddKeyMenu extends MenuTemplate {
     public AddKeyMenu() {
         super(DEFAULT_BORDER_COLOR, DEFAULT_BG_COLOR);
         setSize(
-                FastSetFrame.KEY_SIZE.width + 2,
-                FastSetFrame.KEY_SIZE.height + 90 + 2
+                GU.toAbsSize(FastSetFrame.KEY_SIZE.width + 2, FastSetFrame.KEY_SIZE.height + 90 + 2)
         );
         thisKeyCode = -1;
         //标题
         title = ComponentUtils.registerLabel("请设置按键");
-        title.setSize(FastSetFrame.KEY_SIZE.width, 30);
+        title.setSize(GU.toAbsSize(FastSetFrame.KEY_SIZE.width, 30));
         title.setLocation(1, 1);
         addCom(title);
         //key
         key = ComponentUtils.registerLabel("按下按键");
-        key.setSize(FastSetFrame.KEY_SIZE);
+        key.setSize(GU.toAbsSize(FastSetFrame.KEY_SIZE.width, FastSetFrame.KEY_SIZE.height));
         key.setLocation(1, 31);
         addCom(key);
         //取消按钮
         cancel = ComponentUtils.registerButton("取消");
-        cancel.setSize(FastSetFrame.KEY_SIZE.width, 30);
+        cancel.setSize(GU.toAbsSize(FastSetFrame.KEY_SIZE.width, 30));
         cancel.setLocation(1, key.getY() + key.getHeight());
         cancel.addActionListener(e -> {
             disposeSelf();
@@ -49,7 +49,7 @@ public class AddKeyMenu extends MenuTemplate {
         addCom(cancel);
         //确定按钮
         done = ComponentUtils.registerButton("确定");
-        done.setSize(FastSetFrame.KEY_SIZE.width, 30);
+        done.setSize(GU.toAbsSize(FastSetFrame.KEY_SIZE.width, 30));
         done.setLocation(1, cancel.getY() + cancel.getHeight());
         done.addActionListener(e -> {
             if (thisKeyCode != -1) {

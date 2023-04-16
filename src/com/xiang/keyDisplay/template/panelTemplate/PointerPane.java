@@ -1,6 +1,7 @@
 package com.xiang.keyDisplay.template.panelTemplate;
 
 import com.xiang.keyDisplay.main.Main;
+import com.xiang.keyDisplay.others.GU;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +16,6 @@ public class PointerPane extends JPanel {
         g2d.setColor(Main.DEFAULT_BORDER_COLOR);
         /*
          我tm直接硬画
-
          */
         //画箭头
         //箭头顶点
@@ -51,7 +51,7 @@ public class PointerPane extends JPanel {
     public void updateLocation(Point keyLocation, Dimension keySize, int index) {
         setLocation(
                 keyLocation.x + keySize.width / 2 + index * keySize.width - getWidth() / 2,
-                (keyLocation.y + keySize.height) + 5
+                (keyLocation.y + keySize.height) + GU.absY(5)
         );
     }
 }

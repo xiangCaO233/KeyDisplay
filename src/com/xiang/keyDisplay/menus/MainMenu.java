@@ -2,6 +2,7 @@ package com.xiang.keyDisplay.menus;
 
 import com.xiang.keyDisplay.main.Main;
 import com.xiang.keyDisplay.others.ComponentUtils;
+import com.xiang.keyDisplay.others.GU;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,16 +27,16 @@ public class MainMenu extends MenuTemplate {
     public MainMenu() throws HeadlessException {
         super(DEFAULT_BORDER_COLOR, DEFAULT_BG_COLOR);
 
-        setSize(122, 272);
+        setSize(GU.toAbsSize(122, 272));
         title = ComponentUtils.registerLabel("menu");
-        title.setSize(120, 30);
+        title.setSize(GU.toAbsSize(120, 30));
         title.setLocation(1, 1);
         addCom(title);
 
         buttons = new JButton[buttonNames.length];
         for (int i = 0; i < buttons.length; i++) {
             buttons[i] = ComponentUtils.registerButton(buttonNames[i]);
-            buttons[i].setSize(120, 30);
+            buttons[i].setSize(GU.toAbsSize(120, 30));
             buttons[i].setLocation(1, 1 + (i + 1) * 30);
             addCom(buttons[i]);
         }

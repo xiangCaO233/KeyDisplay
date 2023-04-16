@@ -1,6 +1,6 @@
 package com.xiang.keyDisplay.template.panelTemplate;
 
-import com.xiang.keyDisplay.others.GraphicUtils;
+import com.xiang.keyDisplay.others.GU;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,6 +17,7 @@ public class ColorBlockPanel extends JPanel {
     public ColorBlockPanel(Color color) {
         currentColor = color;
         setColorSize(24, 24);
+
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -38,7 +39,7 @@ public class ColorBlockPanel extends JPanel {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setColor(currentColor);
         g2d.fillRect(0, 0, getWidth(), getHeight());
-        g2d.setColor(GraphicUtils.antiColor(currentColor));
+        g2d.setColor(GU.antiColor(currentColor));
         g2d.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
         if (isInBlockPanel) {
             g2d.drawRect(1, 1, getWidth() - 3, getHeight() - 3);
@@ -46,9 +47,19 @@ public class ColorBlockPanel extends JPanel {
         }
     }
 
+    /**
+     * 自动适配大小,对照1080p分辨率
+     *
+     * @param width
+     * @param height
+     */
     public void setColorSize(int width, int height) {
-        setMaximumSize(new Dimension(width, height));
-        setMinimumSize(new Dimension(width, height));
+        setMaximumSize(
+                GU.toAbsSize(width, height)
+        );
+        setMinimumSize(
+                GU.toAbsSize(width, height)
+        );
     }
 
     public Color getCurrentColor() {

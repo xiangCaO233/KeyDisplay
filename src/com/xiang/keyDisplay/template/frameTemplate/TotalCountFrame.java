@@ -2,10 +2,7 @@ package com.xiang.keyDisplay.template.frameTemplate;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.xiang.keyDisplay.main.Main;
-import com.xiang.keyDisplay.others.ComponentUtils;
-import com.xiang.keyDisplay.others.JsonUtil;
-import com.xiang.keyDisplay.others.MouseAd;
-import com.xiang.keyDisplay.others.MouseMo;
+import com.xiang.keyDisplay.others.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -135,7 +132,7 @@ public class TotalCountFrame extends CustomizeFrame {
             for (KeyFrame keyFrame : keyFrameCollection) {
                 sum += keyFrame.getWidth();
             }
-            setSize(sum, 36);
+            setSize(sum, GU.absY(36));
             labels[0].setSize(getWidth() / 4, getHeight());
             labels[0].setLocation(0, 0);
 

@@ -1,6 +1,7 @@
 package com.xiang.keyDisplay.template.panelTemplate;
 
 import com.xiang.keyDisplay.main.Main;
+import com.xiang.keyDisplay.others.GU;
 import com.xiang.keyDisplay.template.frameTemplate.SwingColorPicker;
 
 import javax.swing.*;
@@ -21,7 +22,7 @@ public class ColorPickPane extends JPanel {
     public ColorPickPane(String title) {
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         setBackground(new Color(0, 0, 0, 0));
-        setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
+        setMaximumSize(GU.toAbsSize(Integer.MAX_VALUE, 30));
         this.title = new JLabel(title);
         this.title.setFont(Main.DEFAULT_FONT.deriveFont(18f));
         this.title.setBackground(new Color(0, 0, 0, 0));

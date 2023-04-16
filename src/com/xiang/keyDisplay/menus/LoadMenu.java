@@ -3,6 +3,7 @@ package com.xiang.keyDisplay.menus;
 import com.alibaba.fastjson2.JSON;
 import com.xiang.keyDisplay.main.Main;
 import com.xiang.keyDisplay.others.ComponentUtils;
+import com.xiang.keyDisplay.others.GU;
 import com.xiang.keyDisplay.template.Choosers;
 import javafx.application.Platform;
 
@@ -24,7 +25,7 @@ public class LoadMenu extends MenuTemplate implements Choosers.FileChooseCallBac
     public LoadMenu() throws HeadlessException {
         super(Main.DEFAULT_BORDER_COLOR, Main.DEFAULT_BG_COLOR);
         title = ComponentUtils.registerLabel("加载存档");
-        title.setSize(120, 30);
+        title.setSize(GU.toAbsSize(120, 30));
         title.setLocation(1, 1);
         addCom(title);
         saveList = Main.savesPath.listFiles();
@@ -32,7 +33,7 @@ public class LoadMenu extends MenuTemplate implements Choosers.FileChooseCallBac
             saveButtons = new JButton[saveList.length];
             for (int i = 0; i < saveList.length; i++) {
                 saveButtons[i] = ComponentUtils.registerButton(saveList[i].getName());
-                saveButtons[i].setSize(120, 30);
+                saveButtons[i].setSize(GU.toAbsSize(120, 30));
                 saveButtons[i].setLocation(1, (i + 1) * 30 + 1);
 
                 int finalI = i;
@@ -55,7 +56,7 @@ public class LoadMenu extends MenuTemplate implements Choosers.FileChooseCallBac
             }
         }
         fromFile = ComponentUtils.registerButton("打开文件");
-        fromFile.setSize(120, 30);
+        fromFile.setSize(GU.toAbsSize(120, 30));
         fromFile.setLocation(1, (saveButtons.length + 1) * 30 + 1);
         fromFile.addActionListener(e -> {
             Platform.runLater(() -> {
@@ -81,7 +82,7 @@ public class LoadMenu extends MenuTemplate implements Choosers.FileChooseCallBac
 
         addCom(fromFile);
 
-        setSize(122, 30 * (saveButtons.length + 2) + 2);
+        setSize(GU.toAbsSize(122, 30 * (saveButtons.length + 2) + 2));
     }
 
     @Override

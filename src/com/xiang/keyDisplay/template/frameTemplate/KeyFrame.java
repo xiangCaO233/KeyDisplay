@@ -3,10 +3,7 @@ package com.xiang.keyDisplay.template.frameTemplate;
 import com.alibaba.fastjson2.JSONObject;
 import com.xiang.keyDisplay.main.Main;
 import com.xiang.keyDisplay.main.VKKeys;
-import com.xiang.keyDisplay.others.ComponentUtils;
-import com.xiang.keyDisplay.others.JsonUtil;
-import com.xiang.keyDisplay.others.MouseAd;
-import com.xiang.keyDisplay.others.MouseMo;
+import com.xiang.keyDisplay.others.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,7 +35,7 @@ public class KeyFrame extends RefreshFrame {
         targetColor = releaseColor;
         currentBg = releaseColor;
 
-        setSize(Main.DEFAULT_SIZE);
+        setSize(GU.toAbsSize(Main.DEFAULT_SIZE.width, Main.DEFAULT_SIZE.height));
         this.keyName = keyName;
         kps = 1;
         //初始化时间戳列表
