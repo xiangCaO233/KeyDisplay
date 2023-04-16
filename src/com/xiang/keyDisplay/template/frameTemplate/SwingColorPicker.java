@@ -8,7 +8,13 @@ import com.xiang.keyDisplay.template.panelTemplate.ColorPickPane;
 import com.xiang.keyDisplay.template.panelTemplate.SliderPane;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
 import java.awt.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -125,8 +131,12 @@ public class SwingColorPicker extends MenuTemplate {
     SliderPane blueSlider;
     //alpha条
     SliderPane alphaSlider;
+    //十六进制字符串
 
-
+    //rbg字符串
+    //应用按钮
+    //确定按钮
+    //取消按钮
     public SwingColorPicker(ColorPickPane pickerPane) {
         super(Main.DEFAULT_BORDER_COLOR, Main.DEFAULT_BG_COLOR);
         bindPickerPane = pickerPane;
@@ -151,69 +161,21 @@ public class SwingColorPicker extends MenuTemplate {
                 GU.absY(13 * 20 + 2)
         );
         //sliders
-
         //red-调整器
-        redSlider = new SliderPane("R", selectedColor.getRed());
-        redSlider.setLocation(GU.absX(1), selectColorPanel.getY());
-        redSlider.slider.addChangeListener(e -> {
-            int value = redSlider.slider.getValue();
-            Color before = selectColorPanel.getCurrentColor();
-            Color setColor = new Color(
-                    value, before.getGreen(), before.getBlue(), before.getAlpha()
-            );
-            redSlider.valueLabel.setText(String.valueOf(value));
-            selectColorPanel.setCurrentColor(setColor);
-            repaint();
-        });
+        redSlider = registerSlider("R", 0);
         add(redSlider);
-
         //green-调整器
-        greenSlider = new SliderPane("G", selectedColor.getGreen());
-        greenSlider.setLocation(GU.absX(1), selectColorPanel.getY() + GU.absY(30));
-        greenSlider.slider.addChangeListener(e -> {
-            int value = greenSlider.slider.getValue();
-            Color before = selectColorPanel.getCurrentColor();
-            Color setColor = new Color(
-                    before.getRed(), value, before.getBlue(), before.getAlpha()
-            );
-            greenSlider.valueLabel.setText(String.valueOf(value));
-            selectColorPanel.setCurrentColor(setColor);
-            repaint();
-        });
+        greenSlider = registerSlider("G", 1);
         add(greenSlider);
-
         //blue-调整器
-        blueSlider = new SliderPane("B", selectedColor.getBlue());
-        blueSlider.setLocation(GU.absX(1), selectColorPanel.getY() + GU.absY(60));
-        blueSlider.slider.addChangeListener(e -> {
-            int value = blueSlider.slider.getValue();
-            Color before = selectColorPanel.getCurrentColor();
-            Color setColor = new Color(
-                    before.getRed(), before.getGreen(), value, before.getAlpha()
-            );
-            blueSlider.valueLabel.setText(String.valueOf(value));
-            selectColorPanel.setCurrentColor(setColor);
-            repaint();
-        });
+        blueSlider = registerSlider("B", 2);
         add(blueSlider);
-
         //alpha-调整器
-        alphaSlider = new SliderPane("A", selectedColor.getAlpha());
-        alphaSlider.setLocation(GU.absX(1), selectColorPanel.getY() + GU.absY(90));
-        alphaSlider.slider.addChangeListener(e -> {
-            int value = alphaSlider.slider.getValue();
-            Color before = selectColorPanel.getCurrentColor();
-            Color setColor = new Color(
-                    before.getRed(), before.getGreen(), before.getBlue(), value
-            );
-            alphaSlider.valueLabel.setText(String.valueOf(value));
-            selectColorPanel.setCurrentColor(setColor);
-            repaint();
-        });
+        alphaSlider = registerSlider("A", 3);
         add(alphaSlider);
-
         //初始化全部快捷颜色设置
         int index = 1;
+        ColorBlockListener listener = new ColorBlockListener();
         for (String colorStr : colorStrs) {
             ColorBlockPanel colorBlockPanel = new ColorBlockPanel(GU.hex2Color(colorStr));
             colorBlockPanel.setSize(GU.toAbsSize(19, 19));
@@ -227,30 +189,16 @@ public class SwingColorPicker extends MenuTemplate {
 
             colorBlockPanel.setLocation(xLoc, yLoc);
             index++;
-            colorBlockPanel.addMouseListener(new MouseAdapter() {
-                //颜色块鼠标事件
-                @Override
-                public void mousePressed(MouseEvent e) {
-                    Color current = colorBlockPanel.getCurrentColor();
-                    selectColorPanel.setCurrentColor(current);
-
-                    redSlider.slider.setValue(current.getRed());
-                    greenSlider.slider.setValue(current.getGreen());
-                    blueSlider.slider.setValue(current.getBlue());
-                    alphaSlider.slider.setValue(current.getAlpha());
-
-                    redSlider.valueLabel.setText(String.valueOf(current.getRed()));
-                    greenSlider.valueLabel.setText(String.valueOf(current.getGreen()));
-                    blueSlider.valueLabel.setText(String.valueOf(current.getBlue()));
-                    alphaSlider.valueLabel.setText(String.valueOf(current.getAlpha()));
-
-                    colorBlockPanel.getTopLevelAncestor().repaint();
-                }
-            });
+            colorBlockPanel.addMouseListener(listener);
             colorsBox.add(colorBlockPanel);
         }
-
-
+        //本体监听器
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                selectColorPanel.requestFocus();
+            }
+        });
     }
 
     public SwingColorPicker() {
@@ -262,5 +210,146 @@ public class SwingColorPicker extends MenuTemplate {
     public void setBindPickerPane(ColorPickPane bindPickerPane) {
         this.bindPickerPane = bindPickerPane;
         selectedColor = bindPickerPane.color;
+    }
+
+    class ColorBlockListener extends MouseAdapter {
+        //颜色块鼠标事件
+        @Override
+        public void mousePressed(MouseEvent e) {
+            Color current = ((ColorBlockPanel) e.getSource()).getCurrentColor();
+            selectColorPanel.setCurrentColor(current);
+
+            redSlider.slider.setValue(current.getRed());
+            greenSlider.slider.setValue(current.getGreen());
+            blueSlider.slider.setValue(current.getBlue());
+            alphaSlider.slider.setValue(current.getAlpha());
+
+            redSlider.valueField.setText(String.valueOf(current.getRed()));
+            greenSlider.valueField.setText(String.valueOf(current.getGreen()));
+            blueSlider.valueField.setText(String.valueOf(current.getBlue()));
+            alphaSlider.valueField.setText(String.valueOf(current.getAlpha()));
+
+            ((ColorBlockPanel) e.getSource()).getTopLevelAncestor().repaint();
+        }
+    }
+
+    SliderPane registerSlider(String name, int index) {
+        //初始化颜色值
+        int currentVal = 0;
+        switch (index) {
+            case 0:
+                currentVal = selectedColor.getRed();
+                break;
+            case 1:
+                currentVal = selectedColor.getGreen();
+                break;
+            case 2:
+                currentVal = selectedColor.getBlue();
+                break;
+            case 3:
+                currentVal = selectedColor.getAlpha();
+                break;
+        }
+        //调整器初始化
+        SliderPane sliderPane = new SliderPane(name, currentVal);
+        sliderPane.setLocation(GU.absX(1), selectColorPanel.getY() + GU.absY(30 * index));
+        sliderPane.slider.addChangeListener(e -> {
+            int value = sliderPane.slider.getValue();
+            Color before = selectColorPanel.getCurrentColor();
+            Color setColor = selectColor(before, index, value);
+            sliderPane.valueField.setText(String.valueOf(value));
+            selectColorPanel.setCurrentColor(setColor);
+            repaint();
+        });
+        sliderPane.valueField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                //插入更新
+                fixLength(e);
+                sliderPane.valueField.getTopLevelAncestor().repaint();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                //删除更新
+                fixLength(e);
+                sliderPane.valueField.getTopLevelAncestor().repaint();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                //纯更新
+                fixLength(e);
+                sliderPane.valueField.getTopLevelAncestor().repaint();
+            }
+
+            private void fixLength(DocumentEvent e) {
+                //修正文本域长度,最高为3
+                Document doc = e.getDocument();
+                if (doc.getLength() > 3) {
+                    sliderPane.t = new Thread(() -> {
+                        try {
+                            sliderPane.valueField.setText(doc.getText(0, 3));
+                        } catch (BadLocationException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    });
+                    sliderPane.t.start();
+                }
+            }
+        });
+        sliderPane.valueField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                //丢失焦点事件,检测是否在范围之内
+                int value = Integer.parseInt(sliderPane.valueField.getText());
+                if (value > 255)
+                    sliderPane.valueField.setText(String.valueOf(255));
+                //获取最终修正后数值
+                int latestValue = Integer.parseInt(sliderPane.valueField.getText());
+                //设置slider位置
+                sliderPane.slider.setValue(latestValue);
+                Color before = selectColorPanel.getCurrentColor();
+                Color setColor = selectColor(before, index, latestValue);
+                selectColorPanel.setCurrentColor(setColor);
+                sliderPane.valueField.getTopLevelAncestor().repaint();
+            }
+        });
+        return sliderPane;
+    }
+
+    /**
+     * 选择颜色,传入选择前颜色与选择器下标和选择器值
+     *
+     * @param before 选择前颜色
+     * @param index  选择器下标(用于区分rgba修改位置)
+     * @param value  选择器实时值
+     * @return 选择结果
+     */
+    private Color selectColor(Color before, int index, int value) {
+        Color setColor = new Color(0, 0, 0, 0);
+        switch (index) {
+            case 0:
+                setColor = new Color(
+                        value, before.getGreen(), before.getBlue(), before.getAlpha()
+                );
+                break;
+            case 1:
+                setColor = new Color(
+                        before.getRed(), value, before.getBlue(), before.getAlpha()
+                );
+                break;
+            case 2:
+                setColor = new Color(
+                        before.getRed(), before.getGreen(), value, before.getAlpha()
+                );
+                break;
+            case 3:
+                setColor = new Color(
+                        before.getRed(), before.getGreen(), before.getBlue(), value
+                );
+                break;
+        }
+        return setColor;
     }
 }
