@@ -148,8 +148,8 @@ public class TotalCountFrame extends CustomizeFrame {
 
     public void resetLocation() {
         setLocation(
-                (Main.SCREEN_SIZE.width - getWidth()) / 2,
-                (Main.SCREEN_SIZE.height - Main.DEFAULT_SIZE.height) / 2 + Main.DEFAULT_SIZE.height
+                (GU.absX(Main.SCREEN_SIZE.width) - getWidth()) / 2,
+                GU.absY((Main.SCREEN_SIZE.height - Main.DEFAULT_SIZE.height) / 2 + Main.DEFAULT_SIZE.height)
         );
     }
 }

@@ -219,21 +219,10 @@ public class Main {
         }
         //初始化总计数frame
         totalCountFrame = new TotalCountFrame(DEFAULT_BORDER_COLOR, DEFAULT_BG_COLOR);
-        /*totalCountFrame.setLocation(
-                (SCREEN_SIZE.width - totalCountFrame.getWidth()) / 2,
-                (SCREEN_SIZE.height - DEFAULT_SIZE.height) / 2 + DEFAULT_SIZE.height
-        );*/
         totalCountFrame.setVisible(true);
         //初始化表格frame
         chartFrame = new ChartFrame(DEFAULT_BORDER_COLOR, DEFAULT_BG_COLOR, DEFAULT_AREA_COLOR);
-        /*chartFrame.setLocation(
-                (SCREEN_SIZE.width - chartFrame.getWidth()) / 2,
-                (SCREEN_SIZE.height - DEFAULT_SIZE.height) / 2 - chartFrame.getHeight()
-        );*/
         chartFrame.setVisible(true);
-
-        /*
-        mainMenu.childMenus.add(fastSetMenu);*/
         isInitDone = true;
     }
     private static void initMouseFrames(String[] mouseButtons){

@@ -32,17 +32,17 @@ public class AddKeyMenu extends MenuTemplate {
         //标题
         title = ComponentUtils.registerLabel("请设置按键");
         title.setSize(GU.toAbsSize(FastSetFrame.KEY_SIZE.width, 30));
-        title.setLocation(1, 1);
+        title.setLocation(GU.toAbsPos(1, 1));
         addCom(title);
         //key
         key = ComponentUtils.registerLabel("按下按键");
         key.setSize(GU.toAbsSize(FastSetFrame.KEY_SIZE.width, FastSetFrame.KEY_SIZE.height));
-        key.setLocation(1, 31);
+        key.setLocation(GU.toAbsPos(1, 31));
         addCom(key);
         //取消按钮
         cancel = ComponentUtils.registerButton("取消");
         cancel.setSize(GU.toAbsSize(FastSetFrame.KEY_SIZE.width, 30));
-        cancel.setLocation(1, key.getY() + key.getHeight());
+        cancel.setLocation(GU.absX(1), key.getY() + key.getHeight());
         cancel.addActionListener(e -> {
             disposeSelf();
         });
@@ -50,7 +50,7 @@ public class AddKeyMenu extends MenuTemplate {
         //确定按钮
         done = ComponentUtils.registerButton("确定");
         done.setSize(GU.toAbsSize(FastSetFrame.KEY_SIZE.width, 30));
-        done.setLocation(1, cancel.getY() + cancel.getHeight());
+        done.setLocation(GU.absX(1), cancel.getY() + cancel.getHeight());
         done.addActionListener(e -> {
             if (thisKeyCode != -1) {
                 if (Main.keyFrames.containsKey(thisKeyCode)) {

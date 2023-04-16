@@ -63,14 +63,14 @@ public class FastSetFrame extends CustomizeFrame {
         title.setSize(getWidth() - GU.absX(2), GU.absY(30));
         title.setFont(Main.DEFAULT_FONT.deriveFont(18f));
         title.setForeground(Main.DEFAULT_BORDER_COLOR);
-        title.setLocation(1, 1);
+        title.setLocation(GU.toAbsPos(1, 1));
         addCom(title);
         //keys
         keys = new FastSetKeyPane[keyCount];
         for (int i = 0; i < keys.length; i++) {
             keys[i] = new FastSetKeyPane();
             keys[i].setSize(GU.toAbsSize(KEY_SIZE.width, KEY_SIZE.height));
-            keys[i].setLocation(i * KEY_SIZE.width + 1, 31);
+            keys[i].setLocation(i * KEY_SIZE.width + GU.absX(1), GU.absY(31));
             addCom(keys[i]);
         }
         //箭头面板
@@ -117,7 +117,7 @@ public class FastSetFrame extends CustomizeFrame {
         //取消按钮
         cancel = ComponentUtils.registerButton("取消");
         cancel.setSize((int) ((getWidth() - GU.absX(2 + deviation)) / 3.0) - GU.absX(1), GU.absY(30));
-        cancel.setLocation(1, pointerPane.getY() + pointerPane.getHeight() + 1);
+        cancel.setLocation(GU.absX(1), pointerPane.getY() + pointerPane.getHeight() + GU.absY(1));
         cancel.addActionListener(e -> {
             disposeFrame();
         });
@@ -126,8 +126,8 @@ public class FastSetFrame extends CustomizeFrame {
         resetAll = ComponentUtils.registerButton("重置");
         resetAll.setSize((int) ((getWidth() - GU.absX(2 + deviation)) / 3.0) - GU.absX(1), GU.absY(30));
         resetAll.setLocation(
-                1 + cancel.getX() + cancel.getWidth(),
-                pointerPane.getY() + pointerPane.getHeight() + 1
+                GU.absX(1) + cancel.getX() + cancel.getWidth(),
+                pointerPane.getY() + pointerPane.getHeight() + GU.absY(1)
         );
         resetAll.addActionListener(e -> {
             resetAll();
@@ -138,8 +138,8 @@ public class FastSetFrame extends CustomizeFrame {
         done = ComponentUtils.registerButton("确定");
         done.setSize((int) ((getWidth() - GU.absX(2 + deviation)) / 3.0) - GU.absX(1), GU.absY(30));
         done.setLocation(
-                1 + resetAll.getX() + resetAll.getWidth(),
-                pointerPane.getY() + pointerPane.getHeight() + 1
+                GU.absX(1) + resetAll.getX() + resetAll.getWidth(),
+                pointerPane.getY() + pointerPane.getHeight() + GU.absY(1)
         );
         done.addActionListener(e -> {
             if (pointerPane.index == keyCount) {

@@ -24,7 +24,7 @@ public class SaveMenu extends MenuTemplate implements Choosers.FileChooseCallBac
         setSize(GU.toAbsSize(162, 162));
         title = ComponentUtils.registerLabel("保存为文件");
         title.setSize(getWidth() - GU.absX(2), GU.absY(30));
-        title.setLocation(1, 1);
+        title.setLocation(GU.toAbsPos(1, 1));
         addCom(title);
 
         inputField = new JTextField();
@@ -34,12 +34,12 @@ public class SaveMenu extends MenuTemplate implements Choosers.FileChooseCallBac
         inputField.setText("save-" + (Main.savesPath.listFiles().length));
         inputField.setHorizontalAlignment(JTextField.CENTER);
         inputField.setSize(getWidth() - GU.absX(2), GU.absY(40));
-        inputField.setLocation(1, 31);
+        inputField.setLocation(GU.toAbsPos(1, 31));
         addCom(inputField);
 
         done = ComponentUtils.registerButton("保存");
         done.setSize(getWidth() - GU.absX(2), GU.absY(30));
-        done.setLocation(1, 71);
+        done.setLocation(GU.toAbsPos(1, 71));
         done.addActionListener(e -> {
             if (inputField.getText() == null || "".equals(inputField.getText())) {
                 System.out.println("请输入文件名!");
@@ -53,7 +53,7 @@ public class SaveMenu extends MenuTemplate implements Choosers.FileChooseCallBac
 
         saveAs = ComponentUtils.registerButton("另存为");
         saveAs.setSize(getWidth() - GU.absX(2), GU.absY(30));
-        saveAs.setLocation(1, 101);
+        saveAs.setLocation(GU.toAbsPos(1, 101));
         saveAs.addActionListener(e -> {
             if (inputField.getText() == null || "".equals(inputField.getText())) {
                 System.out.println("请输入文件名!");
@@ -78,8 +78,8 @@ public class SaveMenu extends MenuTemplate implements Choosers.FileChooseCallBac
 
         cancel = ComponentUtils.registerButton("取消");
         cancel.setSize(getWidth() - GU.absX(2), GU.absY(30));
-        cancel.setLocation(1, 131);
-        cancel.addActionListener(e->{
+        cancel.setLocation(GU.toAbsPos(1, 131));
+        cancel.addActionListener(e -> {
             cancel.getTopLevelAncestor().setVisible(false);
         });
         addCom(cancel);

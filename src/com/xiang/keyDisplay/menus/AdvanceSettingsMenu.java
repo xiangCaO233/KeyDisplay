@@ -23,9 +23,6 @@ public class AdvanceSettingsMenu extends MenuTemplate {
         setSize(GU.toAbsSize(350, 300));
 
         mouseOpts = new MouseOptPanel();
-        /*visible = new JCheckBox("啊啊啊啊");
-        visible.setUI(new CustomCheckBoxUI());
-        mouseOpts.add(visible , "left");*/
 
         chartOpts = new WithoutBorderPanel();
         countOpts = new WithoutBorderPanel();

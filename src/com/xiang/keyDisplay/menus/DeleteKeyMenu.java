@@ -24,7 +24,7 @@ public class DeleteKeyMenu extends MenuTemplate {
         //标题
         title = ComponentUtils.registerLabel("删除按键");
         title.setSize(GU.toAbsSize(120, 30));
-        title.setLocation(1, 1);
+        title.setLocation(GU.toAbsPos(1, 1));
         addCom(title);
 
         Collection<KeyFrame> keyFrames = Main.keyFrames.values();
@@ -61,9 +61,9 @@ public class DeleteKeyMenu extends MenuTemplate {
     public void updateBounds() {
         int index = 0;
         for (JButton button : allKeys) {
-            button.setLocation(1, 1 + ((index++) + 1) * 30);
+            button.setLocation(GU.toAbsPos(1, 1 + ((index++) + 1) * 30));
         }
-        back.setLocation(1, 1 + (allKeys.size() + 1) * 30);
+        back.setLocation(GU.toAbsPos(1, 1 + (allKeys.size() + 1) * 30));
         setSize(GU.toAbsSize(122, 30 * (allKeys.size() + 2) + 2));
         repaint();
     }
