@@ -43,13 +43,15 @@ public class GlobalMouseListener implements NativeMouseListener {
             frame.repaint();
 
         }
-
+        if (Main.swingColorPicker.selectColorPanel != null) {
+            Main.swingColorPicker.selectColorPanel.requestFocus();
+        }
         //菜单逻辑
         boolean inMenu = false;
         //获取计算缩放后坐标
         Point mouseLoc = new Point(
-                (int)(e.getPoint().x / Main.SCALE_X),
-                (int)(e.getPoint().y / Main.SCALE_Y)
+                (int) (e.getPoint().x / Main.SCALE_X),
+                (int) (e.getPoint().y / Main.SCALE_Y)
         );
         for (int i = Main.allMenus.size() - 1; i >= 0; i--) {
             MenuTemplate menu = Main.allMenus.get(i);

@@ -45,7 +45,6 @@ public class SliderPane extends JPanel {
         valueField.setForeground(new Color(230, 230, 230, 230));
         valueField.setBackground(new Color(0, 0, 0, 0));
         valueField.setBorder(null);
-        valueField.setAutoscrolls(false);
         valueField.setText(String.valueOf(value));
 
         valueField.addKeyListener(new KeyAdapter() {

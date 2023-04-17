@@ -132,11 +132,16 @@ public class SwingColorPicker extends MenuTemplate {
     //alpha条
     SliderPane alphaSlider;
     //十六进制字符串
-
-    //rbg字符串
+    JTextField colorHex;
+    //rbga字符串
+    JTextField colorRgba;
     //应用按钮
+    JButton apply;
     //确定按钮
+    JButton done;
     //取消按钮
+    JButton cancel;
+
     public SwingColorPicker(ColorPickPane pickerPane) {
         super(Main.DEFAULT_BORDER_COLOR, Main.DEFAULT_BG_COLOR);
         bindPickerPane = pickerPane;
@@ -192,13 +197,11 @@ public class SwingColorPicker extends MenuTemplate {
             colorBlockPanel.addMouseListener(listener);
             colorsBox.add(colorBlockPanel);
         }
-        //本体监听器
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                selectColorPanel.requestFocus();
-            }
-        });
+        colorHex = new JTextField();
+        colorRgba = new JTextField();
+        apply = new JButton();
+        done = new JButton();
+        cancel = new JButton();
     }
 
     public SwingColorPicker() {

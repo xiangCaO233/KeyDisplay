@@ -44,7 +44,11 @@ public class ColorPickPane extends JPanel {
                 Main.allMenus.add(Main.swingColorPicker);
                 Main.advanceSettingsMenu.childMenus.add(Main.swingColorPicker);
                 Main.swingColorPicker.setVisible(true);
-                Main.swingColorPicker.setLocation(e.getLocationOnScreen());
+                int x = Main.mainMenu.getX() + Main.mainMenu.getWidth();
+                int y = Main.mainMenu.getY();
+                if (Main.advanceSettingsMenu.getX() + Main.advanceSettingsMenu.getWidth() > x)
+                    x = Main.advanceSettingsMenu.getX() + Main.advanceSettingsMenu.getWidth();
+                Main.swingColorPicker.setLocation(x, y);
             }
         });
 
