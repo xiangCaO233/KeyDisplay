@@ -34,17 +34,12 @@ public class GU {
         r = r.toUpperCase();
         g = g.toUpperCase();
         b = b.toUpperCase();
-
-        if (srcColor.getAlpha() != 255) {
-            a = Integer.toHexString(srcColor.getAlpha());
-            if (a.length() == 1) {
-                a = ("0" + a);
-            }
-            a = a.toUpperCase();
-            return "#" + r + g + b + a;
-        } else {
-            return "#" + r + g + b;
+        a = Integer.toHexString(srcColor.getAlpha());
+        if (a.length() == 1) {
+            a = ("0" + a);
         }
+        a = a.toUpperCase();
+        return "#" + r + g + b + a;
     }
 
     /**

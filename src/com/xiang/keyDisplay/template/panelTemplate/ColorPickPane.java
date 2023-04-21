@@ -59,6 +59,7 @@ public class ColorPickPane extends JPanel {
 
     public void setColor(Color color) {
         this.color = color;
+        colorPane.setCurrentColor(color);
     }
 
     public Color getColor() {

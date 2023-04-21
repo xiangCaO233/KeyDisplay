@@ -2,6 +2,7 @@ package com.xiang.keyDisplay.template.frameTemplate;
 
 import com.xiang.keyDisplay.main.Main;
 import com.xiang.keyDisplay.menus.MenuTemplate;
+import com.xiang.keyDisplay.others.ComponentUtils;
 import com.xiang.keyDisplay.others.GU;
 import com.xiang.keyDisplay.template.panelTemplate.ColorBlockPanel;
 import com.xiang.keyDisplay.template.panelTemplate.ColorPickPane;
@@ -132,11 +133,13 @@ public class SwingColorPicker extends MenuTemplate {
     //alpha条
     SliderPane alphaSlider;
     //十六进制字符串
+    JLabel colorHexLabel;
     JTextField colorHex;
+    JButton getHex;
     //rbga字符串
+    JLabel colorRgbaLabel;
     JTextField colorRgba;
-    //应用按钮
-    JButton apply;
+    JButton getRgba;
     //确定按钮
     JButton done;
     //取消按钮
@@ -197,11 +200,85 @@ public class SwingColorPicker extends MenuTemplate {
             colorBlockPanel.addMouseListener(listener);
             colorsBox.add(colorBlockPanel);
         }
+        //hex
+        colorHexLabel = ComponentUtils.registerLabel("Hex->");
+        colorHexLabel.setSize(80, 40);
+        colorHexLabel.setLocation(selectColorPanel.getX() + selectColorPanel.getWidth() + 1, selectColorPanel.getY());
+        add(colorHexLabel);
+
         colorHex = new JTextField();
+        colorHex.setSize(136, 40);
+        colorHex.setLocation(colorHexLabel.getX() + colorHexLabel.getWidth() + 1, colorHexLabel.getY());
+        colorHex.setBackground(Main.DEFAULT_BG_COLOR);
+        colorHex.setForeground(Main.DEFAULT_BORDER_COLOR);
+        colorHex.setBorder(null);
+        colorHex.setFont(Main.DEFAULT_FONT.deriveFont(18f));
+        colorHex.setText(GU.color2Hex(pickerPane.color));
+        registerDocListener(colorHex);
+        add(colorHex);
+
+        getHex = ComponentUtils.registerButton("get");
+        getHex.setSize(60, 40);
+        getHex.setLocation(colorHex.getX() + colorHex.getWidth() + 1, colorHex.getY());
+        getHex.addActionListener(e -> {
+            try {
+                Color color = GU.hex2Color(colorHex.getText());
+                selectedColor = color;
+                selectColorPanel.setCurrentColor(selectedColor);
+                updateSliders();
+                colorRgba.setText(String.valueOf(selectedColor.getRGB()));
+            } catch (Exception ignored) {
+            }
+        });
+        add(getHex);
+
+        //rgba
+        colorRgbaLabel = ComponentUtils.registerLabel("rgba->");
+        colorRgbaLabel.setSize(80, 40);
+        colorRgbaLabel.setLocation(colorHexLabel.getX(), colorHexLabel.getY() + colorHexLabel.getHeight() + 1);
+        add(colorRgbaLabel);
+
         colorRgba = new JTextField();
-        apply = new JButton();
-        done = new JButton();
-        cancel = new JButton();
+        colorRgba.setSize(136, 40);
+        colorRgba.setLocation(colorRgbaLabel.getX() + colorRgbaLabel.getWidth() + 1, colorRgbaLabel.getY());
+        colorRgba.setBackground(Main.DEFAULT_BG_COLOR);
+        colorRgba.setForeground(Main.DEFAULT_BORDER_COLOR);
+        colorRgba.setBorder(null);
+        colorRgba.setFont(Main.DEFAULT_FONT.deriveFont(18f));
+        colorRgba.setText(String.valueOf(pickerPane.color.getRGB()));
+        add(colorRgba);
+
+        getRgba = ComponentUtils.registerButton("get");
+        getRgba.setSize(60, 40);
+        getRgba.setLocation(colorRgba.getX() + colorRgba.getWidth() + 1, colorRgba.getY());
+        getRgba.addActionListener(e -> {
+            try {
+                Color color = new Color(Integer.parseInt(colorRgba.getText()), true);
+                selectedColor = color;
+                selectColorPanel.setCurrentColor(selectedColor);
+                updateSliders();
+                colorHex.setText(GU.color2Hex(color));
+            } catch (Exception ignored) {
+            }
+        });
+        add(getRgba);
+
+        done = ComponentUtils.registerButton("确定");
+        done.setSize(139, 38);
+        done.setLocation(colorRgbaLabel.getX(), colorRgbaLabel.getY() + colorRgbaLabel.getHeight() + 1);
+        done.addActionListener(e -> {
+            bindPickerPane.setColor(selectedColor);
+            setVisible(false);
+            bindPickerPane.getTopLevelAncestor().repaint();
+        });
+        cancel = ComponentUtils.registerButton("取消");
+        cancel.setSize(139, 38);
+        cancel.setLocation(done.getX() + done.getWidth(), done.getY());
+        cancel.addActionListener(e -> {
+            setVisible(false);
+        });
+        add(done);
+        add(cancel);
     }
 
     public SwingColorPicker() {
@@ -210,31 +287,26 @@ public class SwingColorPicker extends MenuTemplate {
         setSize(GU.toAbsSize(100, 80));
     }
 
-    public void setBindPickerPane(ColorPickPane bindPickerPane) {
-        this.bindPickerPane = bindPickerPane;
-        selectedColor = bindPickerPane.color;
-    }
-
     class ColorBlockListener extends MouseAdapter {
         //颜色块鼠标事件
         @Override
         public void mousePressed(MouseEvent e) {
             Color current = ((ColorBlockPanel) e.getSource()).getCurrentColor();
             selectColorPanel.setCurrentColor(current);
-
-            redSlider.slider.setValue(current.getRed());
-            greenSlider.slider.setValue(current.getGreen());
-            blueSlider.slider.setValue(current.getBlue());
-            alphaSlider.slider.setValue(current.getAlpha());
-
-            redSlider.valueField.setText(String.valueOf(current.getRed()));
-            greenSlider.valueField.setText(String.valueOf(current.getGreen()));
-            blueSlider.valueField.setText(String.valueOf(current.getBlue()));
-            alphaSlider.valueField.setText(String.valueOf(current.getAlpha()));
-
+            selectedColor = current;
+            updateSliders();
+            updateHexAndRgba();
             ((ColorBlockPanel) e.getSource()).getTopLevelAncestor().repaint();
         }
     }
+
+    /**
+     * 构造成型sliderPane
+     *
+     * @param name  名
+     * @param index 下标
+     * @return
+     */
 
     SliderPane registerSlider(String name, int index) {
         //初始化颜色值
@@ -262,6 +334,8 @@ public class SwingColorPicker extends MenuTemplate {
             Color setColor = selectColor(before, index, value);
             sliderPane.valueField.setText(String.valueOf(value));
             selectColorPanel.setCurrentColor(setColor);
+            selectedColor = setColor;
+            updateHexAndRgba();
             repaint();
         });
         sliderPane.valueField.getDocument().addDocumentListener(new DocumentListener() {
@@ -315,11 +389,36 @@ public class SwingColorPicker extends MenuTemplate {
                 Color before = selectColorPanel.getCurrentColor();
                 Color setColor = selectColor(before, index, latestValue);
                 selectColorPanel.setCurrentColor(setColor);
+                selectedColor = setColor;
+                updateHexAndRgba();
                 sliderPane.valueField.getTopLevelAncestor().repaint();
             }
         });
         return sliderPane;
     }
+
+    void registerDocListener(JTextField textField) {
+        textField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                //插入更新
+                textField.getTopLevelAncestor().repaint();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                //删除更新
+                textField.getTopLevelAncestor().repaint();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                //纯更新
+                textField.getTopLevelAncestor().repaint();
+            }
+        });
+    }
+
 
     /**
      * 选择颜色,传入选择前颜色与选择器下标和选择器值
@@ -354,5 +453,22 @@ public class SwingColorPicker extends MenuTemplate {
                 break;
         }
         return setColor;
+    }
+
+    public void updateHexAndRgba() {
+        colorHex.setText(GU.color2Hex(selectedColor));
+        colorRgba.setText(String.valueOf(selectedColor.getRGB()));
+    }
+
+    public void updateSliders() {
+        redSlider.slider.setValue(selectedColor.getRed());
+        greenSlider.slider.setValue(selectedColor.getGreen());
+        blueSlider.slider.setValue(selectedColor.getBlue());
+        alphaSlider.slider.setValue(selectedColor.getAlpha());
+
+        redSlider.valueField.setText(String.valueOf(selectedColor.getRed()));
+        greenSlider.valueField.setText(String.valueOf(selectedColor.getGreen()));
+        blueSlider.valueField.setText(String.valueOf(selectedColor.getBlue()));
+        alphaSlider.valueField.setText(String.valueOf(selectedColor.getAlpha()));
     }
 }

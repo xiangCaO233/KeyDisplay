@@ -131,7 +131,7 @@ public class Main {
      * 启动程序(通过默认配置)
      */
     void start() {
-        fps = DEFAULT_FPS;
+        fps = 30;
         initKeyFrames(DEFAULT_KEYS);
         initMouseFrames(DEFAULT_MOUSE_BUTTONS);
         initMenus();
@@ -145,6 +145,7 @@ public class Main {
      */
     static void start(JSONObject config) {
         fps = config.getIntValue("fps");
+        fps = 30;
         //初始化按键列表
         keyFrames = new LinkedHashMap<>();
         JSONArray keysConfig = config.getJSONArray("按键");

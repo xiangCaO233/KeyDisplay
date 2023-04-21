@@ -22,7 +22,7 @@ public class SliderPane extends JPanel {
 
         setLayout(null);
         setSize(GU.toAbsSize((682 - 120) / 2 - 1, 30));
-        setBackground(new Color(0, 0, 0, 0));
+        setBackground(Main.DEFAULT_BG_COLOR);
         this.name = ComponentUtils.registerLabel(name);
         this.name.setSize(GU.toAbsSize(40, 30));
         this.name.setLocation(0, 0);
@@ -72,6 +72,5 @@ public class SliderPane extends JPanel {
         valueLabel.setSize(GU.toAbsSize(40, 40));
         valueLabel.setLocation(getWidth() - GU.absX(40), 0);*/
         add(valueField);
-
     }
 }
