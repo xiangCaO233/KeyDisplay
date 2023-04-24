@@ -27,7 +27,6 @@ public class ColorPickPane extends JPanel {
         this.title.setFont(Main.DEFAULT_FONT.deriveFont(18f));
         this.title.setBackground(new Color(0, 0, 0, 0));
         this.title.setForeground(Main.DEFAULT_BORDER_COLOR);
-        color = Main.DEFAULT_BG_COLOR;
         colorPane = new ColorBlockPanel(color);
         colorPane.addMouseListener(new MouseAdapter() {
             @Override

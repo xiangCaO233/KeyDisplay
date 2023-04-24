@@ -69,6 +69,12 @@ public class GU {
         return null;
     }
 
+    /**
+     * 取因数数组
+     *
+     * @param N 源数
+     * @return 因数数组
+     */
     public static ArrayList<Integer> divisors(int N) {
         ArrayList<Integer> res = new ArrayList<>();
         res.add(1);
