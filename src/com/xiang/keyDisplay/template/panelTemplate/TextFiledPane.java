@@ -1,15 +1,17 @@
 package com.xiang.keyDisplay.template.panelTemplate;
 
+import com.xiang.keyDisplay.listeners.CaretChangeListener;
+import com.xiang.keyDisplay.listeners.DocumentsChangeListener;
+import com.xiang.keyDisplay.listeners.RefreshMouseAd;
 import com.xiang.keyDisplay.main.Main;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 
+/**
+ * 文本域容器
+ * 带title标签和一个文本域
+ */
 public class TextFiledPane extends JPanel {
     JLabel title;
     JTextField field;
@@ -30,38 +32,16 @@ public class TextFiledPane extends JPanel {
         field.setFont(Main.DEFAULT_FONT.deriveFont(18f));
         field.setBorder(null);
         field.setText(text);
+        field.getDocument().addDocumentListener(new DocumentsChangeListener(field));
+        field.getCaret().addChangeListener(new CaretChangeListener(field));
         add(field);
-        field.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                //插入更新
-                field.getTopLevelAncestor().repaint();
-            }
+        addMouseListener(RefreshMouseAd.instance);
+    }
 
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                //删除更新
-                field.getTopLevelAncestor().repaint();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                //纯更新
-                field.getTopLevelAncestor().repaint();
-            }
-        });
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                field.getTopLevelAncestor().repaint();
-            }
-        });
-        addMouseMotionListener(new MouseMotionAdapter() {
-            @Override
-            public void mouseMoved(MouseEvent e) {
-                field.getTopLevelAncestor().repaint();
-            }
-        });
+    @Override
+    protected void paintComponent(Graphics g) {
+        g.setColor(Main.DEFAULT_BORDER_COLOR);
+        g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
     }
 
     void setText(String text) {

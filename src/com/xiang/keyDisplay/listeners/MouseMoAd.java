@@ -1,4 +1,4 @@
-package com.xiang.keyDisplay.others;
+package com.xiang.keyDisplay.listeners;
 
 import com.xiang.keyDisplay.main.Main;
 import com.xiang.keyDisplay.template.frameTemplate.ChartFrame;
@@ -14,7 +14,7 @@ import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class MouseMo extends MouseMotionAdapter {
+public class MouseMoAd extends MouseMotionAdapter {
     public static ArrayList<Point> keyFrameMouseRelativePointTemp;
     public static ArrayList<Point> mouseFrameMouseRelativePointTemp;
     public static Point countFramePointTemp;

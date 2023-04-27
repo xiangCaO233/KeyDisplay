@@ -1,7 +1,6 @@
-package com.xiang.keyDisplay.others;
+package com.xiang.keyDisplay.threads;
 
 import com.xiang.keyDisplay.main.Main;
-import com.xiang.keyDisplay.template.frameTemplate.CustomizeFrame;
 import com.xiang.keyDisplay.template.frameTemplate.KeyFrame;
 import com.xiang.keyDisplay.template.frameTemplate.MouseFrame;
 import com.xiang.keyDisplay.template.frameTemplate.RefreshFrame;

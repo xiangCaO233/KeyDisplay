@@ -31,22 +31,24 @@ public class MouseFrame extends RefreshFrame{
     public ArrayDeque<Long> timeStamps;
     //按下标记,用于标识跳过刷新
     public boolean isPressed;
+    Font currentFont;
+    boolean showCounts;
 
 
     /**
      * 构建鼠标监听界面
+     *
      * @param name LMB,RMB,MMB
      */
-    public MouseFrame(String name){
+    public MouseFrame(String name) {
         super();
         setSize(GU.toAbsSize(Main.DEFAULT_SIZE.width, Main.DEFAULT_SIZE.height));
-
-
-
+        showCounts = true;
         labels = new JLabel[3];
+        currentFont = Main.DEFAULT_FONT.deriveFont(14f);
         for (int i = 0 ; i < labels.length ; i ++){
             labels[i] = ComponentUtils.registerLabel("");
-            labels[i].setFont(Main.DEFAULT_FONT.deriveFont(14f));
+            labels[i].setFont(currentFont);
             labels[i].setSize(
                     getWidth(),
                     getHeight() / 3
@@ -85,13 +87,17 @@ public class MouseFrame extends RefreshFrame{
         count = config.getIntValue("(auto)count");
 
         timeStamps = new ArrayDeque<>();
-
+        if ("Default Font".equals(config.getString("font"))) {
+            currentFont = Main.DEFAULT_FONT.deriveFont(config.getFloat("fontSize"));
+        } else {
+            currentFont = Font.getFont(config.getString("font")).deriveFont(config.getFloat("fontSize"));
+        }
         //初始化标签
         labels = new JLabel[3];
         for (int i = 0; i < labels.length; i++) {
             labels[i] = ComponentUtils.registerLabel("");
             labels[i].setSize(getWidth(), getHeight() / 3);
-            labels[i].setFont(Main.DEFAULT_FONT.deriveFont(14f));
+            labels[i].setFont(currentFont);
             addCom(labels[i]);
         }
         //设置标签显示
@@ -110,6 +116,8 @@ public class MouseFrame extends RefreshFrame{
         config.put(
                 "mouseKeyName", mouseKeyName
         );
+        config.put("font", currentFont.getName().equals(Main.DEFAULT_FONT.getName()) ? "Default Font" : getFont().getName());
+        config.put("fontSize", currentFont.getSize2D());
         config.put(
                 "(auto)keyCode", VKKeys.KeySearch(mouseKeyName)
         );
@@ -130,11 +138,29 @@ public class MouseFrame extends RefreshFrame{
         );
         return config;
     }
+
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof  MouseFrame mouseFrame) {
+        if (obj instanceof MouseFrame mouseFrame) {
             return mouseKeyName.equals(mouseFrame.mouseKeyName);
         } else
             return false;
+    }
+
+    public void setAllLabelsFont(Font font) {
+        currentFont = font;
+        for (JLabel label : labels) {
+            label.setFont(font);
+        }
+    }
+
+    public void updateSize(Dimension size) {
+        setSize(size);
+        for (JLabel label : labels) {
+            label.setSize(getWidth(), getHeight() / 3);
+        }
+        labels[0].setLocation(0, 0);
+        labels[1].setLocation(0, getHeight() / 3);
+        labels[2].setLocation(0, getHeight() * 2 / 3);
     }
 }

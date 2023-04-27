@@ -8,11 +8,17 @@ import com.github.kwhat.jnativehook.GlobalScreen;
 import com.github.kwhat.jnativehook.NativeHookException;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 import com.github.kwhat.jnativehook.mouse.NativeMouseListener;
+import com.xiang.keyDisplay.listeners.GlobalKeyListener;
+import com.xiang.keyDisplay.listeners.GlobalMouseListener;
 import com.xiang.keyDisplay.menus.*;
-import com.xiang.keyDisplay.others.*;
+import com.xiang.keyDisplay.others.AreaColor;
+import com.xiang.keyDisplay.others.JsonUtil;
 import com.xiang.keyDisplay.template.Choosers;
 import com.xiang.keyDisplay.template.frameTemplate.*;
 import com.xiang.keyDisplay.template.uis.CustomButtonUIManager;
+import com.xiang.keyDisplay.threads.ChartRefreshTask;
+import com.xiang.keyDisplay.threads.KpsAndCpsTask;
+import com.xiang.keyDisplay.threads.RefreshThread;
 
 import java.awt.*;
 import java.io.File;
@@ -53,7 +59,7 @@ public class Main {
 
     private static Font initFont() {
         try {
-            return Font.createFont(Font.TRUETYPE_FONT, Main.class.getResourceAsStream("FZSJ-LXQWTJW.TTF"));
+            return Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(Main.class.getResourceAsStream("FZSJ-LXQWTJW.TTF")));
         } catch (FontFormatException | IOException e) {
             throw new RuntimeException(e);
         }
@@ -131,7 +137,7 @@ public class Main {
      * 启动程序(通过默认配置)
      */
     void start() {
-        fps = 30;
+        fps = 60;
         initKeyFrames(DEFAULT_KEYS);
         initMouseFrames(DEFAULT_MOUSE_BUTTONS);
         initMenus();
@@ -145,7 +151,6 @@ public class Main {
      */
     static void start(JSONObject config) {
         fps = config.getIntValue("fps");
-        fps = 30;
         //初始化按键列表
         keyFrames = new LinkedHashMap<>();
         JSONArray keysConfig = config.getJSONArray("按键");
@@ -491,7 +496,7 @@ public class Main {
     /**
      * 创建实时配置文件
      *
-     * @return
+     * @return 实时配置文件
      */
     public static JSONObject createConfigJson() {
         JSONObject latestConfig = new JSONObject();
@@ -519,7 +524,7 @@ public class Main {
     /**
      * 获取全部按键配置文件
      *
-     * @return
+     * @return 全部按键配置文件数组
      */
     public static JSONArray getAllKeysConfigs() {
         JSONArray keyFramesConfig = new JSONArray();
@@ -531,6 +536,12 @@ public class Main {
         }
         return keyFramesConfig;
     }
+
+    /**
+     * 获取全部鼠标按键配置文件
+     *
+     * @return 全部鼠标按键配置文件数组
+     */
     public static JSONArray getAllMouseKeysConfig() {
         JSONArray mouseFramesConfig = new JSONArray();
         //按键配置
@@ -562,7 +573,6 @@ public class Main {
         } catch (NativeHookException e) {
             throw new RuntimeException(e);
         }
-        System.out.println(GU.color2Hex(new Color(10, 200, 200, 125)));
         new Main();
 
 

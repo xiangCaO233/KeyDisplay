@@ -1,4 +1,4 @@
-package com.xiang.keyDisplay.others;
+package com.xiang.keyDisplay.listeners;
 
 import com.github.kwhat.jnativehook.mouse.NativeMouseEvent;
 import com.github.kwhat.jnativehook.mouse.NativeMouseListener;

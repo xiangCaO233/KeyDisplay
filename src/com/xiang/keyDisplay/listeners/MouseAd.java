@@ -1,4 +1,4 @@
-package com.xiang.keyDisplay.others;
+package com.xiang.keyDisplay.listeners;
 
 import com.xiang.keyDisplay.main.Main;
 import com.xiang.keyDisplay.menus.MenuTemplate;
@@ -11,7 +11,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import static com.xiang.keyDisplay.others.MouseMo.*;
+import static com.xiang.keyDisplay.listeners.MouseMoAd.*;
 
 /**
  * 鼠标监听器

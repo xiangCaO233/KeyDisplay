@@ -1,7 +1,7 @@
 package com.xiang.keyDisplay.template.frameTemplate;
 
-import com.xiang.keyDisplay.others.MouseAd;
-import com.xiang.keyDisplay.others.MouseMo;
+import com.xiang.keyDisplay.listeners.MouseAd;
+import com.xiang.keyDisplay.listeners.MouseMoAd;
 import com.xiang.keyDisplay.template.panelTemplate.CustomizePanel;
 import com.xiang.keyDisplay.template.panelTemplate.RecBorderPanel;
 import com.xiang.keyDisplay.template.panelTemplate.RoundRecBorderImagePanel;
@@ -69,7 +69,7 @@ public class CustomizeFrame extends JFrame {
 
     public void registerMouseListener() {
         addMouseListener(new MouseAd());
-        addMouseMotionListener(new MouseMo());
+        addMouseMotionListener(new MouseMoAd());
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.xiang.keyDisplay.template.uis;
 
 import com.xiang.keyDisplay.main.Main;
+import com.xiang.keyDisplay.template.frameTemplate.MouseFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,9 +11,11 @@ import java.awt.*;
  * by-chatgpt
  */
 public class CustomizeToggleButton extends JToggleButton {
+    public MouseFrame frame;
 
-    public CustomizeToggleButton(String text) {
-        super(text);
+    public CustomizeToggleButton(MouseFrame mouseFrame) {
+        super(mouseFrame.mouseKeyName);
+        frame = mouseFrame;
         setFocusPainted(false);
         setFont(Main.DEFAULT_FONT.deriveFont(18f));
         setForeground(Main.DEFAULT_BORDER_COLOR);
@@ -26,7 +29,6 @@ public class CustomizeToggleButton extends JToggleButton {
             if (isSelected()) {
                 //按钮选中
                 setBackground(Main.DEFAULT_PRESS_COLOR);
-                System.out.println(e.getSource());
 
 
             } else {

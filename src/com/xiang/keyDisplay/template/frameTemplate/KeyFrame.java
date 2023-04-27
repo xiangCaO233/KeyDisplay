@@ -1,9 +1,13 @@
 package com.xiang.keyDisplay.template.frameTemplate;
 
 import com.alibaba.fastjson2.JSONObject;
+import com.xiang.keyDisplay.listeners.MouseAd;
+import com.xiang.keyDisplay.listeners.MouseMoAd;
 import com.xiang.keyDisplay.main.Main;
 import com.xiang.keyDisplay.main.VKKeys;
-import com.xiang.keyDisplay.others.*;
+import com.xiang.keyDisplay.others.ComponentUtils;
+import com.xiang.keyDisplay.others.GU;
+import com.xiang.keyDisplay.others.JsonUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,6 +30,7 @@ public class KeyFrame extends RefreshFrame {
 
     //时间戳队列,用于检测时间计算kps
     public ArrayDeque<Long> timeStamps;
+    Font currentFont;
 
     public KeyFrame(String keyName) {
         super();
@@ -43,10 +48,11 @@ public class KeyFrame extends RefreshFrame {
 
         //初始化标签
         labels = new JLabel[3];
+        currentFont = Main.DEFAULT_FONT.deriveFont(14f);
         for (int i = 0; i < labels.length; i++) {
             labels[i] = ComponentUtils.registerLabel("");
             //覆盖字体大小
-            labels[i].setFont(Main.DEFAULT_FONT.deriveFont(14f));
+            labels[i].setFont(currentFont);
             labels[i].setSize(getWidth(), getHeight() / 3);
             addCom(labels[i]);
         }
@@ -59,7 +65,7 @@ public class KeyFrame extends RefreshFrame {
         labels[2].setLocation(0, getHeight() * 2 / 3);
 
         addMouseListener(new MouseAd());
-        addMouseMotionListener(new MouseMo());
+        addMouseMotionListener(new MouseMoAd());
 
     }
 
@@ -78,13 +84,17 @@ public class KeyFrame extends RefreshFrame {
         counts = config.getIntValue("(auto)count");
 
         timeStamps = new ArrayDeque<>();
-
         //初始化标签
         labels = new JLabel[3];
+        if ("Default Font".equals(config.getString("font"))) {
+            currentFont = Main.DEFAULT_FONT.deriveFont(config.getFloat("fontSize"));
+        } else {
+            currentFont = Font.getFont(config.getString("font")).deriveFont(config.getFloat("fontSize"));
+        }
         for (int i = 0; i < labels.length; i++) {
             labels[i] = ComponentUtils.registerLabel("");
             labels[i].setSize(getWidth(), getHeight() / 3);
-            labels[i].setFont(Main.DEFAULT_FONT.deriveFont(14f));
+            labels[i].setFont(currentFont);
             addCom(labels[i]);
         }
         //设置标签显示
@@ -103,6 +113,8 @@ public class KeyFrame extends RefreshFrame {
         config.put(
                 "keyName", keyName
         );
+        config.put("font", currentFont.getName().equals(Main.DEFAULT_FONT.getName()) ? "Default Font" : getFont().getName());
+        config.put("fontSize", currentFont.getSize2D());
         config.put(
                 "(auto)keyCode", VKKeys.KeySearch(keyName)
         );
@@ -130,5 +142,12 @@ public class KeyFrame extends RefreshFrame {
             return keyName.equals(keyFrame.keyName);
         } else
             return false;
+    }
+
+    public void setAllLabelsFont(Font font) {
+        currentFont = font;
+        for (JLabel label : labels) {
+            label.setFont(font);
+        }
     }
 }

@@ -1,8 +1,12 @@
 package com.xiang.keyDisplay.template.frameTemplate;
 
 import com.alibaba.fastjson2.JSONObject;
+import com.xiang.keyDisplay.listeners.MouseAd;
+import com.xiang.keyDisplay.listeners.MouseMoAd;
 import com.xiang.keyDisplay.main.Main;
-import com.xiang.keyDisplay.others.*;
+import com.xiang.keyDisplay.others.ComponentUtils;
+import com.xiang.keyDisplay.others.GU;
+import com.xiang.keyDisplay.others.JsonUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -44,7 +48,7 @@ public class TotalCountFrame extends CustomizeFrame {
         labels[2].setText("总计:" + totalCount);
         updateBounds();
         addMouseListener(new MouseAd());
-        addMouseMotionListener(new MouseMo());
+        addMouseMotionListener(new MouseMoAd());
     }
 
     public TotalCountFrame(JSONObject config) {
@@ -77,7 +81,7 @@ public class TotalCountFrame extends CustomizeFrame {
                 ).getSize()
         );
         addMouseListener(new MouseAd());
-        addMouseMotionListener(new MouseMo());
+        addMouseMotionListener(new MouseMoAd());
 
     }
 

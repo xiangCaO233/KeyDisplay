@@ -56,6 +56,12 @@ public class ColorPickPane extends JPanel {
 
     }
 
+    @Override
+    protected void paintComponent(Graphics g) {
+        g.setColor(Main.DEFAULT_BORDER_COLOR);
+        g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
+    }
+
     public void setColor(Color color) {
         this.color = color;
         colorPane.setCurrentColor(color);
