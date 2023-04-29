@@ -7,12 +7,9 @@ import com.xiang.keyDisplay.main.Main;
 import com.xiang.keyDisplay.others.ComponentUtils;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 
 /**
  * 尺寸设置容器

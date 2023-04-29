@@ -1,7 +1,6 @@
 package com.xiang.keyDisplay.template.uis;
 
 import com.xiang.keyDisplay.main.Main;
-import com.xiang.keyDisplay.template.frameTemplate.MouseFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,13 +10,13 @@ import java.awt.*;
  * by-chatgpt
  */
 public class CustomizeToggleButton extends JToggleButton {
-    public MouseFrame frame;
+    String name;
 
-    public CustomizeToggleButton(MouseFrame mouseFrame) {
-        super(mouseFrame.mouseKeyName);
-        frame = mouseFrame;
+    public CustomizeToggleButton(String buttonName) {
+        super(buttonName);
+        name = buttonName;
         setFocusPainted(false);
-        setFont(Main.DEFAULT_FONT.deriveFont(18f));
+        setFont(Main.DEFAULT_FONT.deriveFont(16f));
         setForeground(Main.DEFAULT_BORDER_COLOR);
         setBackground(Main.DEFAULT_BG_COLOR);
         setBorder(BorderFactory.createCompoundBorder(
@@ -25,12 +24,10 @@ public class CustomizeToggleButton extends JToggleButton {
                 BorderFactory.createEmptyBorder(5, 10, 5, 10)
         ));
 
-        addActionListener(e -> {
+        addChangeListener(e -> {
             if (isSelected()) {
                 //按钮选中
                 setBackground(Main.DEFAULT_PRESS_COLOR);
-
-
             } else {
                 setBackground(Main.DEFAULT_BG_COLOR);
             }
@@ -49,6 +46,17 @@ public class CustomizeToggleButton extends JToggleButton {
         Dimension size = super.getPreferredSize();
         size.width += 20;
         return size;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+        setText(name);
     }
 }
 

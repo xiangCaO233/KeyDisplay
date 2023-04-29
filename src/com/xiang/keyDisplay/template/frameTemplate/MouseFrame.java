@@ -33,6 +33,7 @@ public class MouseFrame extends RefreshFrame{
     public boolean isPressed;
     Font currentFont;
     boolean showCounts;
+    boolean showCps;
 
 
     /**
@@ -44,6 +45,7 @@ public class MouseFrame extends RefreshFrame{
         super();
         setSize(GU.toAbsSize(Main.DEFAULT_SIZE.width, Main.DEFAULT_SIZE.height));
         showCounts = true;
+        showCps = true;
         labels = new JLabel[3];
         currentFont = Main.DEFAULT_FONT.deriveFont(14f);
         for (int i = 0 ; i < labels.length ; i ++){
@@ -92,21 +94,21 @@ public class MouseFrame extends RefreshFrame{
         } else {
             currentFont = Font.getFont(config.getString("font")).deriveFont(config.getFloat("fontSize"));
         }
+        showCounts = config.getBoolean("showCounts");
+        showCps = config.getBoolean("showCps");
         //初始化标签
         labels = new JLabel[3];
         for (int i = 0; i < labels.length; i++) {
             labels[i] = ComponentUtils.registerLabel("");
-            labels[i].setSize(getWidth(), getHeight() / 3);
             labels[i].setFont(currentFont);
             addCom(labels[i]);
         }
         //设置标签显示
         labels[0].setText(mouseKeyName);
-        labels[0].setLocation(0, 0);
         labels[1].setText(String.valueOf(cps - 1));
-        labels[1].setLocation(0, getHeight() / 3);
         labels[2].setText(String.valueOf(count));
-        labels[2].setLocation(0, getHeight() * 2 / 3);
+
+        updateLabel();
 
         registerMouseListener();
     }
@@ -116,6 +118,8 @@ public class MouseFrame extends RefreshFrame{
         config.put(
                 "mouseKeyName", mouseKeyName
         );
+        config.put("showCounts", showCounts);
+        config.put("showCps", showCps);
         config.put("font", currentFont.getName().equals(Main.DEFAULT_FONT.getName()) ? "Default Font" : getFont().getName());
         config.put("fontSize", currentFont.getSize2D());
         config.put(
@@ -156,11 +160,56 @@ public class MouseFrame extends RefreshFrame{
 
     public void updateSize(Dimension size) {
         setSize(size);
-        for (JLabel label : labels) {
-            label.setSize(getWidth(), getHeight() / 3);
+        updateLabel();
+    }
+
+    public void updateLabel() {
+        if (!showCounts) {
+            if (!showCps) {
+                //仅显示按键名
+                for (JLabel label : labels) {
+                    label.setSize(getWidth(), getHeight());
+                }
+                labels[0].setLocation(0, 0);
+                labels[1].setVisible(false);
+                labels[2].setVisible(false);
+            } else {
+                //显示按键名及cps
+                for (JLabel label : labels) {
+                    label.setSize(getWidth(), getHeight() / 2);
+                }
+                labels[0].setLocation(0, 0);
+                labels[1].setLocation(0, getHeight() / 2);
+                labels[2].setVisible(false);
+            }
+        } else {
+            if (!showCps) {
+                //显示按键名和计数
+                for (JLabel label : labels) {
+                    label.setSize(getWidth(), getHeight() / 2);
+                }
+                labels[0].setLocation(0, 0);
+                labels[1].setVisible(false);
+                labels[2].setLocation(0, getHeight() / 2);
+            } else {
+                //全部显示
+                for (JLabel label : labels) {
+                    label.setSize(getWidth(), getHeight() / 3);
+                }
+                labels[0].setLocation(0, 0);
+                labels[1].setLocation(0, getHeight() / 3);
+                labels[2].setLocation(0, getHeight() * 2 / 3);
+            }
         }
-        labels[0].setLocation(0, 0);
-        labels[1].setLocation(0, getHeight() / 3);
-        labels[2].setLocation(0, getHeight() * 2 / 3);
+    }
+
+    public void setShowCounts(boolean isShow) {
+        this.showCounts = isShow;
+        updateLabel();
+    }
+
+    public void setShowCps(boolean isShow) {
+        this.showCps = isShow;
+        updateLabel();
     }
 }
