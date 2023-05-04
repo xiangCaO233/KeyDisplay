@@ -12,13 +12,18 @@ import java.awt.*;
 public class CustomizeToggleButton extends JToggleButton {
     String name;
 
-    public CustomizeToggleButton(String buttonName) {
+    public CustomizeToggleButton(String buttonName, boolean isSelected) {
         super(buttonName);
         name = buttonName;
         setFocusPainted(false);
+        setSelected(isSelected);
         setFont(Main.DEFAULT_FONT.deriveFont(16f));
         setForeground(Main.DEFAULT_BORDER_COLOR);
         setBackground(Main.DEFAULT_BG_COLOR);
+        if (isSelected()) {
+            //按钮选中
+            setBackground(Main.DEFAULT_PRESS_COLOR);
+        }
         setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createMatteBorder(1, 1, 1, 1, Main.DEFAULT_BORDER_COLOR),
                 BorderFactory.createEmptyBorder(5, 10, 5, 10)

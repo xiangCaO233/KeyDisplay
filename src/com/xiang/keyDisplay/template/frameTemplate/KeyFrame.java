@@ -31,6 +31,8 @@ public class KeyFrame extends RefreshFrame {
     //时间戳队列,用于检测时间计算kps
     public ArrayDeque<Long> timeStamps;
     Font currentFont;
+    boolean showCounts;
+    boolean showCps;
 
     public KeyFrame(String keyName) {
         super();
@@ -149,5 +151,64 @@ public class KeyFrame extends RefreshFrame {
         for (JLabel label : labels) {
             label.setFont(font);
         }
+    }
+
+    public void updateSize(Dimension size) {
+        setSize(size);
+        updateLabel();
+    }
+
+    public void updateLabel() {
+        if (!showCounts) {
+            if (!showCps) {
+                //仅显示按键名
+                for (JLabel label : labels) {
+                    label.setSize(getWidth(), getHeight());
+                }
+                labels[0].setLocation(0, 0);
+                labels[1].setVisible(false);
+                labels[2].setVisible(false);
+            } else {
+                //显示按键名及cps
+                for (JLabel label : labels) {
+                    label.setSize(getWidth(), getHeight() / 2);
+                }
+                labels[0].setLocation(0, 0);
+                labels[1].setLocation(0, getHeight() / 2);
+                labels[1].setVisible(true);
+                labels[2].setVisible(false);
+            }
+        } else {
+            if (!showCps) {
+                //显示按键名和计数
+                for (JLabel label : labels) {
+                    label.setSize(getWidth(), getHeight() / 2);
+                }
+                labels[0].setLocation(0, 0);
+                labels[1].setVisible(false);
+                labels[2].setLocation(0, getHeight() / 2);
+                labels[2].setVisible(true);
+            } else {
+                //全部显示
+                for (JLabel label : labels) {
+                    label.setSize(getWidth(), getHeight() / 3);
+                }
+                labels[0].setLocation(0, 0);
+                labels[1].setLocation(0, getHeight() / 3);
+                labels[1].setVisible(true);
+                labels[2].setLocation(0, getHeight() * 2 / 3);
+                labels[2].setVisible(true);
+            }
+        }
+    }
+
+    public void setShowCounts(boolean isShow) {
+        this.showCounts = isShow;
+        updateLabel();
+    }
+
+    public void setShowCps(boolean isShow) {
+        this.showCps = isShow;
+        updateLabel();
     }
 }

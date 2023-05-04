@@ -1,6 +1,7 @@
 package com.xiang.keyDisplay.template.panelTemplate;
 
 import com.xiang.keyDisplay.listeners.CaretChangeListener;
+import com.xiang.keyDisplay.listeners.ComKeyAdapter;
 import com.xiang.keyDisplay.listeners.DocumentsChangeListener;
 import com.xiang.keyDisplay.listeners.RefreshMouseAd;
 import com.xiang.keyDisplay.main.Main;
@@ -35,6 +36,7 @@ public class SizeSetPane extends JPanel{
         field.setBackground(new Color(0,0,0,0));
         field.setForeground(Main.DEFAULT_BORDER_COLOR);
         field.setHorizontalAlignment(JTextField.RIGHT);
+        field.addKeyListener(ComKeyAdapter.DIGIT_FILTER_LISTENER);
         field.setBorder(null);
         field.getCaret().addChangeListener(new CaretChangeListener(field));
         field.getDocument().addDocumentListener(new DocumentsChangeListener(field));
@@ -60,10 +62,20 @@ public class SizeSetPane extends JPanel{
     }
     public void setMode(int mode){
         if (mode == 1 || mode == 2) {
+
+            if (this.mode == 1) {
+                if (mode == 2) {
+                    //px转in
+                    field.getText();
+                }
+            } else {
+                if (mode == 1) {
+                    //in转px
+
+                }
+            }
             this.mode = mode;
-            unit.setText(
-                    (mode == 1 ? "px" : "in")
-            );
+            unit.setText((mode == 1 ? "px" : "in"));
             getTopLevelAncestor().repaint();
         }
         else

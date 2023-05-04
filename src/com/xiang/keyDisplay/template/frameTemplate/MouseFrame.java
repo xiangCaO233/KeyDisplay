@@ -180,6 +180,7 @@ public class MouseFrame extends RefreshFrame{
                 }
                 labels[0].setLocation(0, 0);
                 labels[1].setLocation(0, getHeight() / 2);
+                labels[1].setVisible(true);
                 labels[2].setVisible(false);
             }
         } else {
@@ -191,6 +192,7 @@ public class MouseFrame extends RefreshFrame{
                 labels[0].setLocation(0, 0);
                 labels[1].setVisible(false);
                 labels[2].setLocation(0, getHeight() / 2);
+                labels[2].setVisible(true);
             } else {
                 //全部显示
                 for (JLabel label : labels) {
@@ -198,7 +200,9 @@ public class MouseFrame extends RefreshFrame{
                 }
                 labels[0].setLocation(0, 0);
                 labels[1].setLocation(0, getHeight() / 3);
+                labels[1].setVisible(true);
                 labels[2].setLocation(0, getHeight() * 2 / 3);
+                labels[2].setVisible(true);
             }
         }
     }

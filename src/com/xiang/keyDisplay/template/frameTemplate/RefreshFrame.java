@@ -14,7 +14,7 @@ public class RefreshFrame extends CustomizeFrame{
     //按下时显示的颜色
     public Color pressColor;
     public RefreshFrame() throws HeadlessException {
-        super(Main.DEFAULT_BORDER_COLOR, Main.DEFAULT_BG_COLOR, (float) (1 / 6.0));
+        super(Main.DEFAULT_BORDER_COLOR, Main.DEFAULT_BG_COLOR);
         releaseColor = Main.DEFAULT_BG_COLOR;
         pressColor = Main.DEFAULT_PRESS_COLOR;
 

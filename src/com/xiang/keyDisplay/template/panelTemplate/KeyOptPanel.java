@@ -4,7 +4,7 @@ import com.xiang.keyDisplay.listeners.ComKeyAdapter;
 import com.xiang.keyDisplay.main.Main;
 import com.xiang.keyDisplay.main.VKKeys;
 import com.xiang.keyDisplay.others.GU;
-import com.xiang.keyDisplay.template.frameTemplate.MouseFrame;
+import com.xiang.keyDisplay.template.frameTemplate.KeyFrame;
 import com.xiang.keyDisplay.template.uis.CustomizeToggleButton;
 
 import javax.swing.*;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 
-public class MouseOptPanel extends JPanel {
+public class KeyOptPanel extends JPanel {
     //选择区外壳
     JPanel buttonsShell;
     //切换按钮容器
@@ -29,7 +29,7 @@ public class MouseOptPanel extends JPanel {
     //应用按钮容器
     ApplyButtonsPane applyButtonsPane;
     //切换按钮,全部鼠标按键
-    CustomizeToggleButton[] mousesButtons;
+    CustomizeToggleButton[] keysButtons;
     //背景颜色选择器
     ColorPickPane bgPicker;
     //激活颜色选择器
@@ -44,11 +44,11 @@ public class MouseOptPanel extends JPanel {
     SizeSetPane heightSetting;
     //显示计数
     CustomizeToggleButton showCounts;
-    //显示cps
-    CustomizeToggleButton showCps;
+    //显示kps
+    CustomizeToggleButton showKps;
 
 
-    public MouseOptPanel() {
+    public KeyOptPanel() {
 
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         setBackground(Main.DEFAULT_BG_COLOR);
@@ -63,13 +63,13 @@ public class MouseOptPanel extends JPanel {
         buttonListVbox.setLayout(new BoxLayout(buttonListVbox, BoxLayout.Y_AXIS));
         buttonListVbox.setMaximumSize(GU.toAbsSize(90, Integer.MAX_VALUE));
 
-        mousesButtons = new CustomizeToggleButton[Main.mouseFrames.size()];
-        Collection<Integer> mouseKeys = Main.mouseFrames.keySet();
+        keysButtons = new CustomizeToggleButton[Main.keyFrames.size()];
+        Collection<Integer> mouseKeys = Main.keyFrames.keySet();
         int index = 0;
         for (Integer mouseKey : mouseKeys) {
-            mousesButtons[index] = new CustomizeToggleButton(Main.mouseFrames.get(mouseKey).mouseKeyName, false);
-            mousesButtons[index].setMaximumSize(GU.toAbsSize(Integer.MAX_VALUE, 30));
-            mousesButtons[index].addActionListener(e -> {
+            keysButtons[index] = new CustomizeToggleButton(Main.keyFrames.get(mouseKey).keyName, false);
+            keysButtons[index].setMaximumSize(GU.toAbsSize(Integer.MAX_VALUE, 30));
+            keysButtons[index].addActionListener(e -> {
                 selectAllButton.setSelected(isAllSelected());
                 if (selectAllButton.isSelected())
                     selectAllButton.setName("全不选");
@@ -77,7 +77,7 @@ public class MouseOptPanel extends JPanel {
                     selectAllButton.setName("全选");
                 getTopLevelAncestor().repaint();
             });
-            buttonListVbox.add(mousesButtons[index]);
+            buttonListVbox.add(keysButtons[index]);
             index++;
         }
 
@@ -86,12 +86,12 @@ public class MouseOptPanel extends JPanel {
         selectAllButton.addActionListener(e -> {
             if (selectAllButton.isSelected()) {
                 selectAllButton.setName("全不选");
-                for (CustomizeToggleButton button : mousesButtons) {
+                for (CustomizeToggleButton button : keysButtons) {
                     button.setSelected(true);
                 }
             } else {
                 selectAllButton.setName("全选");
-                for (CustomizeToggleButton button : mousesButtons) {
+                for (CustomizeToggleButton button : keysButtons) {
                     button.setSelected(false);
                 }
             }
@@ -114,23 +114,23 @@ public class MouseOptPanel extends JPanel {
         showCounts.setAlignmentX(CENTER_ALIGNMENT);
         showCounts.setMaximumSize(GU.toAbsSize(Integer.MAX_VALUE, 30));
 //        showCounts.setPreferredSize(new Dimension(Integer.MAX_VALUE, 30));
-        showCps = new CustomizeToggleButton("显示cps", true);
-        showCps.setAlignmentX(CENTER_ALIGNMENT);
-        showCps.setMaximumSize(GU.toAbsSize(Integer.MAX_VALUE, 30));
+        showKps = new CustomizeToggleButton("显示kps", true);
+        showKps.setAlignmentX(CENTER_ALIGNMENT);
+        showKps.setMaximumSize(GU.toAbsSize(Integer.MAX_VALUE, 30));
 //        showCps.setPreferredSize(new Dimension(Integer.MAX_VALUE, 30));
 
         //取最后一个鼠标按键的字体大小
-        Set<Integer> keySet = Main.mouseFrames.keySet();
+        Set<Integer> keySet = Main.keyFrames.keySet();
         int key = -1;
         for (Integer i : keySet) {
             key = i;
         }
         if (key != -1) {
             //有鼠标监听
-            MouseFrame mouseFrame = Main.mouseFrames.get(key);
-            fontSizeSetting = new TextFiledPane("字号:", String.valueOf(mouseFrame.labels[0].getFont().getSize2D()));
-            widthSetting = new SizeSetPane("宽:", mouseFrame.getWidth());
-            heightSetting = new SizeSetPane("高:", mouseFrame.getHeight());
+            KeyFrame keyFrame = Main.keyFrames.get(key);
+            fontSizeSetting = new TextFiledPane("字号:", String.valueOf(keyFrame.labels[0].getFont().getSize2D()));
+            widthSetting = new SizeSetPane("宽:", keyFrame.getWidth());
+            heightSetting = new SizeSetPane("高:", keyFrame.getHeight());
         } else {
             //无鼠标监听
             fontSizeSetting = new TextFiledPane("字号:", String.valueOf(0));
@@ -164,7 +164,7 @@ public class MouseOptPanel extends JPanel {
         settingsPanel2.add(activePicker);
         settingsPanel2.add(fontSizeSetting);
         settingsPanel2.add(heightSetting);
-        settingsPanel2.add(showCps);
+        settingsPanel2.add(showKps);
 
         settings.add(settingsPanel1);
         settings.add(settingsPanel2);
@@ -172,7 +172,7 @@ public class MouseOptPanel extends JPanel {
         applyButtonsPane = new ApplyButtonsPane();
         //确认按钮事件
         applyButtonsPane.setDoneAction(e -> {
-            ArrayList<MouseFrame> selectedFrames = getSelectedFrames();
+            ArrayList<KeyFrame> selectedFrames = getSelectedFrames();
             if (!selectedFrames.isEmpty())
                 apply(selectedFrames);
             new Thread(() -> {
@@ -189,7 +189,7 @@ public class MouseOptPanel extends JPanel {
         );
         //应用按钮事件
         applyButtonsPane.setDoneAction(e -> {
-            ArrayList<MouseFrame> selectedFrames = getSelectedFrames();
+            ArrayList<KeyFrame> selectedFrames = getSelectedFrames();
             if (!selectedFrames.isEmpty())
                 apply(selectedFrames);
         });
@@ -201,19 +201,19 @@ public class MouseOptPanel extends JPanel {
 
     }
 
-    ArrayList<MouseFrame> getSelectedFrames() {
-        ArrayList<MouseFrame> frames = new ArrayList<>();
-        for (CustomizeToggleButton but : mousesButtons) {
+    ArrayList<KeyFrame> getSelectedFrames() {
+        ArrayList<KeyFrame> frames = new ArrayList<>();
+        for (CustomizeToggleButton but : keysButtons) {
             if (but.isSelected())
-                frames.add(Main.mouseFrames.get(VKKeys.KeySearch(but.getName())));
+                frames.add(Main.keyFrames.get(VKKeys.KeySearch(but.getName())));
         }
         return frames;
     }
 
-    void applyDisplayMode(ArrayList<MouseFrame> frames) {
-        for (MouseFrame frame : frames) {
+    void applyDisplayMode(ArrayList<KeyFrame> frames) {
+        for (KeyFrame frame : frames) {
             frame.setShowCounts(showCounts.isSelected());
-            frame.setShowCps(showCps.isSelected());
+            frame.setShowCps(showKps.isSelected());
             frame.updateLabel();
             frame.repaint();
         }
@@ -224,8 +224,8 @@ public class MouseOptPanel extends JPanel {
      *
      * @param frames 选中的窗体
      */
-    void applyColor(ArrayList<MouseFrame> frames) {
-        for (MouseFrame frame : frames) {
+    void applyColor(ArrayList<KeyFrame> frames) {
+        for (KeyFrame frame : frames) {
             frame.backgroundColor = bgPicker.getColor();
             frame.releaseColor = frame.backgroundColor;
             frame.pressColor = activePicker.getColor();
@@ -238,9 +238,9 @@ public class MouseOptPanel extends JPanel {
      *
      * @param frames 选中的窗体
      */
-    void applyFont(ArrayList<MouseFrame> frames) {
+    void applyFont(ArrayList<KeyFrame> frames) {
         try {
-            for (MouseFrame frame : frames) {
+            for (KeyFrame frame : frames) {
                 if ("Default Font".equals(fontSetting.field.getText())) {
                     frame.setAllLabelsFont(
                             Main.DEFAULT_FONT.deriveFont(Float.parseFloat(fontSizeSetting.field.getText()))
@@ -259,9 +259,9 @@ public class MouseOptPanel extends JPanel {
      *
      * @param frames 选中的窗体
      */
-    void applySize(ArrayList<MouseFrame> frames) {
+    void applySize(ArrayList<KeyFrame> frames) {
         try {
-            for (MouseFrame frame : frames) {
+            for (KeyFrame frame : frames) {
                 frame.updateSize(new Dimension(
                         Integer.parseInt(widthSetting.field.getText()),
                         Integer.parseInt(heightSetting.field.getText())
@@ -276,7 +276,7 @@ public class MouseOptPanel extends JPanel {
      *
      * @param frames 选中的窗体
      */
-    void apply(ArrayList<MouseFrame> frames) {
+    void apply(ArrayList<KeyFrame> frames) {
         applyColor(frames);
         applyFont(frames);
         applySize(frames);
@@ -290,7 +290,7 @@ public class MouseOptPanel extends JPanel {
      */
     boolean isAllSelected() {
         boolean isAllSelected = true;
-        for (CustomizeToggleButton toggleButton : mousesButtons) {
+        for (CustomizeToggleButton toggleButton : keysButtons) {
             if (!toggleButton.isSelected())
                 isAllSelected = false;
         }
