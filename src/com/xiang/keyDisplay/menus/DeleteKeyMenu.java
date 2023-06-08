@@ -2,7 +2,6 @@ package com.xiang.keyDisplay.menus;
 
 import com.xiang.keyDisplay.main.Main;
 import com.xiang.keyDisplay.others.ComponentUtils;
-import com.xiang.keyDisplay.others.GU;
 import com.xiang.keyDisplay.template.frameTemplate.KeyFrame;
 
 import javax.swing.*;
@@ -23,8 +22,8 @@ public class DeleteKeyMenu extends MenuTemplate {
         super(DEFAULT_BORDER_COLOR, DEFAULT_BG_COLOR);
         //标题
         title = ComponentUtils.registerLabel("删除按键");
-        title.setSize(GU.toAbsSize(120, 30));
-        title.setLocation(GU.toAbsPos(1, 1));
+        title.setSize(120, 30);
+        title.setLocation(1, 1);
         addCom(title);
 
         Collection<KeyFrame> keyFrames = Main.keyFrames.values();
@@ -32,7 +31,7 @@ public class DeleteKeyMenu extends MenuTemplate {
         int index = 0;
         for (KeyFrame keyFrame : keyFrames) {
             allKeys.add(ComponentUtils.registerButton(keyFrame.keyName));
-            allKeys.get(index).setSize(GU.toAbsSize(120, 30));
+            allKeys.get(index).setSize(120, 30);
             allKeys.get(index).addActionListener(e -> {
                 JButton srcButton = ((JButton) e.getSource());
                 String buttonName = srcButton.getText();
@@ -50,7 +49,7 @@ public class DeleteKeyMenu extends MenuTemplate {
         }
 
         back = ComponentUtils.registerButton("返回");
-        back.setSize(GU.toAbsSize(120, 30));
+        back.setSize(120, 30);
         back.addActionListener(e -> {
             back.getTopLevelAncestor().setVisible(false);
         });
@@ -61,10 +60,10 @@ public class DeleteKeyMenu extends MenuTemplate {
     public void updateBounds() {
         int index = 0;
         for (JButton button : allKeys) {
-            button.setLocation(GU.toAbsPos(1, 1 + ((index++) + 1) * 30));
+            button.setLocation(1, 1 + ((index++) + 1) * 30);
         }
-        back.setLocation(GU.toAbsPos(1, 1 + (allKeys.size() + 1) * 30));
-        setSize(GU.toAbsSize(122, 30 * (allKeys.size() + 2) + 2));
+        back.setLocation(1, 1 + (allKeys.size() + 1) * 30);
+        setSize(122, 30 * (allKeys.size() + 2) + 2);
         repaint();
     }
 

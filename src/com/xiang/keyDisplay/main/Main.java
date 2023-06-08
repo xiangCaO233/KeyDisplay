@@ -13,6 +13,7 @@ import com.xiang.keyDisplay.listeners.GlobalMouseListener;
 import com.xiang.keyDisplay.menus.*;
 import com.xiang.keyDisplay.others.AreaColor;
 import com.xiang.keyDisplay.others.JsonUtil;
+import com.xiang.keyDisplay.others.VKKeys;
 import com.xiang.keyDisplay.template.Choosers;
 import com.xiang.keyDisplay.template.frameTemplate.*;
 import com.xiang.keyDisplay.template.uis.CustomButtonUIManager;
@@ -29,7 +30,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class Main {
-    //默认配置
+    //获取实时屏幕尺寸
     public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
     public static final GraphicsDevice SCREEN_DEVICE = getDevice();
 
@@ -232,9 +233,11 @@ public class Main {
         isInitDone = true;
     }
     private static void initMouseFrames(String[] mouseButtons){
+        //开始初始化
         isInitDone = false;
         mouseFrames = new LinkedHashMap<>();
         int minX = SCREEN_SIZE.width,minY = SCREEN_SIZE.height , maxX = 0 , maxY = 0 , maxsWidth = DEFAULT_SIZE.width;
+        //找到最大最小坐标,为了放在最大或最小的旁边?
         if (keyFrames.size() > 0){
             Collection<KeyFrame> keys = keyFrames.values();
             for (KeyFrame key : keys){
@@ -247,12 +250,11 @@ public class Main {
                     maxX = keyLoc.x;
                     maxsWidth = key.getWidth();
                 }
-
                 if (keyLoc.y > maxY)
                     maxY = keyLoc.y;
-
             }
         }
+
         for (String mouseStr : mouseButtons){
             MouseFrame mouseFrame = new MouseFrame(mouseStr);
             mouseFrames.put(
@@ -270,7 +272,7 @@ public class Main {
                 maxX + maxsWidth ,
                 minY
         );
-
+        //初始化完成,设置标识
         isInitDone = true;
     }
 
@@ -409,25 +411,29 @@ public class Main {
      * @param keycodes
      */
     public static void setKeys(int[] keycodes) {
+        //转化为str数组
         String[] keys = new String[keycodes.length];
         for (int i = 0; i < keys.length; i++) {
             keys[i] = VKKeys.data.get(keycodes[i]);
         }
+        //停止线程释放界面
         stopAllThread();
         disposeAllFrame();
 
-
+        //通过str数组重新初始化
         initKeyFrames(keys);
+        //初始化鼠标监听
         initMouseFrames(DEFAULT_MOUSE_BUTTONS);
+        //等待初始化完毕
         while (!isInitDone) {
             Thread.onSpinWait();
         }
+        //初始化所有线程
         initAllThreads();
     }
 
     /**
      * 添加按钮行为
-     *
      * @param keyCode 要添加的按钮keyCode
      */
     public static void addKey(int keyCode) {
@@ -441,6 +447,7 @@ public class Main {
         }
         Point lastLocation = keyFrames.get(lastKey).getLocationOnScreen();
 
+        //设置相对位置
         keyFrame.setLocation(
                 lastLocation.x + keyFrames.get(lastKey).getWidth(),
                 lastLocation.y
@@ -450,7 +457,7 @@ public class Main {
                 keyFrame
         );
         keyFrame.setVisible(true);
-
+        //更新计数面板和表格面板大小
         totalCountFrame.updateSize();
         chartFrame.updateSize();
     }
@@ -461,11 +468,11 @@ public class Main {
      * @param keyName 要删除的按钮名
      */
     public static void deleteKey(String keyName) {
+
         int keyCode = VKKeys.KeySearch(keyName);
         KeyFrame key = keyFrames.get(keyCode);
         keyFrames.remove(keyCode);
         key.dispose();
-
         totalCountFrame.updateSize();
         chartFrame.updateSize();
     }
@@ -554,6 +561,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        System.out.println(SCREEN_DEVICE_SIZE);
         CustomButtonUIManager.setCustomButtonUIManager();
         String fileStr = Main.class.getResource("").toExternalForm();
         File filePath = new File(

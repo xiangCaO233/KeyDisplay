@@ -3,18 +3,18 @@ package com.xiang.keyDisplay.template.panelTemplate;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class RoundRecBorderImagePanel extends RoundRecBorderPanel implements IImagePane {
+public class RecBorderImagePanel extends RecBorderPanel implements IImagePane {
     BufferedImage image;
 
-    public RoundRecBorderImagePanel(Color borderColor, Color backgroundColor, float roundRecScale, BufferedImage image) {
-        super(roundRecScale, borderColor, backgroundColor);
+    public RecBorderImagePanel(Color borderColor, Color backgroundColor, BufferedImage image) {
+        super(borderColor, backgroundColor);
         this.image = image;
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        paintRoundRec(g2d);
+        paintRec(g2d);
         g2d.drawImage(image, 1, 1, null);
     }
 

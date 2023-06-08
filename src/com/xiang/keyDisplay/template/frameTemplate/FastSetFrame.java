@@ -4,9 +4,8 @@ import com.github.kwhat.jnativehook.GlobalScreen;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 import com.xiang.keyDisplay.main.Main;
-import com.xiang.keyDisplay.main.VKKeys;
 import com.xiang.keyDisplay.others.ComponentUtils;
-import com.xiang.keyDisplay.others.GU;
+import com.xiang.keyDisplay.others.VKKeys;
 import com.xiang.keyDisplay.template.panelTemplate.FastSetKeyPane;
 import com.xiang.keyDisplay.template.panelTemplate.PointerPane;
 
@@ -40,7 +39,7 @@ public class FastSetFrame extends CustomizeFrame {
     public FastSetFrame(int keyCount) throws HeadlessException {
         super(Main.DEFAULT_BORDER_COLOR, Main.DEFAULT_BG_COLOR);
         this.keyCount = keyCount;
-        setSize(GU.toAbsSize(keyCount * KEY_SIZE.width + 2, 98 + KEY_SIZE.height));
+        setSize(keyCount * KEY_SIZE.width + 2, 98 + KEY_SIZE.height);
         /*
           -------------------------------
           (height 1)
@@ -60,22 +59,22 @@ public class FastSetFrame extends CustomizeFrame {
          */
         //标题
         title = new JLabel("快速设置-" + keyCount + "k", JLabel.CENTER);
-        title.setSize(getWidth() - GU.absX(2), GU.absY(30));
+        title.setSize(getWidth() - 2, 30);
         title.setFont(Main.DEFAULT_FONT.deriveFont(18f));
         title.setForeground(Main.DEFAULT_BORDER_COLOR);
-        title.setLocation(GU.toAbsPos(1, 1));
+        title.setLocation(1, 1);
         addCom(title);
         //keys
         keys = new FastSetKeyPane[keyCount];
         for (int i = 0; i < keys.length; i++) {
             keys[i] = new FastSetKeyPane();
-            keys[i].setSize(GU.toAbsSize(KEY_SIZE.width, KEY_SIZE.height));
-            keys[i].setLocation(i * KEY_SIZE.width + GU.absX(1), GU.absY(31));
+            keys[i].setSize(KEY_SIZE.width, KEY_SIZE.height);
+            keys[i].setLocation(i * KEY_SIZE.width + 1, 31);
             addCom(keys[i]);
         }
         //箭头面板
         pointerPane = new PointerPane();
-        pointerPane.setSize(GU.toAbsSize(40, 30));
+        pointerPane.setSize(40, 30);
         updatePointer();
         addCom(pointerPane);
         //初始化结果数组
@@ -116,18 +115,18 @@ public class FastSetFrame extends CustomizeFrame {
         int deviation = (getWidth() - 2) % 3;
         //取消按钮
         cancel = ComponentUtils.registerButton("取消");
-        cancel.setSize((int) ((getWidth() - GU.absX(2 + deviation)) / 3.0) - GU.absX(1), GU.absY(30));
-        cancel.setLocation(GU.absX(1), pointerPane.getY() + pointerPane.getHeight() + GU.absY(1));
+        cancel.setSize((int) ((getWidth() - 2 + deviation) / 3.0) - 1, 30);
+        cancel.setLocation(1, pointerPane.getY() + pointerPane.getHeight() + 1);
         cancel.addActionListener(e -> {
             disposeFrame();
         });
         addCom(cancel);
         //重置按钮
         resetAll = ComponentUtils.registerButton("重置");
-        resetAll.setSize((int) ((getWidth() - GU.absX(2 + deviation)) / 3.0) - GU.absX(1), GU.absY(30));
+        resetAll.setSize((int) ((getWidth() - 2 + deviation) / 3.0) - 1, 30);
         resetAll.setLocation(
-                GU.absX(1) + cancel.getX() + cancel.getWidth(),
-                pointerPane.getY() + pointerPane.getHeight() + GU.absY(1)
+                1 + cancel.getX() + cancel.getWidth(),
+                pointerPane.getY() + pointerPane.getHeight() + 1
         );
         resetAll.addActionListener(e -> {
             resetAll();
@@ -136,10 +135,10 @@ public class FastSetFrame extends CustomizeFrame {
 
         //完成按钮
         done = ComponentUtils.registerButton("确定");
-        done.setSize((int) ((getWidth() - GU.absX(2 + deviation)) / 3.0) - GU.absX(1), GU.absY(30));
+        done.setSize((int) ((getWidth() - 2 + deviation) / 3.0) - 1, 30);
         done.setLocation(
-                GU.absX(1) + resetAll.getX() + resetAll.getWidth(),
-                pointerPane.getY() + pointerPane.getHeight() + GU.absY(1)
+                1 + resetAll.getX() + resetAll.getWidth(),
+                pointerPane.getY() + pointerPane.getHeight() + 1
         );
         done.addActionListener(e -> {
             if (pointerPane.index == keyCount) {

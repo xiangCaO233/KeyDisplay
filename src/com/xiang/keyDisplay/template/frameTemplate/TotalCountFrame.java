@@ -5,7 +5,6 @@ import com.xiang.keyDisplay.listeners.MouseAd;
 import com.xiang.keyDisplay.listeners.MouseMoAd;
 import com.xiang.keyDisplay.main.Main;
 import com.xiang.keyDisplay.others.ComponentUtils;
-import com.xiang.keyDisplay.others.GU;
 import com.xiang.keyDisplay.others.JsonUtil;
 
 import javax.swing.*;
@@ -23,7 +22,7 @@ public class TotalCountFrame extends CustomizeFrame {
     public Color borderColor;
 
     public TotalCountFrame(Color border, Color bg) {
-        super(border, bg, (float) (1 / 18.0));
+        super(border, bg);
         borderColor = border;
         backgroundColor = bg;
         maxKps = Main.keyFrames.size();
@@ -54,8 +53,7 @@ public class TotalCountFrame extends CustomizeFrame {
     public TotalCountFrame(JSONObject config) {
         super(
                 JsonUtil.json2Color(config.getJSONArray("borderColor")),
-                JsonUtil.json2Color(config.getJSONArray("backgroundColor")),
-                (float) (1 / 18.0)
+                JsonUtil.json2Color(config.getJSONArray("backgroundColor"))
         );
         borderColor = JsonUtil.json2Color(config.getJSONArray("borderColor"));
         backgroundColor = JsonUtil.json2Color(config.getJSONArray("backgroundColor"));
@@ -136,7 +134,7 @@ public class TotalCountFrame extends CustomizeFrame {
             for (KeyFrame keyFrame : keyFrameCollection) {
                 sum += keyFrame.getWidth();
             }
-            setSize(sum, GU.absY(36));
+            setSize(sum, 36);
             labels[0].setSize(getWidth() / 4, getHeight());
             labels[0].setLocation(0, 0);
 
@@ -152,8 +150,8 @@ public class TotalCountFrame extends CustomizeFrame {
 
     public void resetLocation() {
         setLocation(
-                (GU.absX(Main.SCREEN_SIZE.width) - getWidth()) / 2,
-                GU.absY((Main.SCREEN_SIZE.height - Main.DEFAULT_SIZE.height) / 2 + Main.DEFAULT_SIZE.height)
+                (Main.SCREEN_SIZE.width - getWidth()) / 2,
+                (Main.SCREEN_SIZE.height - Main.DEFAULT_SIZE.height) / 2 + Main.DEFAULT_SIZE.height
         );
     }
 }

@@ -2,10 +2,9 @@ package com.xiang.keyDisplay.template.frameTemplate;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.xiang.keyDisplay.main.Main;
-import com.xiang.keyDisplay.main.VKKeys;
 import com.xiang.keyDisplay.others.ComponentUtils;
-import com.xiang.keyDisplay.others.GU;
 import com.xiang.keyDisplay.others.JsonUtil;
+import com.xiang.keyDisplay.others.VKKeys;
 
 import javax.swing.*;
 import java.awt.*;
@@ -42,13 +41,13 @@ public class MouseFrame extends RefreshFrame{
      * @param name LMB,RMB,MMB
      */
     public MouseFrame(String name) {
-        super();
-        setSize(GU.toAbsSize(Main.DEFAULT_SIZE.width, Main.DEFAULT_SIZE.height));
+        super(Main.DEFAULT_BG_COLOR);
+        setSize(Main.DEFAULT_SIZE.width, Main.DEFAULT_SIZE.height);
         showCounts = true;
         showCps = true;
         labels = new JLabel[3];
         currentFont = Main.DEFAULT_FONT.deriveFont(14f);
-        for (int i = 0 ; i < labels.length ; i ++){
+        for (int i = 0; i < labels.length; i++) {
             labels[i] = ComponentUtils.registerLabel("");
             labels[i].setFont(currentFont);
             labels[i].setSize(
@@ -75,8 +74,7 @@ public class MouseFrame extends RefreshFrame{
         registerMouseListener();
     }
     public MouseFrame(JSONObject config) {
-        super();
-        this.releaseColor = JsonUtil.json2Color(config.getJSONArray("releaseColor"));
+        super(JsonUtil.json2Color(config.getJSONArray("releaseColor")));
         this.pressColor = JsonUtil.json2Color(config.getJSONArray("pressColor"));
 
         targetColor = releaseColor;

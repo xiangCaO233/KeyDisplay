@@ -14,6 +14,9 @@ import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * 组件鼠标监听器
+ */
 public class MouseMoAd extends MouseMotionAdapter {
     public static ArrayList<Point> keyFrameMouseRelativePointTemp;
     public static ArrayList<Point> mouseFrameMouseRelativePointTemp;

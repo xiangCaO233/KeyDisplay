@@ -5,6 +5,7 @@ import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 import com.xiang.keyDisplay.main.Main;
 import com.xiang.keyDisplay.template.frameTemplate.KeyFrame;
 
+//全局键盘监听
 public class GlobalKeyListener implements NativeKeyListener {
     public static boolean ctrl;
 

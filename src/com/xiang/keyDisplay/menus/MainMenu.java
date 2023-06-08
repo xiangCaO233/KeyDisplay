@@ -2,7 +2,6 @@ package com.xiang.keyDisplay.menus;
 
 import com.xiang.keyDisplay.main.Main;
 import com.xiang.keyDisplay.others.ComponentUtils;
-import com.xiang.keyDisplay.others.GU;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,17 +26,17 @@ public class MainMenu extends MenuTemplate {
     public MainMenu() throws HeadlessException {
         super(DEFAULT_BORDER_COLOR, DEFAULT_BG_COLOR);
 
-        setSize(GU.toAbsSize(122, 272));
+        setSize(122, 272);
         title = ComponentUtils.registerLabel("menu");
-        title.setSize(GU.toAbsSize(120, 30));
-        title.setLocation(GU.toAbsPos(1, 1));
+        title.setSize(120, 30);
+        title.setLocation(1, 1);
         addCom(title);
 
         buttons = new JButton[buttonNames.length];
         for (int i = 0; i < buttons.length; i++) {
             buttons[i] = ComponentUtils.registerButton(buttonNames[i]);
-            buttons[i].setSize(GU.toAbsSize(120, 30));
-            buttons[i].setLocation(GU.toAbsPos(1, 1 + (i + 1) * 30));
+            buttons[i].setSize(120, 30);
+            buttons[i].setLocation(1, 1 + (i + 1) * 30);
             addCom(buttons[i]);
         }
         //按钮事件
@@ -45,7 +44,7 @@ public class MainMenu extends MenuTemplate {
             //快速设置按钮
             Point myLoc = buttons[0].getLocationOnScreen();
             Main.fastSetMenu.setLocation(
-                    myLoc.x + buttons[0].getWidth() + GU.absX(2),
+                    myLoc.x + buttons[0].getWidth() + 2,
                     myLoc.y
             );
             Main.fastSetMenu.setVisible(true);

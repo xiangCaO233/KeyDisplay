@@ -2,7 +2,6 @@ package com.xiang.keyDisplay.menus;
 
 import com.xiang.keyDisplay.main.Main;
 import com.xiang.keyDisplay.others.ComponentUtils;
-import com.xiang.keyDisplay.others.GU;
 import com.xiang.keyDisplay.template.Choosers;
 import javafx.application.Platform;
 
@@ -21,10 +20,10 @@ public class SaveMenu extends MenuTemplate implements Choosers.FileChooseCallBac
 
     public SaveMenu() throws HeadlessException {
         super(Main.DEFAULT_BORDER_COLOR, Main.DEFAULT_BG_COLOR);
-        setSize(GU.toAbsSize(162, 162));
+        setSize(162, 162);
         title = ComponentUtils.registerLabel("保存为文件");
-        title.setSize(getWidth() - GU.absX(2), GU.absY(30));
-        title.setLocation(GU.toAbsPos(1, 1));
+        title.setSize(getWidth() - 2, 30);
+        title.setLocation(1, 1);
         addCom(title);
 
         inputField = new JTextField();
@@ -33,13 +32,13 @@ public class SaveMenu extends MenuTemplate implements Choosers.FileChooseCallBac
         inputField.setForeground(Main.DEFAULT_BORDER_COLOR);
         inputField.setText("save-" + (Main.savesPath.listFiles().length));
         inputField.setHorizontalAlignment(JTextField.CENTER);
-        inputField.setSize(getWidth() - GU.absX(2), GU.absY(40));
-        inputField.setLocation(GU.toAbsPos(1, 31));
+        inputField.setSize(getWidth() - 2, 40);
+        inputField.setLocation(1, 31);
         addCom(inputField);
 
         done = ComponentUtils.registerButton("保存");
-        done.setSize(getWidth() - GU.absX(2), GU.absY(30));
-        done.setLocation(GU.toAbsPos(1, 71));
+        done.setSize(getWidth() - 2, 30);
+        done.setLocation(1, 71);
         done.addActionListener(e -> {
             if (inputField.getText() == null || "".equals(inputField.getText())) {
                 System.out.println("请输入文件名!");
@@ -52,8 +51,8 @@ public class SaveMenu extends MenuTemplate implements Choosers.FileChooseCallBac
         addCom(done);
 
         saveAs = ComponentUtils.registerButton("另存为");
-        saveAs.setSize(getWidth() - GU.absX(2), GU.absY(30));
-        saveAs.setLocation(GU.toAbsPos(1, 101));
+        saveAs.setSize(getWidth() - 2, 30);
+        saveAs.setLocation(1, 101);
         saveAs.addActionListener(e -> {
             if (inputField.getText() == null || "".equals(inputField.getText())) {
                 System.out.println("请输入文件名!");
@@ -77,8 +76,8 @@ public class SaveMenu extends MenuTemplate implements Choosers.FileChooseCallBac
         addCom(saveAs);
 
         cancel = ComponentUtils.registerButton("取消");
-        cancel.setSize(getWidth() - GU.absX(2), GU.absY(30));
-        cancel.setLocation(GU.toAbsPos(1, 131));
+        cancel.setSize(getWidth() - 2, 30);
+        cancel.setLocation(1, 131);
         cancel.addActionListener(e -> {
             cancel.getTopLevelAncestor().setVisible(false);
         });

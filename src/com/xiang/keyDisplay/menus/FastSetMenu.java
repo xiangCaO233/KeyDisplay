@@ -2,7 +2,6 @@ package com.xiang.keyDisplay.menus;
 
 import com.xiang.keyDisplay.main.Main;
 import com.xiang.keyDisplay.others.ComponentUtils;
-import com.xiang.keyDisplay.others.GU;
 import com.xiang.keyDisplay.template.frameTemplate.FastSetFrame;
 
 import javax.swing.*;
@@ -24,17 +23,17 @@ public class FastSetMenu extends MenuTemplate {
     public FastSetMenu() throws HeadlessException {
         super(DEFAULT_BORDER_COLOR, DEFAULT_BG_COLOR);
 
-        setSize(GU.toAbsSize(92, 242));
+        setSize(92, 242);
         title = ComponentUtils.registerLabel("快速设置");
-        title.setSize(GU.toAbsSize(90, 30));
-        title.setLocation(GU.toAbsPos(1, 1));
+        title.setSize(90, 30);
+        title.setLocation(1, 1);
         addCom(title);
 
         buttons = new JButton[buttonNames.length];
         for (int i = 0; i < buttons.length; i++) {
             buttons[i] = ComponentUtils.registerButton(buttonNames[i]);
-            buttons[i].setSize(GU.toAbsSize(90, 30));
-            buttons[i].setLocation(GU.toAbsPos(1, 1 + (i + 1) * 30));
+            buttons[i].setSize(90, 30);
+            buttons[i].setLocation(1, 1 + (i + 1) * 30);
             int finalI = i;
             buttons[i].addActionListener(e -> {
                 if (Main.fastSetFrame != null) {
@@ -43,8 +42,8 @@ public class FastSetMenu extends MenuTemplate {
                 }
                 Main.fastSetFrame = new FastSetFrame(finalI + 4);
                 Main.fastSetFrame.setLocation(
-                        (GU.absX(Main.SCREEN_SIZE.width) - Main.fastSetFrame.getWidth()) / 2,
-                        (GU.absY(Main.SCREEN_SIZE.height) - Main.fastSetFrame.getHeight()) / 2
+                        (Main.SCREEN_SIZE.width - Main.fastSetFrame.getWidth()) / 2,
+                        (Main.SCREEN_SIZE.height - Main.fastSetFrame.getHeight()) / 2
                 );
                 Main.fastSetFrame.setVisible(true);
             });

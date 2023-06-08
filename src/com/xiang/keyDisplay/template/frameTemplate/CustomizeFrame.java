@@ -2,10 +2,7 @@ package com.xiang.keyDisplay.template.frameTemplate;
 
 import com.xiang.keyDisplay.listeners.MouseAd;
 import com.xiang.keyDisplay.listeners.MouseMoAd;
-import com.xiang.keyDisplay.template.panelTemplate.CustomizePanel;
-import com.xiang.keyDisplay.template.panelTemplate.RecBorderPanel;
-import com.xiang.keyDisplay.template.panelTemplate.RoundRecBorderImagePanel;
-import com.xiang.keyDisplay.template.panelTemplate.RoundRecBorderPanel;
+import com.xiang.keyDisplay.template.panelTemplate.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -58,6 +55,14 @@ public class CustomizeFrame extends JFrame {
         setContentPane(rootPane);
     }
 
+    public CustomizeFrame(Color border, Color bg, BufferedImage image) throws HeadlessException {
+        defaultSet();
+        borderColor = border;
+        backgroundColor = bg;
+        rootPane = new RecBorderImagePanel(border, bg, image);
+        setContentPane(rootPane);
+    }
+
     private void defaultSet() {
         setLayout(null);
         setUndecorated(true);
@@ -91,14 +96,16 @@ public class CustomizeFrame extends JFrame {
     }
 
     /**
-     * 只有RoundRecBorderImagePanel可用
+     * 只有RoundRecBorderImagePanel,RecBorderImagePanel可用
      *
      * @param image 背景图片
      * @throws Exception 类转换异常
      */
 
-    public void setRootImage(BufferedImage image) throws Exception {
-        rootPane.setImage(image);
+    public void setRootImage(BufferedImage image) {
+        if (rootPane instanceof IImagePane iImagePane) {
+            iImagePane.setImage(image);
+        }
     }
 
     public void addCom(Component component) {

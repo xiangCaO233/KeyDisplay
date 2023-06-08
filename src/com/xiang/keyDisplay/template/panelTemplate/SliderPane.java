@@ -2,7 +2,6 @@ package com.xiang.keyDisplay.template.panelTemplate;
 
 import com.xiang.keyDisplay.main.Main;
 import com.xiang.keyDisplay.others.ComponentUtils;
-import com.xiang.keyDisplay.others.GU;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,16 +20,16 @@ public class SliderPane extends JPanel {
     public SliderPane(String name, int value) {
 
         setLayout(null);
-        setSize(GU.toAbsSize((682 - 120) / 2 - 1, 30));
+        setSize((682 - 120) / 2 - 1, 30);
         setBackground(Main.DEFAULT_BG_COLOR);
         this.name = ComponentUtils.registerLabel(name);
-        this.name.setSize(GU.toAbsSize(40, 30));
+        this.name.setSize(40, 30);
         this.name.setLocation(0, 0);
         add(this.name);
         //初始化滑动组件
         slider = new JSlider();
-        slider.setSize(getWidth() - GU.absX(80), GU.absY(30));
-        slider.setLocation(GU.toAbsPos(40, 0));
+        slider.setSize(getWidth() - 80, 30);
+        slider.setLocation(40, 0);
         slider.setMaximum(255);
         slider.setMinimum(0);
         slider.setValue(value);
@@ -38,8 +37,8 @@ public class SliderPane extends JPanel {
         add(slider);
         //初始化值显示标签
         valueField = new JTextField(String.valueOf(value));
-        valueField.setSize(GU.toAbsSize(40, 40));
-        valueField.setLocation(getWidth() - GU.absX(40), 0);
+        valueField.setSize(40, 40);
+        valueField.setLocation(getWidth() - 40, 0);
         valueField.setFont(Main.DEFAULT_FONT.deriveFont(18f));
         valueField.setHorizontalAlignment(SwingConstants.CENTER);
         valueField.setForeground(new Color(230, 230, 230, 230));
@@ -68,9 +67,7 @@ public class SliderPane extends JPanel {
             //光标更新重绘组件
             valueField.getTopLevelAncestor().repaint();
         });
-        /*valueLabel = ComponentUtils.registerLabel(String.valueOf(value));
-        valueLabel.setSize(GU.toAbsSize(40, 40));
-        valueLabel.setLocation(getWidth() - GU.absX(40), 0);*/
+
         add(valueField);
     }
 }

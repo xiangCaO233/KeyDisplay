@@ -25,7 +25,7 @@ public class ChartFrame extends CustomizeFrame {
     public AreaColor areaColor;
 
     public ChartFrame(Color border, Color bg, AreaColor area) {
-        super(border, bg, (float) (1 / 18.0), new BufferedImage(Main.DEFAULT_SIZE.width, Main.DEFAULT_SIZE.height, BufferedImage.TYPE_INT_ARGB));
+        super(border, bg, new BufferedImage(Main.DEFAULT_SIZE.width, Main.DEFAULT_SIZE.height, BufferedImage.TYPE_INT_ARGB));
         borderColor = border;
         backgroundColor = bg;
         areaColor = area;
@@ -83,7 +83,6 @@ public class ChartFrame extends CustomizeFrame {
         super(
                 JsonUtil.json2Color(config.getJSONArray("borderColor")),
                 JsonUtil.json2Color(config.getJSONArray("backgroundColor")),
-                (float) (1 / 18.0),
                 new BufferedImage(Main.DEFAULT_SIZE.width, Main.DEFAULT_SIZE.height, BufferedImage.TYPE_INT_ARGB)
         );
         borderColor = JsonUtil.json2Color(config.getJSONArray("borderColor"));
@@ -173,7 +172,8 @@ public class ChartFrame extends CustomizeFrame {
         if (Main.keyFrames.size() >= 4) {
             setSize(
                     Main.DEFAULT_SIZE.width * Main.keyFrames.size(),
-                    Main.DEFAULT_SIZE.height * 2);
+                    Main.DEFAULT_SIZE.height * 2
+            );
         }
     }
 

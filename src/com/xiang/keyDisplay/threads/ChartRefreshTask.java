@@ -1,7 +1,6 @@
 package com.xiang.keyDisplay.threads;
 
 import com.xiang.keyDisplay.main.Main;
-import com.xiang.keyDisplay.others.GU;
 
 import java.util.TimerTask;
 
@@ -19,8 +18,8 @@ public class ChartRefreshTask extends TimerTask {
         try {
             Main.chartFrame.setRootImage(
                     Main.chartFrame.chart.createBufferedImage(
-                            Main.chartFrame.getWidth() - GU.absX(2),
-                            Main.chartFrame.getHeight() - GU.absY(2)
+                            Main.chartFrame.getWidth() - 2,
+                            Main.chartFrame.getHeight() - 2
                     )
             );
         } catch (Exception e) {

@@ -1,7 +1,6 @@
 package com.xiang.keyDisplay.menus;
 
 import com.xiang.keyDisplay.main.Main;
-import com.xiang.keyDisplay.others.GU;
 import com.xiang.keyDisplay.template.panelTemplate.KeyOptPanel;
 import com.xiang.keyDisplay.template.panelTemplate.MouseOptPanel;
 import com.xiang.keyDisplay.template.panelTemplate.WithoutBorderPanel;
@@ -22,7 +21,7 @@ public class AdvanceSettingsMenu extends MenuTemplate {
 
     public AdvanceSettingsMenu() {
         super(Main.DEFAULT_BORDER_COLOR, Main.DEFAULT_BG_COLOR);
-        setSize(GU.toAbsSize(350, 300));
+        setSize(350, 300);
 
         mouseOpts = new MouseOptPanel();
         keyOpts = new KeyOptPanel();
@@ -34,7 +33,7 @@ public class AdvanceSettingsMenu extends MenuTemplate {
 
 
         JTabbedPane tabbedPane = new JTabbedPane();
-        tabbedPane.setSize(GU.toAbsSize(350, 300));
+        tabbedPane.setSize(350, 300);
         tabbedPane.setFont(Main.DEFAULT_FONT.deriveFont(18f));
         tabbedPane.setForeground(Main.DEFAULT_BORDER_COLOR);
         tabbedPane.addTab("鼠标", null, mouseOpts, "鼠标高级设置");

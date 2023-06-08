@@ -2,8 +2,7 @@ package com.xiang.keyDisplay.template.panelTemplate;
 
 import com.xiang.keyDisplay.listeners.ComKeyAdapter;
 import com.xiang.keyDisplay.main.Main;
-import com.xiang.keyDisplay.main.VKKeys;
-import com.xiang.keyDisplay.others.GU;
+import com.xiang.keyDisplay.others.VKKeys;
 import com.xiang.keyDisplay.template.frameTemplate.KeyFrame;
 import com.xiang.keyDisplay.template.uis.CustomizeToggleButton;
 
@@ -56,19 +55,19 @@ public class KeyOptPanel extends JPanel {
         buttonsShell = new JPanel();
         buttonsShell.setLayout(new BoxLayout(buttonsShell, BoxLayout.Y_AXIS));
         buttonsShell.setBackground(new Color(0, 0, 0, 0));
-        buttonsShell.setMaximumSize(GU.toAbsSize(90, Integer.MAX_VALUE));
+        buttonsShell.setMaximumSize(new Dimension(90, Integer.MAX_VALUE));
 
         buttonListVbox = new JPanel();
         buttonListVbox.setBackground(new Color(0, 0, 0, 0));
         buttonListVbox.setLayout(new BoxLayout(buttonListVbox, BoxLayout.Y_AXIS));
-        buttonListVbox.setMaximumSize(GU.toAbsSize(90, Integer.MAX_VALUE));
+        buttonListVbox.setMaximumSize(new Dimension(90, Integer.MAX_VALUE));
 
         keysButtons = new CustomizeToggleButton[Main.keyFrames.size()];
         Collection<Integer> mouseKeys = Main.keyFrames.keySet();
         int index = 0;
         for (Integer mouseKey : mouseKeys) {
             keysButtons[index] = new CustomizeToggleButton(Main.keyFrames.get(mouseKey).keyName, false);
-            keysButtons[index].setMaximumSize(GU.toAbsSize(Integer.MAX_VALUE, 30));
+            keysButtons[index].setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
             keysButtons[index].addActionListener(e -> {
                 selectAllButton.setSelected(isAllSelected());
                 if (selectAllButton.isSelected())
@@ -82,7 +81,7 @@ public class KeyOptPanel extends JPanel {
         }
 
         selectAllButton = new CustomizeToggleButton("全选", false);
-        selectAllButton.setMaximumSize(GU.toAbsSize(100, 30));
+        selectAllButton.setMaximumSize(new Dimension(100, 30));
         selectAllButton.addActionListener(e -> {
             if (selectAllButton.isSelected()) {
                 selectAllButton.setName("全不选");
@@ -112,11 +111,11 @@ public class KeyOptPanel extends JPanel {
         fontSetting = new TextFiledPane("字体:", "Default Font");
         showCounts = new CustomizeToggleButton("显示计数", true);
         showCounts.setAlignmentX(CENTER_ALIGNMENT);
-        showCounts.setMaximumSize(GU.toAbsSize(Integer.MAX_VALUE, 30));
+        showCounts.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
 //        showCounts.setPreferredSize(new Dimension(Integer.MAX_VALUE, 30));
         showKps = new CustomizeToggleButton("显示kps", true);
         showKps.setAlignmentX(CENTER_ALIGNMENT);
-        showKps.setMaximumSize(GU.toAbsSize(Integer.MAX_VALUE, 30));
+        showKps.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
 //        showCps.setPreferredSize(new Dimension(Integer.MAX_VALUE, 30));
 
         //取最后一个鼠标按键的字体大小
@@ -150,7 +149,7 @@ public class KeyOptPanel extends JPanel {
         //细分设置
         settingsPanel1 = new JPanel();
         settingsPanel1.setLayout(new BoxLayout(settingsPanel1, BoxLayout.Y_AXIS));
-        settingsPanel1.setMaximumSize(GU.toAbsSize(Integer.MAX_VALUE, Integer.MAX_VALUE));
+        settingsPanel1.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
         settingsPanel1.setBackground(new Color(0, 0, 0, 0));
         settingsPanel1.add(bgPicker);
         settingsPanel1.add(fontSetting);
@@ -159,7 +158,7 @@ public class KeyOptPanel extends JPanel {
 
         settingsPanel2 = new JPanel();
         settingsPanel2.setLayout(new BoxLayout(settingsPanel2, BoxLayout.Y_AXIS));
-        settingsPanel2.setMaximumSize(GU.toAbsSize(Integer.MAX_VALUE, Integer.MAX_VALUE));
+        settingsPanel2.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
         settingsPanel2.setBackground(new Color(0, 0, 0, 0));
         settingsPanel2.add(activePicker);
         settingsPanel2.add(fontSizeSetting);

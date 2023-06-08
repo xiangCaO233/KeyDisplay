@@ -4,7 +4,7 @@ import com.xiang.keyDisplay.main.Main;
 
 import java.awt.*;
 
-public class RefreshFrame extends CustomizeFrame{
+public class RefreshFrame extends CustomizeFrame {
     //用于渐变,按下后松开一直在变化
     public Color currentBg;
     //标记渐变要到的目标颜色
@@ -13,9 +13,10 @@ public class RefreshFrame extends CustomizeFrame{
     public Color releaseColor;
     //按下时显示的颜色
     public Color pressColor;
-    public RefreshFrame() throws HeadlessException {
-        super(Main.DEFAULT_BORDER_COLOR, Main.DEFAULT_BG_COLOR);
-        releaseColor = Main.DEFAULT_BG_COLOR;
+
+    public RefreshFrame(Color bg) throws HeadlessException {
+        super(Main.DEFAULT_BORDER_COLOR, bg);
+        releaseColor = bg;
         pressColor = Main.DEFAULT_PRESS_COLOR;
 
         currentBg = releaseColor;

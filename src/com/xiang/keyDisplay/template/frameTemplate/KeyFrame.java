@@ -4,10 +4,9 @@ import com.alibaba.fastjson2.JSONObject;
 import com.xiang.keyDisplay.listeners.MouseAd;
 import com.xiang.keyDisplay.listeners.MouseMoAd;
 import com.xiang.keyDisplay.main.Main;
-import com.xiang.keyDisplay.main.VKKeys;
 import com.xiang.keyDisplay.others.ComponentUtils;
-import com.xiang.keyDisplay.others.GU;
 import com.xiang.keyDisplay.others.JsonUtil;
+import com.xiang.keyDisplay.others.VKKeys;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,14 +34,13 @@ public class KeyFrame extends RefreshFrame {
     boolean showCps;
 
     public KeyFrame(String keyName) {
-        super();
-        this.releaseColor = Main.DEFAULT_BG_COLOR;
+        super(Main.DEFAULT_BG_COLOR);
         this.pressColor = Main.DEFAULT_PRESS_COLOR;
 
         targetColor = releaseColor;
         currentBg = releaseColor;
 
-        setSize(GU.toAbsSize(Main.DEFAULT_SIZE.width, Main.DEFAULT_SIZE.height));
+        setSize(Main.DEFAULT_SIZE.width, Main.DEFAULT_SIZE.height);
         this.keyName = keyName;
         kps = 1;
         //初始化时间戳列表
@@ -72,8 +70,7 @@ public class KeyFrame extends RefreshFrame {
     }
 
     public KeyFrame(JSONObject config) {
-        super();
-        this.releaseColor = JsonUtil.json2Color(config.getJSONArray("releaseColor"));
+        super(JsonUtil.json2Color(config.getJSONArray("releaseColor")));
         this.pressColor = JsonUtil.json2Color(config.getJSONArray("pressColor"));
 
         targetColor = releaseColor;

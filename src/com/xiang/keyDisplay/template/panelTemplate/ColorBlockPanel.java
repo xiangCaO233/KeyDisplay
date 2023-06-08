@@ -55,10 +55,10 @@ public class ColorBlockPanel extends JPanel {
      */
     public void setColorSize(int width, int height) {
         setMaximumSize(
-                GU.toAbsSize(width, height)
+                new Dimension(width, height)
         );
         setMinimumSize(
-                GU.toAbsSize(width, height)
+                new Dimension(width, height)
         );
     }
 

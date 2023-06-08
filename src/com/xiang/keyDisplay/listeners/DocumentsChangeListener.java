@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+//文档监听器,给输入框使用的,当输入框内文本变化时触发
 public class DocumentsChangeListener implements DocumentListener {
     JComponent component;
 

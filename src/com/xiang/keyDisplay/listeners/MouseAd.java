@@ -14,7 +14,7 @@ import java.util.Collection;
 import static com.xiang.keyDisplay.listeners.MouseMoAd.*;
 
 /**
- * 鼠标监听器
+ * 组件鼠标监听器
  */
 public class MouseAd extends MouseAdapter {
     @Override
